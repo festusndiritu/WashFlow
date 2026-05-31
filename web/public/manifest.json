@@ -1,0 +1,21 @@
+{
+  "name": "WashFlow",
+  "short_name": "WashFlow",
+  "description": "Laundry business management platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafaf9",
+  "theme_color": "#0c0a09",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["business", "productivity"],
+  "lang": "en"
+}

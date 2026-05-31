@@ -1,0 +1,121 @@
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { LoginPage } from './pages/Login'
+import { PlatformDashboardPage } from './pages/PlatformDashboard'
+import { PlatformSetupPage } from './pages/PlatformSetup'
+import { SignupPage } from './pages/Signup'
+import { TenantDashboardPage } from './pages/TenantDashboard'
+import { CustomersPage } from './pages/CustomersPage'
+import { OrdersPage } from './pages/OrdersPage'
+import { ReportsPage } from './pages/ReportsPage'
+import { TeamPage } from './pages/TeamPage'
+import { SettingsPage } from './pages/SettingsPage'
+import { ServicesPage } from './pages/ServicesPage'
+import { OnboardingPage } from './pages/Onboarding'
+import { PrintReceiptPage } from './pages/PrintReceiptPage'
+import { InvoicePage } from './pages/InvoicePage'
+import { ExpensesPage } from './pages/ExpensesPage'
+import { useAuthStore } from './store/auth'
+
+export function App() {
+  const token = useAuthStore((s) => s.token)
+  const user = useAuthStore((s) => s.user)
+
+  return (
+    <Routes>
+      <Route path="/signup" element={<SignupPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/platform-setup" element={<PlatformSetupPage />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            {user?.role === 'platform_owner' ? <PlatformDashboardPage /> : <TenantDashboardPage />}
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/orders"
+        element={
+          <ProtectedRoute>
+            <OrdersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/customers"
+        element={
+          <ProtectedRoute>
+            <CustomersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/reports"
+        element={
+          <ProtectedRoute>
+            <ReportsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/services"
+        element={
+          <ProtectedRoute>
+            <ServicesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/team"
+        element={
+          <ProtectedRoute>
+            <TeamPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <SettingsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/onboarding"
+        element={
+          <ProtectedRoute>
+            <OnboardingPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/print/:orderId"
+        element={
+          <ProtectedRoute>
+            <PrintReceiptPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/invoice/:orderId"
+        element={
+          <ProtectedRoute>
+            <InvoicePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/expenses"
+        element={
+          <ProtectedRoute>
+            <ExpensesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />
+      <Route path="*" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />
+    </Routes>
+  )
+}
