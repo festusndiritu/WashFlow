@@ -15,7 +15,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 30s
 
   api:
     build:
@@ -33,6 +32,8 @@ services:
     build:
       context: ./web
       dockerfile: Dockerfile
+      args:
+        - VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID}
     restart: unless-stopped
     networks:
       - laundry_net
