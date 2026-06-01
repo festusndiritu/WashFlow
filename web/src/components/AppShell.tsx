@@ -1,7 +1,19 @@
 import React, { useState, type ReactNode } from 'react'
 import { Link, useMatch } from 'react-router-dom'
-import { LogOut, Menu, X, Shirt, LayoutDashboard, Package, Users, DollarSign, Settings } from 'lucide-react'
+import { LogOut, Menu, X, LayoutDashboard, Package, Users, DollarSign, Settings } from 'lucide-react'
 import { useAuthStore } from '../store/auth'
+
+/** WashFlow brand droplet mark — inline SVG so it renders at any size without a network request */
+function BrandMark({ size = 28 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="#f97316"/>
+      <path d="M16 3C15.3 4.6 7 13.5 7 19C7 23.4 11 27 16 27C21 27 25 23.4 25 19C25 13.5 16.7 4.6 16 3Z" fill="white"/>
+      <path d="M11 18.5L12.5 23L14.8 17L16 19.8L17.2 17L19.5 23L21 18.5"
+            stroke="#f97316" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  )
+}
 
 interface Props {
   orgName: string
@@ -26,17 +38,15 @@ function SidebarContent({
   const logout = useAuthStore((s) => s.logout)
 
   return (
-    <div className="flex flex-col h-full bg-stone-950">
+    <div className="flex flex-col h-full" style={{ background: 'linear-gradient(180deg, #111110 0%, #0c0a09 100%)' }}>
       {/* Brand */}
-      <div className="px-4 py-4 flex items-center justify-between border-b border-stone-800/60">
-        <div>
-          <div className="flex items-center gap-2 mb-0.5">
-            <div className="w-6 h-6 bg-orange-500 rounded-md flex items-center justify-center shrink-0">
-              <Shirt className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="text-white font-bold text-sm tracking-tight">WashFlow</span>
+      <div className="px-4 pt-5 pb-4 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <BrandMark size={30} />
+          <div>
+            <span className="text-white font-bold text-[15px] tracking-tight leading-none">WashFlow</span>
+            <p className="text-stone-500 text-[10px] mt-0.5 leading-none font-medium uppercase tracking-wider">Business</p>
           </div>
-          <p className="text-stone-500 text-[11px] truncate pl-8 max-w-[160px]">{orgName}</p>
         </div>
         {onClose && (
           <button onClick={onClose} className="text-stone-500 hover:text-white transition-colors p-1 rounded lg:hidden">
@@ -45,25 +55,32 @@ function SidebarContent({
         )}
       </div>
 
+      {/* Org badge */}
+      <div className="mx-3 mb-3 px-3 py-2.5 rounded-xl bg-stone-800/60 border border-stone-700/40">
+        <p className="text-white text-xs font-semibold truncate leading-tight">{orgName}</p>
+        <p className="text-stone-400 text-[10px] truncate leading-tight mt-0.5 capitalize">{orgRole}</p>
+      </div>
+
       {/* Nav */}
-      <nav className="flex-1 py-3 px-2 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 py-1 px-2 space-y-0.5 overflow-y-auto">
+        <p className="px-3 pt-1 pb-1.5 text-[10px] font-semibold tracking-widest text-stone-600 uppercase select-none">Menu</p>
         {sidebarNav}
       </nav>
 
       {/* User footer */}
-      <div className="px-3 py-3 border-t border-stone-800/60">
-        <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-white text-[11px] font-bold shrink-0 select-none">
+      <div className="px-2 py-2 border-t border-stone-800/70">
+        <div className="flex items-center gap-2.5 px-2 py-2 rounded-xl hover:bg-stone-800/60 transition-colors group">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-[11px] font-bold shrink-0 select-none shadow-sm">
             {user?.name?.[0]?.toUpperCase() ?? '?'}
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-white text-xs font-medium truncate leading-tight">{user?.name}</p>
-            <p className="text-stone-500 text-[10px] truncate leading-tight capitalize">{orgRole}</p>
+            <p className="text-stone-500 text-[10px] truncate leading-tight capitalize">{user?.email}</p>
           </div>
           <button
             onClick={logout}
             title="Sign out"
-            className="text-stone-500 hover:text-white transition-colors shrink-0 p-1.5 rounded hover:bg-stone-800"
+            className="text-stone-600 hover:text-red-400 transition-colors shrink-0 p-1 rounded"
           >
             <LogOut className="w-3.5 h-3.5" />
           </button>
@@ -86,9 +103,9 @@ export function AppShell({ orgName, orgRole, sidebarNav, headerSlot, children }:
   const matchSettings = useMatch('/settings')
 
   return (
-    <div className="min-h-screen flex bg-stone-50">
+    <div className="min-h-screen flex bg-stone-100">
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex w-60 shrink-0 flex-col sticky top-0 h-screen">
+      <aside className="hidden lg:flex w-64 shrink-0 flex-col sticky top-0 h-screen shadow-[1px_0_0_0_rgba(0,0,0,0.08)]">
         <SidebarContent orgName={orgName} orgRole={orgRole} sidebarNav={sidebarNav} />
       </aside>
 
@@ -113,7 +130,7 @@ export function AppShell({ orgName, orgRole, sidebarNav, headerSlot, children }:
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile top bar */}
-        <div className="lg:hidden bg-stone-950 px-4 py-3 flex items-center gap-3 sticky top-0 z-40">
+        <div className="lg:hidden sticky top-0 z-40 flex items-center gap-3 px-4 py-3" style={{ background: '#0c0a09' }}>
           <button
             onClick={() => setMobileOpen(true)}
             className="text-stone-400 hover:text-white transition-colors p-1"
@@ -121,18 +138,28 @@ export function AppShell({ orgName, orgRole, sidebarNav, headerSlot, children }:
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-orange-500 rounded flex items-center justify-center">
-              <Shirt className="w-3 h-3 text-white" />
-            </div>
+            <BrandMark size={22} />
             <span className="text-white font-bold text-sm tracking-tight">WashFlow</span>
           </div>
         </div>
 
+        {/* Desktop top bar */}
+        <div className="hidden lg:flex items-center justify-between px-6 py-3 bg-white border-b border-stone-200 sticky top-0 z-30">
+          <div className="flex items-center gap-2 text-sm text-stone-500">
+            <span className="font-semibold text-stone-800">{orgName}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            {headerSlot}
+          </div>
+        </div>
+
+        {/* Mobile headerSlot */}
         {headerSlot && (
-          <header className="bg-white border-b border-stone-200 px-4 lg:px-6 py-4 sticky top-0 lg:top-0 z-30">
+          <header className="lg:hidden bg-white border-b border-stone-200 px-4 py-3 sticky top-[49px] z-20">
             {headerSlot}
           </header>
         )}
+
         <main className="flex-1 overflow-y-auto p-4 lg:p-6 pb-20 lg:pb-6">{children}</main>
 
         {/* Mobile bottom nav */}
@@ -173,10 +200,10 @@ export function NavItem({
 }) {
   const match = useMatch(to ?? '__no_match__')
   const isActive = activeProp !== undefined ? activeProp : !!match
-  const cls = `w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+  const cls = `w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
     isActive
-      ? 'bg-orange-500 text-white'
-      : 'text-stone-400 hover:bg-stone-800 hover:text-stone-100'
+      ? 'bg-orange-500/15 text-orange-400 ring-1 ring-orange-500/20'
+      : 'text-stone-400 hover:bg-stone-800/70 hover:text-stone-100'
   }`
 
   if (to) {

@@ -1,4 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#f97316"/>
-  <text x="256" y="355" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="280" fill="white">W</text>
+  <!-- Safe-zone background (adaptive icon) -->
+  <rect width="512" height="512" rx="0" fill="#f97316"/>
+  <!-- Rounded mask shape -->
+  <rect width="512" height="512" rx="108" fill="#f97316"/>
+  <!-- Water drop -->
+  <path d="M256 80C244 106 120 256 120 332C120 404 181 456 256 456C331 456 392 404 392 332C392 256 268 106 256 80Z" fill="white"/>
+  <!-- W letterform inside drop -->
+  <path d="M186 296 L208 364 L240 274 L256 316 L272 274 L304 364 L326 296"
+        stroke="#f97316" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 </svg>
