@@ -156,15 +156,15 @@ export function AppShell({ orgName, orgRole, sidebarNav, headerSlot, title, acti
 
       <div className="flex-1 flex flex-col min-w-0">
 
-        {/* Mobile topbar */}
+        {/* Mobile topbar — logo + hamburger + theme only */}
         <div
-          className="lg:hidden sticky top-0 z-40 flex items-center gap-3 px-4 h-14"
+          className="lg:hidden sticky top-0 z-40 flex items-center gap-3 px-4 h-14 shrink-0"
           style={{ background: 'var(--sidebar-bg)', borderBottom: '1px solid var(--sidebar-border)' }}
         >
           <button
             onClick={() => setMobileOpen(true)}
             className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
-            style={{ color: '#737370' }}
+            style={{ color: '#a8a8a5' }}
             aria-label="Open menu"
           >
             <Menu className="w-[18px] h-[18px]" />
@@ -174,8 +174,25 @@ export function AppShell({ orgName, orgRole, sidebarNav, headerSlot, title, acti
             <span className="text-white font-bold text-[14px] tracking-tight">WashFlow</span>
           </div>
           <div className="flex-1" />
-          {headerSlot && <div className="flex items-center">{headerSlot}</div>}
+          <button
+            onClick={() => setMode(THEME_CYCLE[mode])}
+            title={`Theme: ${THEME_LABEL[mode]}`}
+            className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors shrink-0"
+            style={{ color: '#a8a8a5' }}
+          >
+            <ThemeIcon className="w-[15px] h-[15px]" />
+          </button>
         </div>
+
+        {/* Mobile page header — title + action button */}
+        {headerSlot && (
+          <div
+            className="lg:hidden sticky top-14 z-30 px-4 py-3 shrink-0"
+            style={{ background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-default)' }}
+          >
+            {headerSlot}
+          </div>
+        )}
 
         {/* Desktop topbar */}
         <div

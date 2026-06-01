@@ -129,17 +129,17 @@ export function ReportsPage() {
   const sidebarNav = <TenantNav role={user?.role ?? 'worker'} />
 
   const headerSlot = (
-    <div className="flex items-center justify-between gap-4 flex-wrap">
+    <div className="flex items-center justify-between gap-3 flex-wrap">
       <div>
         <h1 className="text-base font-semibold text-primary leading-none mb-0.5">Reports</h1>
         <p className="text-xs text-tertiary">{tenant?.name ?? 'Organization'}</p>
       </div>
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 shrink-0">
         {PERIODS.map((p) => (
           <button
             key={p.days}
             onClick={() => setDays(p.days)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${days === p.days ? 'bg-stone-900 text-white' : 'bg-surface border border-theme text-secondary hover:bg-subtle'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${days === p.days ? 'bg-[var(--text-primary)] text-[var(--bg-surface)]' : 'bg-surface border border-theme text-secondary hover:bg-subtle'}`}
           >
             {p.label}
           </button>
