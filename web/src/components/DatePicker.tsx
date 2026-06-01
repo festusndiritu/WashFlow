@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, Calendar, X } from 'lucide-react'
 
 const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
@@ -21,6 +22,7 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
   const [calPos, setCalPos] = useState<{ top: number; left: number } | null>(null)
   const ref = useRef<HTMLDivElement>(null)
   const btnRef = useRef<HTMLButtonElement>(null)
+  const calRef = useRef<HTMLDivElement>(null)
 
   const todayDate = new Date()
   const todayStr = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-${String(todayDate.getDate()).padStart(2, '0')}`
@@ -40,7 +42,11 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
 
   useEffect(() => {
     const h = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+      const t = e.target as Node
+      if (
+        ref.current && !ref.current.contains(t) &&
+        calRef.current && !calRef.current.contains(t)
+      ) setOpen(false)
     }
     if (open) document.addEventListener('mousedown', h)
     return () => document.removeEventListener('mousedown', h)
@@ -123,16 +129,16 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
         )}
       </button>
 
-      {open && calPos && (
-        <div className="fixed z-[9999] bg-surface border-theme rounded-2xl shadow-2xl w-72 p-3"
+      {open && calPos && createPortal(
+        <div ref={calRef} className="fixed z-[9999] bg-surface border-theme rounded-2xl shadow-2xl w-72 p-3"
           style={{ top: calPos.top, left: calPos.left }}>
           {/* Month nav */}
           <div className="flex items-center justify-between mb-3">
-            <button type="button" onClick={prevMonth} className="p-1.5 rounded-lg hover:bg-stone-100 text-secondary transition-colors">
+            <button type="button" onClick={prevMonth} className="p-1.5 rounded-lg hover:bg-subtle text-secondary transition-colors">
               <ChevronLeft className="w-4 h-4" />
             </button>
             <span className="text-sm font-semibold text-primary">{MONTHS[viewMonth]} {viewYear}</span>
-            <button type="button" onClick={nextMonth} className="p-1.5 rounded-lg hover:bg-stone-100 text-secondary transition-colors">
+            <button type="button" onClick={nextMonth} className="p-1.5 rounded-lg hover:bg-subtle text-secondary transition-colors">
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -165,7 +171,7 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
                       ? 'bg-orange-500 text-white shadow-sm'
                       : isToday
                       ? 'bg-orange-50 text-orange-600 font-bold ring-1 ring-orange-200'
-                      : 'text-secondary hover:bg-stone-100',
+                      : 'text-secondary hover:bg-subtle',
                   ].join(' ')}
                 >
                   {day}
@@ -192,7 +198,7 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
             </button>
           </div>
         </div>
-      )}
+      , document.body)}
     </div>
   )
 }

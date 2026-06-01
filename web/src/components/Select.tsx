@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Check, ChevronDown } from 'lucide-react'
 
 export interface SelectOption {
@@ -21,6 +22,7 @@ export function Select({ value, onChange, options, placeholder = 'Select…', re
   const [dropPos, setDropPos] = useState<{ top: number; left: number; width: number } | null>(null)
   const ref = useRef<HTMLDivElement>(null)
   const btnRef = useRef<HTMLButtonElement>(null)
+  const dropRef = useRef<HTMLDivElement>(null)
 
   const selected = options.find((o) => o.value === value)
 
@@ -36,10 +38,14 @@ export function Select({ value, onChange, options, placeholder = 'Select…', re
     setOpen((v) => !v)
   }
 
-  // Close on outside click
+  // Close on outside click — must check both anchor and portalled dropdown
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+      const t = e.target as Node
+      if (
+        ref.current && !ref.current.contains(t) &&
+        dropRef.current && !dropRef.current.contains(t)
+      ) setOpen(false)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
@@ -88,8 +94,9 @@ export function Select({ value, onChange, options, placeholder = 'Select…', re
         <ChevronDown className={`w-3.5 h-3.5 text-tertiary shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
-      {open && dropPos && (
+      {open && dropPos && createPortal(
         <div
+          ref={dropRef}
           className="fixed z-[9999] bg-surface border-theme rounded-xl shadow-xl overflow-hidden"
           style={{ top: dropPos.top, left: dropPos.left, width: dropPos.width }}
         >
@@ -112,7 +119,7 @@ export function Select({ value, onChange, options, placeholder = 'Select…', re
             ))}
           </ul>
         </div>
-      )}
+      , document.body)}
     </div>
   )
 }
