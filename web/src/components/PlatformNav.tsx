@@ -1,7 +1,7 @@
-import { LayoutDashboard, Building2, TrendingUp, Package, Users } from 'lucide-react'
+import { LayoutDashboard, Building2, TrendingUp, Package, Users, Layers } from 'lucide-react'
 import { NavItem } from './AppShell'
 
-type PlatformSection = 'overview' | 'tenants' | 'revenue' | 'orders' | 'users'
+type PlatformSection = 'overview' | 'tenants' | 'revenue' | 'orders' | 'users' | 'plans'
 
 export function PlatformNav({ active }: { active: PlatformSection }) {
   return (
@@ -11,6 +11,7 @@ export function PlatformNav({ active }: { active: PlatformSection }) {
       <NavItem icon={<TrendingUp />}      label="Revenue"       to="/platform/revenue"  active={active === 'revenue'} />
       <NavItem icon={<Package />}         label="All Orders"    to="/platform/orders"   active={active === 'orders'} />
       <NavItem icon={<Users />}           label="Users"         to="/platform/users"    active={active === 'users'} />
+      <NavItem icon={<Layers />}          label="Plans"         to="/platform/plans"    active={active === 'plans'} />
     </>
   )
 }

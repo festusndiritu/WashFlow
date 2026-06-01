@@ -9,6 +9,8 @@ from ..schemas.platform import (
     PlatformDashboardResponse,
     PlatformOrderRow,
     PlatformOrdersResponse,
+    PlatformPlanStat,
+    PlatformPlansResponse,
     PlatformRevenueResponse,
     PlatformTenantDetail,
     PlatformTenantsResponse,
@@ -239,3 +241,34 @@ def list_all_users(
         ))
 
     return PlatformUsersResponse(items=items, total=total, page=page, page_size=page_size)
+
+
+PLAN_CONFIG: dict[str, dict] = {
+    "free":       {"label": "Free",       "price_kes": 0,     "shops": 1,  "users": 3,  "orders_per_month": 50},
+    "starter":    {"label": "Starter",    "price_kes": 1500,  "shops": 2,  "users": 10, "orders_per_month": 300},
+    "pro":        {"label": "Pro",        "price_kes": 4500,  "shops": 5,  "users": 30, "orders_per_month": 1000},
+    "enterprise": {"label": "Enterprise", "price_kes": 12000, "shops": -1, "users": -1, "orders_per_month": -1},
+}
+
+
+@router.get('/plans', response_model=PlatformPlansResponse)
+def get_plans(
+    _=Depends(get_platform_identity),
+    db: Session = Depends(get_db),
+) -> PlatformPlansResponse:
+    counts_raw = db.query(Tenant.plan, func.count(Tenant.id)).group_by(Tenant.plan).all()
+    counts: dict[str, int] = {plan: cnt for plan, cnt in counts_raw}
+
+    plans = [
+        PlatformPlanStat(
+            key=key,
+            label=cfg["label"],
+            price_kes=cfg["price_kes"],
+            shops=cfg["shops"],
+            users=cfg["users"],
+            orders_per_month=cfg["orders_per_month"],
+            tenant_count=counts.get(key, 0),
+        )
+        for key, cfg in PLAN_CONFIG.items()
+    ]
+    return PlatformPlansResponse(plans=plans)

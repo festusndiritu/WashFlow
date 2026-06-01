@@ -76,3 +76,17 @@ class PlatformUsersResponse(BaseModel):
     total: int
     page: int
     page_size: int
+
+
+class PlatformPlanStat(BaseModel):
+    key: str
+    label: str
+    price_kes: int
+    shops: int        # -1 = unlimited
+    users: int        # -1 = unlimited
+    orders_per_month: int  # -1 = unlimited
+    tenant_count: int
+
+
+class PlatformPlansResponse(BaseModel):
+    plans: list[PlatformPlanStat]

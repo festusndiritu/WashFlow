@@ -6,6 +6,7 @@ import { PlatformTenantsPage } from './pages/PlatformTenantsPage'
 import { PlatformRevenuePage } from './pages/PlatformRevenuePage'
 import { PlatformOrdersPage } from './pages/PlatformOrdersPage'
 import { PlatformUsersPage } from './pages/PlatformUsersPage'
+import { PlatformPlansPage } from './pages/PlatformPlansPage'
 import { PlatformSetupPage } from './pages/PlatformSetup'
 import { SignupPage } from './pages/Signup'
 import { TenantDashboardPage } from './pages/TenantDashboard'
@@ -67,6 +68,14 @@ export function App() {
         element={
           <ProtectedRoute>
             <PlatformUsersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/platform/plans"
+        element={
+          <ProtectedRoute>
+            <PlatformPlansPage />
           </ProtectedRoute>
         }
       />
