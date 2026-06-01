@@ -29,7 +29,7 @@ const CATEGORIES: { value: string; label: string; icon: typeof Zap; color: strin
   { value: 'maintenance', label: 'Maintenance', icon: Wrench,       color: 'text-orange-700', bg: 'bg-orange-50 border-orange-200' },
   { value: 'equipment',   label: 'Equipment',   icon: MoreHorizontal, color: 'text-teal-700', bg: 'bg-teal-50 border-teal-200' },
   { value: 'staff',       label: 'Staff',       icon: Users,        color: 'text-violet-700', bg: 'bg-violet-50 border-violet-200' },
-  { value: 'other',       label: 'Other',       icon: MoreHorizontal, color: 'text-stone-600', bg: 'bg-stone-100 border-stone-200' },
+  { value: 'other',       label: 'Other',       icon: MoreHorizontal, color: 'text-secondary', bg: 'bg-stone-100 border-stone-200' },
 ]
 
 const CAT_MAP = Object.fromEntries(CATEGORIES.map((c) => [c.value, c]))
@@ -184,8 +184,8 @@ export function ExpensesPage() {
   const headerSlot = (
     <div className="flex items-center justify-between gap-4 flex-wrap">
       <div>
-        <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">Expenses</h1>
-        <p className="text-xs text-stone-400">{tenant?.name} · Purchases, utilities, maintenance &amp; more</p>
+        <h1 className="text-base font-semibold text-primary leading-none mb-0.5">Expenses</h1>
+        <p className="text-xs text-tertiary">{tenant?.name} · Purchases, utilities, maintenance &amp; more</p>
       </div>
       {canManage && (
         <button onClick={() => setShowForm(true)}
@@ -208,25 +208,25 @@ export function ExpensesPage() {
 
       {/* This month summary */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-        <div className="col-span-2 lg:col-span-1 bg-white rounded-2xl border border-stone-200 shadow-sm p-4">
+        <div className="col-span-2 lg:col-span-1 card p-4">
           <div className="flex items-center justify-between mb-1">
-            <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">This month</p>
+            <p className="text-xs font-semibold text-secondary uppercase tracking-wide">This month</p>
             <div className="p-1.5 bg-red-50 rounded-lg"><TrendingDown className="w-3.5 h-3.5 text-red-500" /></div>
           </div>
-          <p className="text-2xl font-bold text-stone-900 tabular-nums leading-none">
+          <p className="text-2xl font-bold text-primary tabular-nums leading-none">
             KES {Number(monthTotal).toLocaleString('en-KE')}
           </p>
-          <p className="text-xs text-stone-400 mt-1">{monthExpenses.length} entries</p>
+          <p className="text-xs text-tertiary mt-1">{monthExpenses.length} entries</p>
         </div>
         {catTotals.slice(0, 3).map((c) => {
           const Icon = c.icon
           return (
             <div key={c.value} className="card p-4">
               <div className="flex items-center justify-between mb-1">
-                <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">{c.label}</p>
+                <p className="text-xs font-semibold text-secondary uppercase tracking-wide">{c.label}</p>
                 <div className={`p-1.5 rounded-lg border ${c.bg}`}><Icon className={`w-3.5 h-3.5 ${c.color}`} /></div>
               </div>
-              <p className="text-xl font-bold text-stone-900 tabular-nums leading-none">
+              <p className="text-xl font-bold text-primary tabular-nums leading-none">
                 KES {Number(c.total).toLocaleString('en-KE')}
               </p>
             </div>
@@ -238,32 +238,32 @@ export function ExpensesPage() {
         <form onSubmit={onSubmit} className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Amount (KES) *</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Amount (KES) *</label>
               <input type="number" min="1" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="0.00" required className={inputCls} autoFocus />
             </div>
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Category *</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Category *</label>
               <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputCls}>
                 {CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-stone-600 mb-1">Date *</label>
+            <label className="block text-xs font-medium text-secondary mb-1">Date *</label>
             <DatePicker value={expenseDate} onChange={setExpenseDate} placeholder="Pick date" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-stone-600 mb-1">Description *</label>
+            <label className="block text-xs font-medium text-secondary mb-1">Description *</label>
             <input value={description} onChange={(e) => setDescription(e.target.value)} placeholder="e.g. Detergent powder 10kg, KPLC token…" required minLength={2} className={inputCls} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Reference / Receipt #</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Reference / Receipt #</label>
               <input value={reference} onChange={(e) => setReference(e.target.value)} placeholder="Optional" className={inputCls} />
             </div>
             {shops.length > 1 && (
               <div>
-                <label className="block text-xs font-medium text-stone-600 mb-1">Shop</label>
+                <label className="block text-xs font-medium text-secondary mb-1">Shop</label>
                 <select value={formShopId} onChange={(e) => setFormShopId(e.target.value)} className={inputCls}>
                   <option value="">All / General</option>
                   {shops.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
@@ -276,7 +276,7 @@ export function ExpensesPage() {
             <button type="submit" disabled={submitting} className="bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors">
               {submitting ? 'Saving…' : 'Save expense'}
             </button>
-            <button type="button" onClick={() => setShowForm(false)} className="text-sm text-stone-500 hover:text-stone-700 px-4 py-2 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
+            <button type="button" onClick={() => setShowForm(false)} className="text-sm text-secondary hover:text-secondary px-4 py-2 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
           </div>
         </form>
       </Modal>
@@ -285,20 +285,20 @@ export function ExpensesPage() {
       <div className="flex items-center gap-1 mb-4 flex-wrap">
         <div className="flex items-center gap-1 bg-stone-100 rounded-lg p-1 flex-wrap">
           <button onClick={() => setFilterCat('all')}
-            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${filterCat === 'all' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-700'}`}>
+            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${filterCat === 'all' ? 'bg-surface text-primary shadow-sm' : 'text-secondary hover:text-secondary'}`}>
             All
           </button>
           {CATEGORIES.map((c) => {
             const Icon = c.icon
             return (
               <button key={c.value} onClick={() => setFilterCat(c.value)}
-                className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${filterCat === c.value ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-700'}`}>
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${filterCat === c.value ? 'bg-surface text-primary shadow-sm' : 'text-secondary hover:text-secondary'}`}>
                 <Icon className="w-3 h-3" /> {c.label}
               </button>
             )
           })}
         </div>
-        <span className="ml-auto text-xs text-stone-400 font-medium">
+        <span className="ml-auto text-xs text-tertiary font-medium">
           {visible.length} entries · KES {Number(totalVisible).toLocaleString('en-KE')}
         </span>
       </div>
@@ -311,7 +311,7 @@ export function ExpensesPage() {
       ) : visible.length === 0 ? (
         <div className="card py-16 text-center">
           <TrendingDown className="w-10 h-10 text-stone-200 mx-auto mb-3" />
-          <p className="text-sm font-medium text-stone-500">No expenses recorded yet</p>
+          <p className="text-sm font-medium text-secondary">No expenses recorded yet</p>
           {canManage && (
             <button onClick={() => setShowForm(true)}
               className="mt-3 text-xs text-orange-600 font-semibold hover:text-orange-700 inline-flex items-center gap-1">
@@ -321,37 +321,37 @@ export function ExpensesPage() {
         </div>
       ) : (
         <div className="card overflow-hidden">
-          <div className="divide-y divide-stone-50">
+          <div className="divide-y divide-[var(--border-default)]">
             {visible.map((exp) => {
               const cat = CAT_MAP[exp.category] ?? CAT_MAP['other']
               const Icon = cat.icon
               return (
-                <div key={exp.id} className="px-5 py-3.5 flex items-center justify-between gap-4 hover:bg-stone-50 transition-colors group">
+                <div key={exp.id} className="px-5 py-3.5 flex items-center justify-between gap-4 hover:bg-subtle transition-colors group">
                   <div className="flex items-center gap-3 min-w-0">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center border shrink-0 ${cat.bg}`}>
                       <Icon className={`w-4 h-4 ${cat.color}`} />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-stone-900 truncate">{exp.description}</p>
+                      <p className="text-sm font-medium text-primary truncate">{exp.description}</p>
                       <div className="flex items-center gap-2 mt-0.5">
                         <span className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold border ${cat.bg} ${cat.color}`}>
                           {cat.label}
                         </span>
                         {exp.reference && (
-                          <span className="text-[10px] text-stone-400 font-mono truncate">Ref: {exp.reference}</span>
+                          <span className="text-[10px] text-tertiary font-mono truncate">Ref: {exp.reference}</span>
                         )}
                         {exp.shop_name && shops.length > 1 && (
-                          <span className="text-[10px] text-stone-400 truncate">· {exp.shop_name}</span>
+                          <span className="text-[10px] text-tertiary truncate">· {exp.shop_name}</span>
                         )}
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 shrink-0">
                     <div className="text-right">
-                      <p className="text-sm font-bold text-stone-900 tabular-nums">
+                      <p className="text-sm font-bold text-primary tabular-nums">
                         KES {Number(exp.amount).toLocaleString('en-KE')}
                       </p>
-                      <p className="text-[10px] text-stone-400">{formatDate(exp.expense_date)}</p>
+                      <p className="text-[10px] text-tertiary">{formatDate(exp.expense_date)}</p>
                     </div>
                     {canManage && (
                       confirmDeleteId === exp.id ? (
@@ -360,18 +360,18 @@ export function ExpensesPage() {
                             className="text-xs text-red-600 hover:text-red-700 font-semibold px-2 py-1 rounded bg-red-50 hover:bg-red-100 transition-colors">
                             {deleting ? '…' : 'Delete'}
                           </button>
-                          <button onClick={() => setConfirmDeleteId(null)} className="text-xs text-stone-400 hover:text-stone-600 px-1">
+                          <button onClick={() => setConfirmDeleteId(null)} className="text-xs text-tertiary hover:text-secondary px-1">
                             Cancel
                           </button>
                         </div>
                       ) : (
                         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button onClick={() => openEdit(exp)}
-                            className="text-stone-300 hover:text-orange-500 p-1 rounded transition-colors">
+                            className="text-disabled hover:text-orange-500 p-1 rounded transition-colors">
                             <Pencil className="w-3.5 h-3.5" />
                           </button>
                           <button onClick={() => setConfirmDeleteId(exp.id)}
-                            className="text-stone-300 hover:text-red-500 p-1 rounded transition-colors">
+                            className="text-disabled hover:text-red-500 p-1 rounded transition-colors">
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         </div>
@@ -395,26 +395,26 @@ export function ExpensesPage() {
         <form onSubmit={saveEdit} className="flex flex-col gap-4">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Amount (KES) *</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Amount (KES) *</label>
               <input type="number" min="0" step="0.01" value={editAmount} onChange={(e) => setEditAmount(e.target.value)} required className={inputCls} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Category</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Category</label>
               <select value={editCategory} onChange={(e) => setEditCategory(e.target.value)} className={inputCls}>
                 {CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-stone-600 mb-1">Date *</label>
+            <label className="block text-xs font-medium text-secondary mb-1">Date *</label>
             <DatePicker value={editDate} onChange={setEditDate} placeholder="Pick date" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-stone-600 mb-1">Description *</label>
+            <label className="block text-xs font-medium text-secondary mb-1">Description *</label>
             <input value={editDescription} onChange={(e) => setEditDescription(e.target.value)} required minLength={2} className={inputCls} />
           </div>
           <div>
-            <label className="block text-xs font-medium text-stone-600 mb-1">Reference / Receipt #</label>
+            <label className="block text-xs font-medium text-secondary mb-1">Reference / Receipt #</label>
             <input value={editReference} onChange={(e) => setEditReference(e.target.value)} placeholder="Optional" className={inputCls} />
           </div>
           {editError && <p className="text-xs text-red-600">{editError}</p>}
@@ -422,7 +422,7 @@ export function ExpensesPage() {
             <button type="submit" disabled={editSaving} className="bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors">
               {editSaving ? 'Saving…' : 'Save changes'}
             </button>
-            <button type="button" onClick={() => setEditingExpense(null)} className="text-sm text-stone-500 hover:text-stone-700 px-4 py-2 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
+            <button type="button" onClick={() => setEditingExpense(null)} className="text-sm text-secondary hover:text-secondary px-4 py-2 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
           </div>
         </form>
       </Modal>

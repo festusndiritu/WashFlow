@@ -69,7 +69,7 @@ function CustomAreaTooltip({ active, payload, label }: any) {
     <div className="bg-stone-900 text-white text-xs rounded-lg px-3 py-2 shadow-xl">
       <p className="font-medium mb-1">{label}</p>
       <p className="text-orange-300">{fmtKES(payload[0]?.value ?? 0)}</p>
-      <p className="text-stone-400">{payload[1]?.value ?? 0} orders</p>
+      <p className="text-tertiary">{payload[1]?.value ?? 0} orders</p>
     </div>
   )
 }
@@ -131,15 +131,15 @@ export function ReportsPage() {
   const headerSlot = (
     <div className="flex items-center justify-between gap-4 flex-wrap">
       <div>
-        <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">Reports</h1>
-        <p className="text-xs text-stone-400">{tenant?.name ?? 'Organization'}</p>
+        <h1 className="text-base font-semibold text-primary leading-none mb-0.5">Reports</h1>
+        <p className="text-xs text-tertiary">{tenant?.name ?? 'Organization'}</p>
       </div>
       <div className="flex items-center gap-1.5">
         {PERIODS.map((p) => (
           <button
             key={p.days}
             onClick={() => setDays(p.days)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${days === p.days ? 'bg-stone-900 text-white' : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-50'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${days === p.days ? 'bg-stone-900 text-white' : 'bg-surface border border-theme text-secondary hover:bg-subtle'}`}
           >
             {p.label}
           </button>
@@ -166,39 +166,39 @@ export function ReportsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="card p-5">
               <div className="flex items-start justify-between mb-3">
-                <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Total revenue</p>
+                <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Total revenue</p>
                 <div className="p-2 bg-orange-50 rounded-xl"><TrendingUp className="w-4 h-4 text-orange-500" /></div>
               </div>
-              <p className="text-2xl font-bold text-stone-900 tabular-nums">{fmtKES(data.total_revenue)}</p>
-              <p className="text-xs text-stone-400 mt-1">Last {data.period_days} days</p>
+              <p className="text-2xl font-bold text-primary tabular-nums">{fmtKES(data.total_revenue)}</p>
+              <p className="text-xs text-tertiary mt-1">Last {data.period_days} days</p>
             </div>
 
             <div className="card p-5">
               <div className="flex items-start justify-between mb-3">
-                <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Total orders</p>
+                <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Total orders</p>
                 <div className="p-2 bg-sky-50 rounded-xl"><ShoppingBag className="w-4 h-4 text-sky-500" /></div>
               </div>
-              <p className="text-2xl font-bold text-stone-900 tabular-nums">{data.total_orders}</p>
-              <p className="text-xs text-stone-400 mt-1">Last {data.period_days} days</p>
+              <p className="text-2xl font-bold text-primary tabular-nums">{data.total_orders}</p>
+              <p className="text-xs text-tertiary mt-1">Last {data.period_days} days</p>
             </div>
 
             <div className="card p-5">
               <div className="flex items-start justify-between mb-3">
-                <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Avg. order value</p>
+                <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Avg. order value</p>
                 <div className="p-2 bg-emerald-50 rounded-xl"><DollarSign className="w-4 h-4 text-emerald-500" /></div>
               </div>
-              <p className="text-2xl font-bold text-stone-900 tabular-nums">
+              <p className="text-2xl font-bold text-primary tabular-nums">
                 {data.total_orders > 0 ? fmtKES(data.total_revenue / data.total_orders) : 'KES 0'}
               </p>
-              <p className="text-xs text-stone-400 mt-1">Per order</p>
+              <p className="text-xs text-tertiary mt-1">Per order</p>
             </div>
           </div>
 
           {/* Revenue trend */}
           <div className="card p-5">
-            <p className="text-sm font-semibold text-stone-900 mb-5">Revenue trend</p>
+            <p className="text-sm font-semibold text-primary mb-5">Revenue trend</p>
             {trendData.length === 0 ? (
-              <p className="text-sm text-stone-400 py-8 text-center">No revenue data for this period.</p>
+              <p className="text-sm text-tertiary py-8 text-center">No revenue data for this period.</p>
             ) : (
               <ResponsiveContainer width="100%" height={200}>
                 <AreaChart data={trendData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
@@ -246,15 +246,15 @@ export function ReportsPage() {
               </ResponsiveContainer>
             )}
             <div className="flex items-center gap-4 mt-3">
-              <div className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-orange-500 rounded-full inline-block" /><span className="text-xs text-stone-500">Revenue</span></div>
-              <div className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-sky-400 rounded-full inline-block" /><span className="text-xs text-stone-500">Orders</span></div>
+              <div className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-orange-500 rounded-full inline-block" /><span className="text-xs text-secondary">Revenue</span></div>
+              <div className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-sky-400 rounded-full inline-block" /><span className="text-xs text-secondary">Orders</span></div>
             </div>
           </div>
 
           {/* Orders by status */}
           {statusData.length > 0 && (
             <div className="card p-5">
-              <p className="text-sm font-semibold text-stone-900 mb-5">Orders by status</p>
+              <p className="text-sm font-semibold text-primary mb-5">Orders by status</p>
               <ResponsiveContainer width="100%" height={160}>
                 <BarChart data={statusData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }} barSize={36}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f5f5f4" horizontal vertical={false} />
@@ -279,22 +279,22 @@ export function ReportsPage() {
           {/* Shop breakdown */}
           {isOwner && data.shop_breakdown.length > 0 && (
             <div className="card overflow-hidden">
-              <div className="px-5 py-3.5 border-b border-stone-100 flex items-center gap-2">
-                <Store className="w-4 h-4 text-stone-400" />
-                <p className="text-sm font-semibold text-stone-900">Revenue by shop</p>
+              <div className="px-5 py-3.5 border-b border-theme flex items-center gap-2">
+                <Store className="w-4 h-4 text-tertiary" />
+                <p className="text-sm font-semibold text-primary">Revenue by shop</p>
               </div>
-              <div className="divide-y divide-stone-50">
+              <div className="divide-y divide-[var(--border-default)]">
                 {data.shop_breakdown.map((shop, idx) => (
                   <div key={shop.shop_id} className="px-5 py-3.5 flex items-center gap-4">
-                    <div className="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-xs font-bold text-stone-500 shrink-0">
+                    <div className="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-xs font-bold text-secondary shrink-0">
                       {idx + 1}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-stone-900 truncate">{shop.shop_name}</p>
-                      <p className="text-xs text-stone-400">{shop.orders} orders</p>
+                      <p className="text-sm font-medium text-primary truncate">{shop.shop_name}</p>
+                      <p className="text-xs text-tertiary">{shop.orders} orders</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-bold text-stone-900">{fmtKES(shop.revenue)}</p>
+                      <p className="text-sm font-bold text-primary">{fmtKES(shop.revenue)}</p>
                       {data.total_revenue > 0 && (
                         <div className="flex items-center justify-end gap-0.5 text-xs text-emerald-600">
                           <ArrowUpRight className="w-3 h-3" />
@@ -311,24 +311,24 @@ export function ReportsPage() {
           {/* Daily table */}
           {data.daily_revenue.length > 0 && (
             <div className="card overflow-hidden">
-              <div className="px-5 py-3.5 border-b border-stone-100">
-                <p className="text-sm font-semibold text-stone-900">Daily breakdown</p>
+              <div className="px-5 py-3.5 border-b border-theme">
+                <p className="text-sm font-semibold text-primary">Daily breakdown</p>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-stone-100 bg-stone-50">
-                      <th className="px-5 py-2.5 text-left text-xs font-semibold text-stone-500">Date</th>
-                      <th className="px-5 py-2.5 text-right text-xs font-semibold text-stone-500">Orders</th>
-                      <th className="px-5 py-2.5 text-right text-xs font-semibold text-stone-500">Revenue</th>
+                    <tr className="border-b border-theme bg-subtle">
+                      <th className="px-5 py-2.5 text-left text-xs font-semibold text-secondary">Date</th>
+                      <th className="px-5 py-2.5 text-right text-xs font-semibold text-secondary">Orders</th>
+                      <th className="px-5 py-2.5 text-right text-xs font-semibold text-secondary">Revenue</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-stone-50">
+                  <tbody className="divide-y divide-[var(--border-default)]">
                     {[...data.daily_revenue].reverse().map((d) => (
-                      <tr key={d.date} className="hover:bg-stone-50 transition-colors">
-                        <td className="px-5 py-3 text-stone-600">{fmtShort(d.date)}</td>
-                        <td className="px-5 py-3 text-right text-stone-700 tabular-nums">{d.orders}</td>
-                        <td className="px-5 py-3 text-right font-semibold text-stone-900 tabular-nums">{fmtKES(d.revenue)}</td>
+                      <tr key={d.date} className="hover:bg-subtle transition-colors">
+                        <td className="px-5 py-3 text-secondary">{fmtShort(d.date)}</td>
+                        <td className="px-5 py-3 text-right text-secondary tabular-nums">{d.orders}</td>
+                        <td className="px-5 py-3 text-right font-semibold text-primary tabular-nums">{fmtKES(d.revenue)}</td>
                       </tr>
                     ))}
                   </tbody>

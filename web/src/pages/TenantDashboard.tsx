@@ -40,7 +40,7 @@ const STATUS_BADGE: Record<string, string> = {
   received:  'bg-amber-50 text-amber-700',
   washing:   'bg-sky-50 text-sky-700',
   ready:     'bg-emerald-50 text-emerald-700',
-  delivered: 'bg-stone-100 text-stone-500',
+  delivered: 'bg-stone-100 text-secondary',
 }
 
 const STATUS_ICON: Record<string, typeof Clock> = {
@@ -138,7 +138,7 @@ export function TenantDashboardPage() {
         <div className="flex items-center gap-1 bg-stone-100 rounded-lg p-1">
           {shops.map((shop) => (
             <button key={shop.id} onClick={() => switchShop(shop.id)}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${shop.id === activeShopId ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-700'}`}>
+              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${shop.id === activeShopId ? 'bg-surface text-primary shadow-sm' : 'text-secondary hover:text-secondary'}`}>
               {shop.name}
             </button>
           ))}
@@ -170,10 +170,10 @@ export function TenantDashboardPage() {
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-50/60 to-transparent pointer-events-none rounded-2xl" />
                 <div className="relative flex flex-col flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Revenue (30d)</p>
+                    <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Revenue (30d)</p>
                     <div className="p-1.5 bg-orange-100 rounded-lg"><TrendingUp className="w-3.5 h-3.5 text-orange-500" /></div>
                   </div>
-                  <p className="text-2xl font-bold text-stone-900 tabular-nums leading-none mb-2">
+                  <p className="text-2xl font-bold text-primary tabular-nums leading-none mb-2">
                     KES {Number(report.total_revenue).toLocaleString('en-KE', { minimumFractionDigits: 0 })}
                   </p>
                   {report.daily_revenue.length > 1 && (
@@ -205,12 +205,12 @@ export function TenantDashboardPage() {
                 <div className="relative flex flex-col flex-1 justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Orders</p>
+                      <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Orders</p>
                       <div className="p-1.5 bg-amber-100 rounded-lg"><Package className="w-3.5 h-3.5 text-amber-500" /></div>
                     </div>
-                    <p className="text-2xl font-bold text-stone-900 tabular-nums leading-none">{report.total_orders}</p>
+                    <p className="text-2xl font-bold text-primary tabular-nums leading-none">{report.total_orders}</p>
                   </div>
-                  <p className="text-xs text-stone-400 mt-1">Last 30 days</p>
+                  <p className="text-xs text-tertiary mt-1">Last 30 days</p>
                 </div>
               </div>
               <div className="card p-4 relative overflow-hidden flex flex-col">
@@ -218,10 +218,10 @@ export function TenantDashboardPage() {
                 <div className="relative flex flex-col flex-1 justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Customers</p>
+                      <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Customers</p>
                       <div className="p-1.5 bg-sky-100 rounded-lg"><UserCheck className="w-3.5 h-3.5 text-sky-500" /></div>
                     </div>
-                    <p className="text-2xl font-bold text-stone-900 tabular-nums leading-none">{customersCount}</p>
+                    <p className="text-2xl font-bold text-primary tabular-nums leading-none">{customersCount}</p>
                   </div>
                   <Link to="/customers" className="text-xs text-orange-600 hover:text-orange-700 font-medium mt-1 inline-flex items-center gap-0.5">
                     View <ArrowUpRight className="w-3 h-3" />
@@ -233,10 +233,10 @@ export function TenantDashboardPage() {
                 <div className="relative flex flex-col flex-1 justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Team</p>
+                      <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Team</p>
                       <div className="p-1.5 bg-violet-100 rounded-lg"><Users className="w-3.5 h-3.5 text-violet-500" /></div>
                     </div>
-                    <p className="text-2xl font-bold text-stone-900 tabular-nums leading-none">{teamCount}</p>
+                    <p className="text-2xl font-bold text-primary tabular-nums leading-none">{teamCount}</p>
                   </div>
                   <Link to="/team" className="text-xs text-orange-600 hover:text-orange-700 font-medium mt-1 inline-flex items-center gap-0.5">
                     Manage <ArrowUpRight className="w-3 h-3" />
@@ -250,12 +250,12 @@ export function TenantDashboardPage() {
           {!isManagement && (
             <div className="grid grid-cols-2 gap-3 mb-5">
               <div className="card p-4">
-                <p className="text-xs font-medium text-stone-500 mb-1">Customers</p>
-                <p className="text-2xl font-bold text-stone-900">{customersCount}</p>
+                <p className="text-xs font-medium text-secondary mb-1">Customers</p>
+                <p className="text-2xl font-bold text-primary">{customersCount}</p>
               </div>
               <div className="card p-4">
-                <p className="text-xs font-medium text-stone-500 mb-1">Active shop</p>
-                <p className="text-sm font-semibold text-stone-900 truncate">{shops.find((s) => s.id === activeShopId)?.name ?? 'All'}</p>
+                <p className="text-xs font-medium text-secondary mb-1">Active shop</p>
+                <p className="text-sm font-semibold text-primary truncate">{shops.find((s) => s.id === activeShopId)?.name ?? 'All'}</p>
               </div>
             </div>
           )}
@@ -264,9 +264,9 @@ export function TenantDashboardPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
             {[
               { label: 'New order',       desc: 'Create & assign',    icon: Plus,       href: '/orders',   iconBg: 'bg-orange-500',   iconColor: 'text-white',   bg: 'bg-orange-500 hover:bg-orange-600 text-white border-orange-500' },
-              { label: 'Customers',       desc: 'Manage contacts',    icon: UserCheck,  href: '/customers', iconBg: 'bg-sky-100',     iconColor: 'text-sky-600', bg: 'bg-white hover:bg-sky-50 text-stone-700 border-stone-200' },
-              { label: 'Service catalog', desc: 'Pricing & items',    icon: Tag,        href: '/services',  iconBg: 'bg-violet-100',  iconColor: 'text-violet-600', bg: 'bg-white hover:bg-violet-50 text-stone-700 border-stone-200' },
-              { label: 'Reports',         desc: 'Revenue & stats',    icon: TrendingUp, href: '/reports',   iconBg: 'bg-emerald-100', iconColor: 'text-emerald-600', bg: 'bg-white hover:bg-stone-50 text-stone-700 border-stone-200' },
+              { label: 'Customers',       desc: 'Manage contacts',    icon: UserCheck,  href: '/customers', iconBg: 'bg-sky-100',     iconColor: 'text-sky-600', bg: 'bg-surface hover:bg-subtle text-secondary border-theme' },
+              { label: 'Service catalog', desc: 'Pricing & items',    icon: Tag,        href: '/services',  iconBg: 'bg-violet-100',  iconColor: 'text-violet-600', bg: 'bg-surface hover:bg-subtle text-secondary border-theme' },
+              { label: 'Reports',         desc: 'Revenue & stats',    icon: TrendingUp, href: '/reports',   iconBg: 'bg-emerald-100', iconColor: 'text-emerald-600', bg: 'bg-surface hover:bg-subtle text-secondary border-theme' },
             ].map(({ label, desc, icon: Icon, href, iconBg, iconColor, bg }) => (
               <Link key={href} to={href}
                 className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-semibold border shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all hover:shadow-[0_2px_6px_rgba(0,0,0,0.07)] active:scale-[0.98] ${bg}`}>
@@ -275,7 +275,7 @@ export function TenantDashboardPage() {
                 </div>
                 <div className="min-w-0">
                   <p className="leading-tight truncate">{label}</p>
-                  <p className={`text-[11px] font-normal leading-tight truncate mt-0.5 ${bg.includes('orange-500') ? 'text-orange-100' : 'text-stone-400'}`}>{desc}</p>
+                  <p className={`text-[11px] font-normal leading-tight truncate mt-0.5 ${bg.includes('orange-500') ? 'text-orange-100' : 'text-tertiary'}`}>{desc}</p>
                 </div>
               </Link>
             ))}
@@ -284,11 +284,11 @@ export function TenantDashboardPage() {
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
             {/* Recent orders — main panel */}
             <div className="card xl:col-span-2 overflow-hidden">
-              <div className="px-5 py-3.5 border-b border-stone-100 flex items-center justify-between">
+              <div className="px-5 py-3.5 border-b border-theme flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-semibold text-stone-900">Recent orders</h2>
+                  <h2 className="text-sm font-semibold text-primary">Recent orders</h2>
                   {recentOrders.length > 0 && (
-                    <span className="px-1.5 py-0.5 bg-stone-100 text-stone-500 text-[11px] font-semibold rounded-full tabular-nums">
+                    <span className="px-1.5 py-0.5 bg-stone-100 text-secondary text-[11px] font-semibold rounded-full tabular-nums">
                       {recentOrders.length}
                     </span>
                   )}
@@ -300,7 +300,7 @@ export function TenantDashboardPage() {
               {recentOrders.length === 0 ? (
                 <div className="px-5 py-12 text-center">
                   <Package className="w-8 h-8 text-stone-200 mx-auto mb-2" />
-                  <p className="text-sm text-stone-400">No orders yet</p>
+                  <p className="text-sm text-tertiary">No orders yet</p>
                   <Link to="/orders" className="mt-2 inline-flex items-center gap-1 text-xs text-orange-600 font-medium">
                     <Plus className="w-3 h-3" /> Create first order
                   </Link>
@@ -310,7 +310,7 @@ export function TenantDashboardPage() {
                   {recentOrders.map((order) => {
                     const customer = customerMap[order.customer_id]
                     const StatusIcon = STATUS_ICON[order.status] ?? Clock
-                    const badge = STATUS_BADGE[order.status] ?? 'bg-stone-100 text-stone-500'
+                    const badge = STATUS_BADGE[order.status] ?? 'bg-stone-100 text-secondary'
                     const label = STATUS_LABEL[order.status] ?? order.status
                     const timeAgo = (() => {
                       const diff = Date.now() - new Date(order.created_at).getTime()
@@ -321,19 +321,19 @@ export function TenantDashboardPage() {
                       return `${Math.floor(hrs / 24)}d ago`
                     })()
                     const AVATAR_PALETTE = ['bg-rose-100 text-rose-700', 'bg-sky-100 text-sky-700', 'bg-violet-100 text-violet-700', 'bg-amber-100 text-amber-700', 'bg-emerald-100 text-emerald-700', 'bg-orange-100 text-orange-700']
-                    const avatarColor = customer?.name ? AVATAR_PALETTE[customer.name.charCodeAt(0) % AVATAR_PALETTE.length] : 'bg-stone-100 text-stone-500'
+                    const avatarColor = customer?.name ? AVATAR_PALETTE[customer.name.charCodeAt(0) % AVATAR_PALETTE.length] : 'bg-stone-100 text-secondary'
                     const shortId = `#${order.id.slice(-5).toUpperCase()}`
                     return (
-                      <div key={order.id} className="px-5 py-3.5 flex items-center gap-3 hover:bg-stone-50/70 transition-colors border-b border-stone-50 last:border-0">
+                      <div key={order.id} className="px-5 py-3.5 flex items-center gap-3 hover:bg-subtle/70 transition-colors border-b border-stone-50 last:border-0">
                         <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-sm font-bold select-none ${avatarColor}`}>
                           {customer?.name?.[0]?.toUpperCase() ?? '?'}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1.5 mb-0.5">
-                            <p className="text-sm font-semibold text-stone-900 truncate">{customer?.name ?? 'Unknown'}</p>
-                            <span className="text-[10px] font-mono text-stone-300 shrink-0">{shortId}</span>
+                            <p className="text-sm font-semibold text-primary truncate">{customer?.name ?? 'Unknown'}</p>
+                            <span className="text-[10px] font-mono text-disabled shrink-0">{shortId}</span>
                           </div>
-                          <p className="text-xs text-stone-400 truncate">
+                          <p className="text-xs text-tertiary truncate">
                             {order.items.map((i) => `${i.service_name} ×${i.quantity}`).join(' · ') || 'No items'}
                           </p>
                         </div>
@@ -350,10 +350,10 @@ export function TenantDashboardPage() {
                             )}
                           </div>
                           <div className="text-right hidden sm:block min-w-[88px]">
-                            <p className="text-sm font-bold text-stone-900 tabular-nums">
+                            <p className="text-sm font-bold text-primary tabular-nums">
                               KES {Number(order.total_amount).toLocaleString('en-KE')}
                             </p>
-                            <p className="text-[10px] text-stone-400">{timeAgo}</p>
+                            <p className="text-[10px] text-tertiary">{timeAgo}</p>
                           </div>
                         </div>
                       </div>
@@ -368,7 +368,7 @@ export function TenantDashboardPage() {
               {/* Orders by status */}
               {isManagement && report && Object.keys(ordsByStatus).length > 0 && (
                 <div className="card p-5">
-                  <h2 className="text-sm font-semibold text-stone-900 mb-4">Pipeline</h2>
+                  <h2 className="text-sm font-semibold text-primary mb-4">Pipeline</h2>
                   <div className="space-y-3">
                     {(['received', 'washing', 'ready', 'delivered'] as const).map((status) => {
                       const count = ordsByStatus[status] ?? 0
@@ -379,12 +379,12 @@ export function TenantDashboardPage() {
                         <div key={status}>
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex items-center gap-2">
-                              <Icon className="w-3.5 h-3.5 text-stone-400" />
-                              <span className="text-sm text-stone-700 capitalize">{status}</span>
+                              <Icon className="w-3.5 h-3.5 text-tertiary" />
+                              <span className="text-sm text-secondary capitalize">{status}</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <span className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${badge}`}>{count}</span>
-                              <span className="text-xs text-stone-400 tabular-nums w-8 text-right">{pct}%</span>
+                              <span className="text-xs text-tertiary tabular-nums w-8 text-right">{pct}%</span>
                             </div>
                           </div>
                           <div className="w-full bg-stone-100 rounded-full h-1.5">
@@ -399,9 +399,9 @@ export function TenantDashboardPage() {
 
               {/* Shops */}
               <div className="card overflow-hidden">
-                <div className="px-5 py-3.5 border-b border-stone-100 flex items-center justify-between">
-                  <h2 className="text-sm font-semibold text-stone-900 flex items-center gap-2">
-                    <Store className="w-4 h-4 text-stone-400" /> Shops
+                <div className="px-5 py-3.5 border-b border-theme flex items-center justify-between">
+                  <h2 className="text-sm font-semibold text-primary flex items-center gap-2">
+                    <Store className="w-4 h-4 text-tertiary" /> Shops
                   </h2>
                   {user?.role === 'owner' && (
                     <Link to="/settings" className="text-xs text-orange-600 hover:text-orange-700 font-medium inline-flex items-center gap-0.5">
@@ -411,7 +411,7 @@ export function TenantDashboardPage() {
                 </div>
                 {shops.length === 0 ? (
                   <div className="px-5 py-6 text-center">
-                    <p className="text-sm text-stone-400 mb-2">No shops yet</p>
+                    <p className="text-sm text-tertiary mb-2">No shops yet</p>
                     <Link to="/settings" className="text-xs text-orange-600 font-medium">Add in Settings →</Link>
                   </div>
                 ) : (
@@ -420,25 +420,25 @@ export function TenantDashboardPage() {
                       const shopRevenue = report?.shop_breakdown?.find((b) => b.shop_id === shop.id)
                       const isActive = shop.id === activeShopId
                       return (
-                        <div key={shop.id} className={`rounded-lg p-3.5 border transition-colors ${isActive ? 'bg-orange-50 border-orange-200' : 'border-stone-100 hover:bg-stone-50'}`}>
+                        <div key={shop.id} className={`rounded-lg p-3.5 border transition-colors ${isActive ? 'bg-orange-50 border-orange-200' : 'border-theme hover:bg-subtle'}`}>
                           <div className="flex items-center justify-between gap-2">
                             <div className="flex items-center gap-2 min-w-0">
                               <div className={`w-2 h-2 rounded-full shrink-0 ${isActive ? 'bg-orange-500' : 'bg-stone-300'}`} />
-                              <p className={`text-sm font-semibold truncate ${isActive ? 'text-orange-900' : 'text-stone-900'}`}>{shop.name}</p>
+                              <p className={`text-sm font-semibold truncate ${isActive ? 'text-orange-900' : 'text-primary'}`}>{shop.name}</p>
                             </div>
                             {isActive ? (
                               <span className="shrink-0 text-[11px] font-semibold px-2 py-0.5 bg-orange-100 text-orange-600 rounded-full">Active</span>
                             ) : (
                               <button onClick={() => switchShop(shop.id)}
-                                className="shrink-0 text-[11px] font-semibold px-2 py-0.5 bg-stone-100 text-stone-600 hover:bg-stone-200 rounded-full transition-colors">
+                                className="shrink-0 text-[11px] font-semibold px-2 py-0.5 bg-stone-100 text-secondary hover:bg-stone-200 rounded-full transition-colors">
                                 Switch
                               </button>
                             )}
                           </div>
                           {shopRevenue && (
                             <div className="flex items-center gap-3 mt-2 pl-4">
-                              <span className="text-xs font-semibold text-stone-700">KES {Number(shopRevenue.revenue).toLocaleString('en-KE')}</span>
-                              <span className="text-xs text-stone-400">{shopRevenue.orders} orders</span>
+                              <span className="text-xs font-semibold text-secondary">KES {Number(shopRevenue.revenue).toLocaleString('en-KE')}</span>
+                              <span className="text-xs text-tertiary">{shopRevenue.orders} orders</span>
                             </div>
                           )}
                         </div>
@@ -451,20 +451,20 @@ export function TenantDashboardPage() {
               {/* Revenue by shop (multi-shop) */}
               {isManagement && report?.shop_breakdown && report.shop_breakdown.length > 1 && (
                 <div className="card">
-                  <div className="px-5 py-3.5 border-b border-stone-100">
-                    <h2 className="text-sm font-semibold text-stone-900">Revenue by shop (30d)</h2>
+                  <div className="px-5 py-3.5 border-b border-theme">
+                    <h2 className="text-sm font-semibold text-primary">Revenue by shop (30d)</h2>
                   </div>
-                  <div className="divide-y divide-stone-50">
+                  <div className="divide-y divide-[var(--border-default)]">
                     {report.shop_breakdown.map((b) => {
                       const maxRev = Math.max(...report.shop_breakdown!.map((r) => r.revenue), 1)
                       const pct = Math.round((b.revenue / maxRev) * 100)
                       return (
                         <div key={b.shop_id} className="px-5 py-3">
                           <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-sm font-medium text-stone-900 truncate">{b.shop_name}</span>
+                            <span className="text-sm font-medium text-primary truncate">{b.shop_name}</span>
                             <div className="flex items-center gap-2 shrink-0">
-                              <span className="text-xs text-stone-400">{b.orders} orders</span>
-                              <span className="text-sm font-bold text-stone-900">KES {Number(b.revenue).toLocaleString('en-KE')}</span>
+                              <span className="text-xs text-tertiary">{b.orders} orders</span>
+                              <span className="text-sm font-bold text-primary">KES {Number(b.revenue).toLocaleString('en-KE')}</span>
                             </div>
                           </div>
                           <div className="w-full bg-stone-100 rounded-full h-1.5">

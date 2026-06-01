@@ -81,7 +81,7 @@ export function PrintReceiptPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-sm text-stone-500">Loading receipt…</p>
+        <p className="text-sm text-secondary">Loading receipt…</p>
       </div>
     )
   }
@@ -107,7 +107,7 @@ export function PrintReceiptPage() {
         {/* Back button — hidden when printing */}
         <div className="no-print mb-4 flex items-center gap-3">
           <button onClick={() => navigate(-1)}
-            className="text-xs text-stone-500 hover:text-stone-700 underline">
+            className="text-xs text-secondary hover:text-secondary underline">
             ← Back to orders
           </button>
           <Link to={`/invoice/${orderId}`}

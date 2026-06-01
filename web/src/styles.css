@@ -432,3 +432,13 @@
   color: var(--text-tertiary);
 }
 
+/* ─── Theme-aware Tailwind utilities ─────────────────────────────────── */
+@utility text-primary   { color: var(--text-primary); }
+@utility text-secondary { color: var(--text-secondary); }
+@utility text-tertiary  { color: var(--text-tertiary); }
+@utility text-disabled  { color: var(--text-disabled); }
+@utility bg-surface     { background-color: var(--bg-surface); }
+@utility bg-subtle      { background-color: var(--bg-subtle); }
+@utility bg-muted       { background-color: var(--bg-muted); }
+@utility border-theme   { border-color: var(--border-default); }
+

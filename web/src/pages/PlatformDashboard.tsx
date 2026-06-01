@@ -39,8 +39,8 @@ export function PlatformDashboardPage() {
   const headerSlot = (
     <div className="flex items-center justify-between">
       <div>
-        <p className="text-base font-semibold text-stone-900 leading-none mb-0.5">Platform Overview</p>
-        <p className="text-sm text-stone-500">Welcome back, {user?.name}</p>
+        <p className="text-base font-semibold text-primary leading-none mb-0.5">Platform Overview</p>
+        <p className="text-sm text-secondary">Welcome back, {user?.name}</p>
       </div>
       <span className="inline-flex items-center gap-1.5 bg-orange-50 text-orange-700 border border-orange-200 rounded-full px-3 py-1 text-xs font-semibold">
         <span className="w-1.5 h-1.5 rounded-full bg-orange-500 block" />
@@ -61,45 +61,45 @@ export function PlatformDashboardPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 lg:gap-4 mb-6">
         {STAT_DEFS.map(({ key, label, icon: Icon, ring }) => (
-          <div key={key} className="bg-white rounded-xl border border-stone-200 p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div key={key} className="card p-4 hover:shadow-md transition-shadow">
             <div className={`inline-flex items-center justify-center w-8 h-8 rounded-lg ${ring} mb-3`}>
               <Icon className="w-4 h-4" />
             </div>
-            <p className="text-2xl font-bold text-stone-900 leading-none mb-1 tabular-nums">
-              {metrics ? (metrics as any)[key] : <span className="text-stone-300">&mdash;</span>}
+            <p className="text-2xl font-bold text-primary leading-none mb-1 tabular-nums">
+              {metrics ? (metrics as any)[key] : <span className="text-disabled">&mdash;</span>}
             </p>
-            <p className="text-xs text-stone-500 font-medium">{label}</p>
+            <p className="text-xs text-secondary font-medium">{label}</p>
           </div>
         ))}
       </div>
 
       {/* Recent orgs */}
       <div className="card">
-        <div className="px-5 py-3.5 border-b border-stone-100 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-stone-900">Latest Organizations</h2>
-          <span className="text-xs text-stone-400">{metrics?.recent_tenants.length ?? 0} shown</span>
+        <div className="px-5 py-3.5 border-b border-theme flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-primary">Latest Organizations</h2>
+          <span className="text-xs text-tertiary">{metrics?.recent_tenants.length ?? 0} shown</span>
         </div>
-        <div className="divide-y divide-stone-50">
+        <div className="divide-y divide-[var(--border-default)]">
           {!metrics && (
             <div className="px-5 py-10 text-center">
               <div className="w-6 h-6 border-2 border-orange-200 border-t-orange-500 rounded-full animate-spin mx-auto" />
             </div>
           )}
           {metrics?.recent_tenants.length === 0 && (
-            <p className="px-5 py-10 text-center text-stone-400 text-sm">No organizations yet</p>
+            <p className="px-5 py-10 text-center text-tertiary text-sm">No organizations yet</p>
           )}
           {(metrics?.recent_tenants ?? []).map((tenant) => (
             <div
               key={tenant.id}
-              className="px-5 py-3.5 flex items-center justify-between hover:bg-stone-50 transition-colors"
+              className="px-5 py-3.5 flex items-center justify-between hover:bg-subtle transition-colors"
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 font-bold text-sm select-none">
                   {tenant.name[0].toUpperCase()}
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-stone-900">{tenant.name}</p>
-                  <p className="text-xs text-stone-400 font-mono">{tenant.slug}</p>
+                  <p className="text-sm font-medium text-primary">{tenant.name}</p>
+                  <p className="text-xs text-tertiary font-mono">{tenant.slug}</p>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-full px-2.5 py-1 text-xs font-medium">

@@ -166,7 +166,7 @@ export function OnboardingPage() {
           <BrandMark />
           <span className="text-white font-bold text-base tracking-tight">WashFlow</span>
         </div>
-        <button onClick={finish} className="text-stone-400 hover:text-white text-sm transition-colors">
+        <button onClick={finish} className="text-tertiary hover:text-white text-sm transition-colors">
           Skip setup →
         </button>
       </div>
@@ -180,19 +180,19 @@ export function OnboardingPage() {
                 ? 'bg-orange-500 text-white'
                 : step > s.id
                 ? 'bg-emerald-500/20 text-emerald-400'
-                : 'bg-stone-800 text-stone-500'
+                : 'bg-stone-800 text-secondary'
             }`}>
               {step > s.id ? <CheckCircle2 className="w-3 h-3" /> : <span>{s.id}</span>}
               <span className="ml-0.5">{s.label}</span>
             </div>
-            {i < STEPS.length - 1 && <ChevronRight className="w-3 h-3 text-stone-600" />}
+            {i < STEPS.length - 1 && <ChevronRight className="w-3 h-3 text-secondary" />}
           </div>
         ))}
       </div>
 
       {/* Card */}
       <div className="flex-1 flex items-start justify-center px-4 pb-12">
-        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
+        <div className="bg-surface rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
           {error && (
             <div className="flex items-center gap-2 bg-red-50 border-b border-red-200 px-5 py-3 text-red-700 text-sm">
               <AlertCircle className="w-4 h-4 shrink-0" /> {error}
@@ -217,8 +217,8 @@ export function OnboardingPage() {
               <div className="p-8">
                 {hasShop ? (
                   <div>
-                    <p className="text-sm text-stone-600 mb-6">
-                      Your first shop <strong className="text-stone-900">{activeShop?.name}</strong> is ready. Let's add your services next.
+                    <p className="text-sm text-secondary mb-6">
+                      Your first shop <strong className="text-primary">{activeShop?.name}</strong> is ready. Let's add your services next.
                     </p>
                     <div className="grid grid-cols-3 gap-4 mb-8">
                       {[
@@ -226,12 +226,12 @@ export function OnboardingPage() {
                         { icon: Package, label: 'Order tracking', desc: 'From drop-off to delivery' },
                         { icon: Users, label: 'Team management', desc: 'Invite staff with roles' },
                       ].map(({ icon: Icon, label, desc }) => (
-                        <div key={label} className="text-center p-4 bg-stone-50 rounded-xl">
+                        <div key={label} className="text-center p-4 bg-subtle rounded-xl">
                           <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-2">
                             <Icon className="w-5 h-5 text-orange-600" />
                           </div>
-                          <p className="text-sm font-semibold text-stone-900">{label}</p>
-                          <p className="text-xs text-stone-500 mt-0.5">{desc}</p>
+                          <p className="text-sm font-semibold text-primary">{label}</p>
+                          <p className="text-xs text-secondary mt-0.5">{desc}</p>
                         </div>
                       ))}
                     </div>
@@ -245,8 +245,8 @@ export function OnboardingPage() {
                 ) : (
                   <form onSubmit={createShop} className="space-y-5">
                     <div>
-                      <p className="text-sm text-stone-600 mb-5">First, let's create your shop location.</p>
-                      <label className="block text-xs font-semibold text-stone-700 mb-1.5 uppercase tracking-wide">Shop name</label>
+                      <p className="text-sm text-secondary mb-5">First, let's create your shop location.</p>
+                      <label className="block text-xs font-semibold text-secondary mb-1.5 uppercase tracking-wide">Shop name</label>
                       <input
                         value={shopName}
                         onChange={(e) => setShopName(e.target.value)}
@@ -255,7 +255,7 @@ export function OnboardingPage() {
                         required
                         autoFocus
                       />
-                      <p className="text-xs text-stone-400 mt-1.5">You can add more branches later from your dashboard.</p>
+                      <p className="text-xs text-tertiary mt-1.5">You can add more branches later from your dashboard.</p>
                     </div>
                     <button
                       type="submit"
@@ -282,7 +282,7 @@ export function OnboardingPage() {
                 <p className="text-sky-100 text-sm mt-1">Pick common services to start with, then customise prices later.</p>
               </div>
               <div className="p-6">
-                <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide mb-3">Common services — click to select</p>
+                <p className="text-xs font-semibold text-secondary uppercase tracking-wide mb-3">Common services — click to select</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
                   {PRESET_SERVICES.map((svc, i) => {
                     const selected = selectedPresets.has(i)
@@ -298,11 +298,11 @@ export function OnboardingPage() {
                         className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl border text-sm font-medium transition-all text-left ${
                           selected
                             ? 'bg-orange-50 border-orange-400 text-orange-700'
-                            : 'bg-white border-stone-200 text-stone-700 hover:border-stone-300 hover:bg-stone-50'
+                            : 'bg-surface border-theme text-secondary hover:border-stone-300 hover:bg-subtle'
                         }`}
                       >
                         <span>{svc.name}</span>
-                        <span className={`text-xs font-semibold ${selected ? 'text-orange-500' : 'text-stone-400'}`}>
+                        <span className={`text-xs font-semibold ${selected ? 'text-orange-500' : 'text-tertiary'}`}>
                           KES {svc.price}/{svc.unit}
                         </span>
                       </button>
@@ -312,7 +312,7 @@ export function OnboardingPage() {
 
                 {customServices.length > 0 && (
                   <div className="mb-4 space-y-2">
-                    <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide mb-2">Custom services</p>
+                    <p className="text-xs font-semibold text-secondary uppercase tracking-wide mb-2">Custom services</p>
                     {customServices.map((svc, i) => (
                       <div key={i} className="grid grid-cols-12 gap-2 items-center">
                         <input
@@ -340,7 +340,7 @@ export function OnboardingPage() {
                         <button
                           type="button"
                           onClick={() => setCustomServices((p) => p.filter((_, j) => j !== i))}
-                          className="col-span-1 text-stone-300 hover:text-red-400 flex items-center justify-center"
+                          className="col-span-1 text-disabled hover:text-red-400 flex items-center justify-center"
                         >✕</button>
                       </div>
                     ))}
@@ -355,7 +355,7 @@ export function OnboardingPage() {
                   <Plus className="w-3.5 h-3.5" /> Add custom service
                 </button>
 
-                <div className="flex gap-3 pt-2 border-t border-stone-100">
+                <div className="flex gap-3 pt-2 border-t border-theme">
                   <button
                     onClick={saveServices}
                     disabled={savingServices || (selectedPresets.size === 0 && customServices.filter((s) => s.name.trim()).length === 0)}
@@ -367,7 +367,7 @@ export function OnboardingPage() {
                   </button>
                   <button
                     onClick={() => setStep(3)}
-                    className="px-4 py-2.5 text-sm text-stone-500 hover:text-stone-700 hover:bg-stone-100 rounded-xl transition-colors"
+                    className="px-4 py-2.5 text-sm text-secondary hover:text-secondary hover:bg-stone-100 rounded-xl transition-colors"
                   >
                     Skip
                   </button>
@@ -397,24 +397,24 @@ export function OnboardingPage() {
                 <form onSubmit={inviteMember} className="space-y-3 mb-5">
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-semibold text-stone-600 mb-1.5">Name</label>
+                      <label className="block text-xs font-semibold text-secondary mb-1.5">Name</label>
                       <input value={inviteName} onChange={(e) => setInviteName(e.target.value)} placeholder="Jane Doe" className={inputCls} />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-stone-600 mb-1.5">Email</label>
+                      <label className="block text-xs font-semibold text-secondary mb-1.5">Email</label>
                       <input type="email" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} placeholder="jane@example.com" className={inputCls} />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-semibold text-stone-600 mb-1.5">Role</label>
+                      <label className="block text-xs font-semibold text-secondary mb-1.5">Role</label>
                       <select value={inviteRole} onChange={(e) => setInviteRole(e.target.value as 'admin' | 'worker')} className={inputCls}>
                         <option value="worker">Worker</option>
                         <option value="admin">Admin</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-stone-600 mb-1.5">Temporary password</label>
+                      <label className="block text-xs font-semibold text-secondary mb-1.5">Temporary password</label>
                       <input type="password" value={invitePassword} onChange={(e) => setInvitePassword(e.target.value)} placeholder="••••••••" className={inputCls} />
                     </div>
                   </div>
@@ -427,14 +427,14 @@ export function OnboardingPage() {
                   </button>
                 </form>
 
-                <div className="border-t border-stone-100 pt-4">
+                <div className="border-t border-theme pt-4">
                   <button
                     onClick={finish}
                     className="w-full bg-stone-900 hover:bg-stone-800 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors"
                   >
                     <CheckCircle2 className="w-4 h-4" /> All done — go to dashboard
                   </button>
-                  <p className="text-xs text-stone-400 text-center mt-3">
+                  <p className="text-xs text-tertiary text-center mt-3">
                     More team members can be added from <strong>Team</strong> in the sidebar.
                   </p>
                 </div>

@@ -14,7 +14,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
     <button
       onClick={() => setMode(CYCLE[mode])}
       title={`Theme: ${LABEL[mode]}`}
-      className={`w-7 h-7 flex items-center justify-center rounded-md transition-colors text-stone-400 hover:text-stone-600 hover:bg-stone-100 dark:hover:text-stone-200 dark:hover:bg-white/8 ${className}`}
+      className={`w-7 h-7 flex items-center justify-center rounded-md transition-colors text-tertiary hover:text-secondary hover:bg-stone-100 dark:hover:text-stone-200 dark:hover:bg-white/8 ${className}`}
     >
       <Icon className="w-[14px] h-[14px]" />
     </button>

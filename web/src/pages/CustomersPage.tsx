@@ -39,7 +39,7 @@ const STATUS_BADGE: Record<string, string> = {
   received: 'bg-amber-50 text-amber-700 border border-amber-200',
   washing:  'bg-sky-50 text-sky-700 border border-sky-200',
   ready:    'bg-emerald-50 text-emerald-700 border border-emerald-200',
-  delivered:'bg-stone-100 text-stone-500 border border-stone-200',
+  delivered:'bg-stone-100 text-secondary border border-stone-200',
 }
 
 function formatDate(iso: string) {
@@ -152,8 +152,8 @@ export function CustomersPage() {
   const headerSlot = (
     <div className="flex items-center justify-between gap-4 flex-wrap">
       <div>
-        <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">Customers</h1>
-        <p className="text-xs text-stone-400">{shopName}</p>
+        <h1 className="text-base font-semibold text-primary leading-none mb-0.5">Customers</h1>
+        <p className="text-xs text-tertiary">{shopName}</p>
       </div>
       <button onClick={() => setShowForm(true)}
         className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-3.5 py-2 rounded-lg transition-colors">
@@ -175,21 +175,21 @@ export function CustomersPage() {
         <form onSubmit={onSubmit} className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Name *</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Name *</label>
               <input value={name} onChange={(e) => setName(e.target.value)} required placeholder="Full name" className={inputCls} autoFocus />
             </div>
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Phone *</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Phone *</label>
               <input value={phone} onChange={(e) => setPhone(e.target.value)} required placeholder="+254 7XX XXX XXX" className={inputCls} />
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Email</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Email</label>
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Optional" className={inputCls} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Notes</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Notes</label>
               <input value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Optional" className={inputCls} />
             </div>
           </div>
@@ -202,21 +202,21 @@ export function CustomersPage() {
             <button type="submit" disabled={submitting} className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors">
               <Plus className="w-3.5 h-3.5" /> {submitting ? 'Saving…' : 'Add customer'}
             </button>
-            <button type="button" onClick={() => setShowForm(false)} className="text-sm text-stone-500 hover:text-stone-700 px-3 py-2 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
+            <button type="button" onClick={() => setShowForm(false)} className="text-sm text-secondary hover:text-secondary px-3 py-2 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
           </div>
         </form>
       </Modal>
 
       <div className="relative mb-4 max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-400 pointer-events-none" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-tertiary pointer-events-none" />
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name, phone or email…"
           className="search-input w-full" />
       </div>
 
-      <div className="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
-        <div className="px-5 py-3 border-b border-stone-100 flex items-center justify-between">
-          <p className="text-sm font-semibold text-stone-900">All customers</p>
-          <span className="text-xs text-stone-400">{filtered.length} total</span>
+      <div className="card overflow-hidden">
+        <div className="px-5 py-3 border-b border-theme flex items-center justify-between">
+          <p className="text-sm font-semibold text-primary">All customers</p>
+          <span className="text-xs text-tertiary">{filtered.length} total</span>
         </div>
 
         {loading ? (
@@ -225,12 +225,12 @@ export function CustomersPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="py-16 text-center">
-            <UserCheck className="w-8 h-8 text-stone-300 mx-auto mb-2" />
-            <p className="text-sm text-stone-400">{search ? 'No customers match your search' : 'No customers yet'}</p>
+            <UserCheck className="w-8 h-8 text-disabled mx-auto mb-2" />
+            <p className="text-sm text-tertiary">{search ? 'No customers match your search' : 'No customers yet'}</p>
             {!search && <button onClick={() => setShowForm(true)} className="mt-3 text-sm text-orange-600 hover:text-orange-700 font-medium">Add the first customer →</button>}
           </div>
         ) : (
-          <div className="divide-y divide-stone-50">
+          <div className="divide-y divide-[var(--border-default)]">
             {filtered.map((c) => {
               const isExpanded = expandedId === c.id
               const orders = ordersCache[c.id] ?? []
@@ -242,35 +242,35 @@ export function CustomersPage() {
                 <div key={c.id}>
                   {isConfirmDelete ? (
                     <div className="px-5 py-4 flex items-center gap-3 flex-wrap bg-red-50">
-                      <p className="text-sm text-stone-700">Delete <strong>{c.name}</strong> and all their orders?</p>
+                      <p className="text-sm text-secondary">Delete <strong>{c.name}</strong> and all their orders?</p>
                       <button onClick={() => deleteCustomer(c.id)} disabled={isDeleting}
                         className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 disabled:opacity-60 px-3 py-1.5 rounded-lg transition-colors">
                         {isDeleting ? 'Deleting…' : 'Yes, delete'}
                       </button>
-                      <button onClick={() => setConfirmDeleteId(null)} className="text-xs text-stone-500 hover:text-stone-700 px-3 py-1.5 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
+                      <button onClick={() => setConfirmDeleteId(null)} className="text-xs text-secondary hover:text-secondary px-3 py-1.5 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
                     </div>
                   ) : (
-                    <div className="px-5 py-3.5 hover:bg-stone-50 transition-colors">
+                    <div className="px-5 py-3.5 hover:bg-subtle transition-colors">
                       <div className="flex items-center justify-between gap-4">
                         <button onClick={() => toggleExpand(c.id)} className="flex items-center gap-3 min-w-0 flex-1 text-left group">
                           <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 font-bold text-sm shrink-0 select-none">
                             {c.name[0]?.toUpperCase()}
                           </div>
                           <div className="min-w-0">
-                            <p className="text-sm font-medium text-stone-900 truncate group-hover:text-orange-600 transition-colors">{c.name}</p>
+                            <p className="text-sm font-medium text-primary truncate group-hover:text-orange-600 transition-colors">{c.name}</p>
                             <div className="flex items-center gap-3 mt-0.5 flex-wrap">
-                              <span className="flex items-center gap-1 text-xs text-stone-400"><Phone className="w-3 h-3" />{c.phone}</span>
-                              {c.email && <span className="flex items-center gap-1 text-xs text-stone-400 truncate"><Mail className="w-3 h-3" />{c.email}</span>}
-                              <span className="text-xs text-stone-300">{formatDate(c.created_at)}</span>
+                              <span className="flex items-center gap-1 text-xs text-tertiary"><Phone className="w-3 h-3" />{c.phone}</span>
+                              {c.email && <span className="flex items-center gap-1 text-xs text-tertiary truncate"><Mail className="w-3 h-3" />{c.email}</span>}
+                              <span className="text-xs text-disabled">{formatDate(c.created_at)}</span>
                             </div>
                           </div>
-                          <div className="shrink-0 text-stone-300 ml-1">
+                          <div className="shrink-0 text-disabled ml-1">
                             {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                           </div>
                         </button>
                         {(user?.role === 'owner' || user?.role === 'admin') && (
                           <button onClick={() => setConfirmDeleteId(c.id)}
-                            className="p-1.5 text-stone-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0" title="Delete customer">
+                            className="p-1.5 text-disabled hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0" title="Delete customer">
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         )}
@@ -278,28 +278,28 @@ export function CustomersPage() {
                       {isExpanded && (
                         <div className="mt-3 ml-11">
                           {isLoadingOrders ? (
-                            <div className="flex items-center gap-2 text-xs text-stone-400">
+                            <div className="flex items-center gap-2 text-xs text-tertiary">
                               <div className="w-3.5 h-3.5 rounded-full border border-stone-200 border-t-orange-500 animate-spin" /> Loading orders…
                             </div>
                           ) : orders.length === 0 ? (
-                            <p className="text-xs text-stone-400">No orders for this customer.</p>
+                            <p className="text-xs text-tertiary">No orders for this customer.</p>
                           ) : (
                             <div className="space-y-2">
-                              <p className="text-xs font-medium text-stone-500 mb-1">{orders.length} order{orders.length !== 1 ? 's' : ''}</p>
+                              <p className="text-xs font-medium text-secondary mb-1">{orders.length} order{orders.length !== 1 ? 's' : ''}</p>
                               {orders.map((o) => (
-                                <div key={o.id} className="bg-stone-50 rounded-lg px-3 py-2.5 border border-stone-100">
+                                <div key={o.id} className="bg-subtle rounded-lg px-3 py-2.5 border border-theme">
                                   <div className="flex items-center justify-between gap-2 mb-1">
                                     <span className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold ${STATUS_BADGE[o.status] ?? STATUS_BADGE.received}`}>{o.status}</span>
-                                    <span className="text-xs font-bold text-stone-700">KES {Number(o.total_amount).toLocaleString('en-KE', { minimumFractionDigits: 2 })}</span>
-                                    <span className="text-xs text-stone-400">{formatDateTime(o.created_at)}</span>
+                                    <span className="text-xs font-bold text-secondary">KES {Number(o.total_amount).toLocaleString('en-KE', { minimumFractionDigits: 2 })}</span>
+                                    <span className="text-xs text-tertiary">{formatDateTime(o.created_at)}</span>
                                   </div>
                                   {o.items?.length > 0 && (
                                     <div className="flex items-start gap-1">
-                                      <Receipt className="w-3 h-3 text-stone-300 mt-0.5 shrink-0" />
-                                      <p className="text-xs text-stone-500">{o.items.map((i) => `${i.service_name} ×${i.quantity}`).join(', ')}</p>
+                                      <Receipt className="w-3 h-3 text-disabled mt-0.5 shrink-0" />
+                                      <p className="text-xs text-secondary">{o.items.map((i) => `${i.service_name} ×${i.quantity}`).join(', ')}</p>
                                     </div>
                                   )}
-                                  {o.notes && <p className="text-xs text-stone-400 mt-1">{o.notes}</p>}
+                                  {o.notes && <p className="text-xs text-tertiary mt-1">{o.notes}</p>}
                                 </div>
                               ))}
                             </div>

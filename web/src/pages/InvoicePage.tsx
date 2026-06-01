@@ -107,12 +107,12 @@ export function InvoicePage() {
       <div className="no-print fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur border-b border-stone-200 print:hidden">
         <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
           <button onClick={() => navigate(-1)}
-            className="flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 transition-colors">
+            className="flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
           <div className="flex items-center gap-2">
             <button onClick={handleCopyLink}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-stone-700 border border-stone-200 rounded-lg hover:bg-stone-50 transition-colors">
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-secondary border border-stone-200 rounded-lg hover:bg-subtle transition-colors">
               {copied ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> : <Share2 className="w-3.5 h-3.5" />}
               {copied ? 'Copied!' : 'Copy link'}
             </button>
@@ -136,14 +136,14 @@ export function InvoicePage() {
               </div>
               <div>
                 <h1 className="text-xl font-black tracking-tight">{shop?.name ?? 'Laundry Shop'}</h1>
-                <p className="text-stone-400 text-sm mt-0.5">Professional Laundry &amp; Dry Cleaning</p>
-                {shop?.phone && <p className="text-stone-400 text-xs mt-1">📞 {shop.phone}</p>}
+                <p className="text-tertiary text-sm mt-0.5">Professional Laundry &amp; Dry Cleaning</p>
+                {shop?.phone && <p className="text-tertiary text-xs mt-1">📞 {shop.phone}</p>}
               </div>
             </div>
             <div className="text-right shrink-0">
               <p className="text-orange-400 text-3xl font-black tracking-widest uppercase">Invoice</p>
-              <p className="text-stone-300 font-mono text-sm mt-1">{invoiceNumber}</p>
-              <p className="text-stone-400 text-xs mt-0.5">{issuedDate}</p>
+              <p className="text-disabled font-mono text-sm mt-1">{invoiceNumber}</p>
+              <p className="text-tertiary text-xs mt-0.5">{issuedDate}</p>
               <div className={`mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${isPaid ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'}`}>
                 {isPaid ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
                 {isPaid ? 'PAID' : 'PENDING'}
@@ -155,34 +155,34 @@ export function InvoicePage() {
             {/* Bill to */}
             <div className="grid grid-cols-2 gap-6 mb-8">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-stone-400 mb-2">Billed To</p>
-                <div className="border border-stone-200 rounded-xl p-4 bg-stone-50">
-                  <p className="font-bold text-stone-900 text-base">{customer?.name ?? '—'}</p>
-                  {customer?.phone && <p className="text-sm text-stone-500 mt-0.5">{customer.phone}</p>}
-                  {customer?.email && <p className="text-sm text-stone-500">{customer.email}</p>}
+                <p className="text-[10px] font-black uppercase tracking-widest text-tertiary mb-2">Billed To</p>
+                <div className="border border-stone-200 rounded-xl p-4 bg-subtle">
+                  <p className="font-bold text-primary text-base">{customer?.name ?? '—'}</p>
+                  {customer?.phone && <p className="text-sm text-secondary mt-0.5">{customer.phone}</p>}
+                  {customer?.email && <p className="text-sm text-secondary">{customer.email}</p>}
                 </div>
               </div>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-stone-400 mb-2">Order Details</p>
-                <div className="border border-stone-200 rounded-xl p-4 bg-stone-50 space-y-1.5">
+                <p className="text-[10px] font-black uppercase tracking-widest text-tertiary mb-2">Order Details</p>
+                <div className="border border-stone-200 rounded-xl p-4 bg-subtle space-y-1.5">
                   <div className="flex justify-between text-sm">
-                    <span className="text-stone-500">Order #</span>
-                    <span className="font-mono font-semibold text-stone-800">{order.id.slice(0, 8).toUpperCase()}</span>
+                    <span className="text-secondary">Order #</span>
+                    <span className="font-mono font-semibold text-primary">{order.id.slice(0, 8).toUpperCase()}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-stone-500">Status</span>
-                    <span className="font-semibold text-stone-800 capitalize">{order.status}</span>
+                    <span className="text-secondary">Status</span>
+                    <span className="font-semibold text-primary capitalize">{order.status}</span>
                   </div>
                   {order.pickup_date && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-stone-500">Pickup</span>
-                      <span className="font-semibold text-stone-800">{order.pickup_date}</span>
+                      <span className="text-secondary">Pickup</span>
+                      <span className="font-semibold text-primary">{order.pickup_date}</span>
                     </div>
                   )}
                   {order.delivery_date && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-stone-500">Delivery</span>
-                      <span className="font-semibold text-stone-800">{order.delivery_date}</span>
+                      <span className="text-secondary">Delivery</span>
+                      <span className="font-semibold text-primary">{order.delivery_date}</span>
                     </div>
                   )}
                 </div>
@@ -191,42 +191,42 @@ export function InvoicePage() {
 
             {/* Items table */}
             <div className="mb-8">
-              <p className="text-[10px] font-black uppercase tracking-widest text-stone-400 mb-3">Services</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-tertiary mb-3">Services</p>
               <div className="border border-stone-200 rounded-xl overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="bg-stone-50 border-b border-stone-200">
-                      <th className="text-left px-4 py-3 text-xs font-black uppercase tracking-wider text-stone-400">#</th>
-                      <th className="text-left px-4 py-3 text-xs font-black uppercase tracking-wider text-stone-400">Description</th>
-                      <th className="text-center px-4 py-3 text-xs font-black uppercase tracking-wider text-stone-400">Qty</th>
-                      <th className="text-right px-4 py-3 text-xs font-black uppercase tracking-wider text-stone-400">Unit Price</th>
-                      <th className="text-right px-4 py-3 text-xs font-black uppercase tracking-wider text-stone-400">Total</th>
+                    <tr className="bg-subtle border-b border-stone-200">
+                      <th className="text-left px-4 py-3 text-xs font-black uppercase tracking-wider text-tertiary">#</th>
+                      <th className="text-left px-4 py-3 text-xs font-black uppercase tracking-wider text-tertiary">Description</th>
+                      <th className="text-center px-4 py-3 text-xs font-black uppercase tracking-wider text-tertiary">Qty</th>
+                      <th className="text-right px-4 py-3 text-xs font-black uppercase tracking-wider text-tertiary">Unit Price</th>
+                      <th className="text-right px-4 py-3 text-xs font-black uppercase tracking-wider text-tertiary">Total</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-stone-100">
+                  <tbody className="divide-y divide-[var(--border-default)]">
                     {order.items.map((item, i) => (
-                      <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-stone-50/50'}>
-                        <td className="px-4 py-3 text-stone-400 text-xs">{i + 1}</td>
-                        <td className="px-4 py-3 font-medium text-stone-900">{item.service_name}</td>
-                        <td className="px-4 py-3 text-center text-stone-700">{item.quantity}</td>
-                        <td className="px-4 py-3 text-right text-stone-700 font-mono">
+                      <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-subtle/50'}>
+                        <td className="px-4 py-3 text-tertiary text-xs">{i + 1}</td>
+                        <td className="px-4 py-3 font-medium text-primary">{item.service_name}</td>
+                        <td className="px-4 py-3 text-center text-secondary">{item.quantity}</td>
+                        <td className="px-4 py-3 text-right text-secondary font-mono">
                           KES {Number(item.unit_price).toLocaleString('en-KE', { minimumFractionDigits: 2 })}
                         </td>
-                        <td className="px-4 py-3 text-right font-semibold text-stone-900 font-mono">
+                        <td className="px-4 py-3 text-right font-semibold text-primary font-mono">
                           KES {Number(item.unit_price * item.quantity).toLocaleString('en-KE', { minimumFractionDigits: 2 })}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                   <tfoot className="border-t-2 border-stone-200">
-                    <tr className="bg-stone-50">
-                      <td colSpan={4} className="px-4 py-2.5 text-right text-sm text-stone-500 font-semibold">Subtotal</td>
-                      <td className="px-4 py-2.5 text-right font-mono text-stone-700">
+                    <tr className="bg-subtle">
+                      <td colSpan={4} className="px-4 py-2.5 text-right text-sm text-secondary font-semibold">Subtotal</td>
+                      <td className="px-4 py-2.5 text-right font-mono text-secondary">
                         KES {Number(subtotal).toLocaleString('en-KE', { minimumFractionDigits: 2 })}
                       </td>
                     </tr>
                     <tr className="bg-orange-50">
-                      <td colSpan={4} className="px-4 py-3 text-right text-sm font-black uppercase tracking-wide text-stone-900">Total</td>
+                      <td colSpan={4} className="px-4 py-3 text-right text-sm font-black uppercase tracking-wide text-primary">Total</td>
                       <td className="px-4 py-3 text-right font-black font-mono text-orange-600 text-base">
                         KES {Number(order.total_amount).toLocaleString('en-KE', { minimumFractionDigits: 2 })}
                       </td>
@@ -238,14 +238,14 @@ export function InvoicePage() {
 
             {/* Payment info */}
             <div className="mb-8">
-              <p className="text-[10px] font-black uppercase tracking-widest text-stone-400 mb-3">Payment Information</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-tertiary mb-3">Payment Information</p>
               <div className={`border rounded-xl p-4 flex flex-wrap items-center gap-x-8 gap-y-2 ${isPaid ? 'border-emerald-200 bg-emerald-50' : 'border-amber-200 bg-amber-50'}`}>
                 <div className="flex items-center gap-2">
                   {isPaid
                     ? <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                     : <AlertCircle className="w-5 h-5 text-amber-500" />}
                   <div>
-                    <p className="text-xs text-stone-500">Status</p>
+                    <p className="text-xs text-secondary">Status</p>
                     <p className={`font-bold text-sm uppercase ${isPaid ? 'text-emerald-700' : 'text-amber-700'}`}>
                       {payment?.status ?? 'Unpaid'}
                     </p>
@@ -253,20 +253,20 @@ export function InvoicePage() {
                 </div>
                 {payment?.method && (
                   <div>
-                    <p className="text-xs text-stone-500">Method</p>
-                    <p className="font-bold text-sm text-stone-800 uppercase">{payment.method}</p>
+                    <p className="text-xs text-secondary">Method</p>
+                    <p className="font-bold text-sm text-primary uppercase">{payment.method}</p>
                   </div>
                 )}
                 {payment?.mpesa_ref && (
                   <div>
-                    <p className="text-xs text-stone-500">M-Pesa Ref</p>
-                    <p className="font-bold text-sm font-mono text-stone-800">{payment.mpesa_ref}</p>
+                    <p className="text-xs text-secondary">M-Pesa Ref</p>
+                    <p className="font-bold text-sm font-mono text-primary">{payment.mpesa_ref}</p>
                   </div>
                 )}
                 {payment?.amount != null && (
                   <div className="ml-auto text-right">
-                    <p className="text-xs text-stone-500">Amount Paid</p>
-                    <p className="font-black text-lg text-stone-900">
+                    <p className="text-xs text-secondary">Amount Paid</p>
+                    <p className="font-black text-lg text-primary">
                       KES {Number(payment.amount).toLocaleString('en-KE', { minimumFractionDigits: 2 })}
                     </p>
                   </div>
@@ -276,17 +276,17 @@ export function InvoicePage() {
 
             {/* Notes */}
             {order.notes && (
-              <div className="mb-8 border border-stone-200 rounded-xl p-4 bg-stone-50">
-                <p className="text-[10px] font-black uppercase tracking-widest text-stone-400 mb-1">Notes</p>
-                <p className="text-sm text-stone-700 italic">{order.notes}</p>
+              <div className="mb-8 border border-stone-200 rounded-xl p-4 bg-subtle">
+                <p className="text-[10px] font-black uppercase tracking-widest text-tertiary mb-1">Notes</p>
+                <p className="text-sm text-secondary italic">{order.notes}</p>
               </div>
             )}
 
             {/* Footer */}
-            <div className="border-t border-stone-100 pt-6 text-center">
-              <p className="text-base font-semibold text-stone-800">Thank you for your business! 🙏</p>
-              <p className="text-sm text-stone-400 mt-1">We look forward to serving you again.</p>
-              <p className="text-xs text-stone-300 mt-4">Powered by LaundryOS · {shop?.name}</p>
+            <div className="border-t border-theme pt-6 text-center">
+              <p className="text-base font-semibold text-primary">Thank you for your business! 🙏</p>
+              <p className="text-sm text-tertiary mt-1">We look forward to serving you again.</p>
+              <p className="text-xs text-disabled mt-4">Powered by LaundryOS · {shop?.name}</p>
             </div>
           </div>
         </div>

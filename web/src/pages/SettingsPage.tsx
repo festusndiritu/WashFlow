@@ -122,8 +122,8 @@ export function SettingsPage() {
 
   const headerSlot = (
     <div>
-      <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">Settings</h1>
-      <p className="text-xs text-stone-400">{tenant?.name}</p>
+      <h1 className="text-base font-semibold text-primary leading-none mb-0.5">Settings</h1>
+      <p className="text-xs text-tertiary">{tenant?.name}</p>
     </div>
   )
 
@@ -145,17 +145,17 @@ export function SettingsPage() {
           {/* Organization settings */}
           <div className="card p-5">
             <div className="flex items-center gap-2 mb-4">
-              <Building2 className="w-4 h-4 text-stone-500" />
-              <h2 className="text-sm font-semibold text-stone-900">Organization</h2>
+              <Building2 className="w-4 h-4 text-secondary" />
+              <h2 className="text-sm font-semibold text-primary">Organization</h2>
             </div>
             {isOwner ? (
               <form onSubmit={saveOrgName} className="space-y-3">
                 <div>
-                  <label className="block text-xs font-medium text-stone-600 mb-1">Business name</label>
+                  <label className="block text-xs font-medium text-secondary mb-1">Business name</label>
                   <input value={orgName} onChange={(e) => setOrgName(e.target.value)} required className={inputCls} />
                 </div>
-                <div className="text-xs text-stone-400">
-                  <span className="font-medium text-stone-500">Slug:</span> {settings?.slug}
+                <div className="text-xs text-tertiary">
+                  <span className="font-medium text-secondary">Slug:</span> {settings?.slug}
                 </div>
                 {orgError && <p className="text-xs text-red-600">{orgError}</p>}
                 {orgSuccess && (
@@ -170,14 +170,14 @@ export function SettingsPage() {
             ) : (
               <div className="space-y-1.5">
                 <div className="flex gap-3">
-                  <span className="text-xs font-medium text-stone-500 w-20">Name</span>
-                  <span className="text-sm text-stone-900">{settings?.name}</span>
+                  <span className="text-xs font-medium text-secondary w-20">Name</span>
+                  <span className="text-sm text-primary">{settings?.name}</span>
                 </div>
                 <div className="flex gap-3">
-                  <span className="text-xs font-medium text-stone-500 w-20">Slug</span>
-                  <span className="text-sm text-stone-500 font-mono">{settings?.slug}</span>
+                  <span className="text-xs font-medium text-secondary w-20">Slug</span>
+                  <span className="text-sm text-secondary font-mono">{settings?.slug}</span>
                 </div>
-                <p className="text-xs text-stone-400 mt-2">Only the owner can change the organization name.</p>
+                <p className="text-xs text-tertiary mt-2">Only the owner can change the organization name.</p>
               </div>
             )}
           </div>
@@ -185,20 +185,20 @@ export function SettingsPage() {
           {/* Password change */}
           <div className="card p-5">
             <div className="flex items-center gap-2 mb-4">
-              <KeyRound className="w-4 h-4 text-stone-500" />
-              <h2 className="text-sm font-semibold text-stone-900">Change password</h2>
+              <KeyRound className="w-4 h-4 text-secondary" />
+              <h2 className="text-sm font-semibold text-primary">Change password</h2>
             </div>
             <form onSubmit={changePassword} className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-stone-600 mb-1">Current password *</label>
+                <label className="block text-xs font-medium text-secondary mb-1">Current password *</label>
                 <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required className={inputCls} autoComplete="current-password" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-stone-600 mb-1">New password *</label>
+                <label className="block text-xs font-medium text-secondary mb-1">New password *</label>
                 <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required minLength={8} className={inputCls} autoComplete="new-password" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-stone-600 mb-1">Confirm new password *</label>
+                <label className="block text-xs font-medium text-secondary mb-1">Confirm new password *</label>
                 <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required className={inputCls} autoComplete="new-password" />
               </div>
               {pwError && <p className="text-xs text-red-600">{pwError}</p>}
@@ -217,21 +217,21 @@ export function SettingsPage() {
           {isOwner && (
             <div className="card p-5">
               <div className="flex items-center gap-2 mb-4">
-                <Store className="w-4 h-4 text-stone-500" />
-                <h2 className="text-sm font-semibold text-stone-900">Shops</h2>
-                <span className="ml-auto text-xs text-stone-400">{shops.length} {shops.length === 1 ? 'shop' : 'shops'}</span>
+                <Store className="w-4 h-4 text-secondary" />
+                <h2 className="text-sm font-semibold text-primary">Shops</h2>
+                <span className="ml-auto text-xs text-tertiary">{shops.length} {shops.length === 1 ? 'shop' : 'shops'}</span>
               </div>
 
               {/* Existing shops list */}
               {shops.length > 0 && (
-                <div className="divide-y divide-stone-100 mb-4 -mx-5 px-5">
+                <div className="divide-y divide-[var(--border-default)] mb-4 -mx-5 px-5">
                   {shops.map((shop) => (
                     <div key={shop.id} className="py-2.5 flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className={`w-2 h-2 rounded-full ${shop.id === activeShopId ? 'bg-orange-500' : 'bg-stone-300'}`} />
                         <div>
-                          <p className="text-sm font-medium text-stone-900">{shop.name}</p>
-                          <p className="text-xs text-stone-400 font-mono">{shop.code}</p>
+                          <p className="text-sm font-medium text-primary">{shop.name}</p>
+                          <p className="text-xs text-tertiary font-mono">{shop.code}</p>
                         </div>
                       </div>
                       {shop.id === activeShopId && (
@@ -245,7 +245,7 @@ export function SettingsPage() {
               {/* Add new shop */}
               <form onSubmit={addShop} className="space-y-3">
                 <div>
-                  <label className="block text-xs font-medium text-stone-600 mb-1">New shop name</label>
+                  <label className="block text-xs font-medium text-secondary mb-1">New shop name</label>
                   <input
                     value={newShopName}
                     onChange={(e) => setNewShopName(e.target.value)}

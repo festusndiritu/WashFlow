@@ -105,10 +105,10 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
           }
           setOpen((o) => !o)
         }}
-        className="w-full flex items-center gap-2 px-3 py-2 bg-white border border-stone-200 rounded-lg text-sm text-left focus:outline-none focus:ring-2 focus:ring-orange-400 hover:border-stone-300 transition-colors"
+        className="w-full flex items-center gap-2 px-3 py-2 bg-surface border-theme rounded-lg text-sm text-left focus:outline-none focus:ring-2 focus:ring-orange-400 transition-colors"
       >
-        <Calendar className="w-4 h-4 text-stone-400 shrink-0" />
-        <span className={`flex-1 ${displayVal ? 'text-stone-900' : 'text-stone-400'}`}>
+        <Calendar className="w-4 h-4 text-tertiary shrink-0" />
+        <span className={`flex-1 ${displayVal ? 'text-primary' : 'text-tertiary'}`}>
           {displayVal || placeholder}
         </span>
         {value && (
@@ -116,7 +116,7 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
             role="button"
             aria-label="Clear date"
             onClick={(e) => { e.stopPropagation(); onChange('') }}
-            className="text-stone-300 hover:text-stone-500 transition-colors"
+            className="text-disabled hover:text-secondary transition-colors"
           >
             <X className="w-3.5 h-3.5" />
           </span>
@@ -124,15 +124,15 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
       </button>
 
       {open && calPos && (
-        <div className="fixed z-[9999] bg-white border border-stone-200 rounded-2xl shadow-2xl w-72 p-3"
+        <div className="fixed z-[9999] bg-surface border-theme rounded-2xl shadow-2xl w-72 p-3"
           style={{ top: calPos.top, left: calPos.left }}>
           {/* Month nav */}
           <div className="flex items-center justify-between mb-3">
-            <button type="button" onClick={prevMonth} className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-500 transition-colors">
+            <button type="button" onClick={prevMonth} className="p-1.5 rounded-lg hover:bg-stone-100 text-secondary transition-colors">
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="text-sm font-semibold text-stone-900">{MONTHS[viewMonth]} {viewYear}</span>
-            <button type="button" onClick={nextMonth} className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-500 transition-colors">
+            <span className="text-sm font-semibold text-primary">{MONTHS[viewMonth]} {viewYear}</span>
+            <button type="button" onClick={nextMonth} className="p-1.5 rounded-lg hover:bg-stone-100 text-secondary transition-colors">
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -140,7 +140,7 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
           {/* Day headers */}
           <div className="grid grid-cols-7 mb-1">
             {DAYS.map((d) => (
-              <span key={d} className="text-center text-[11px] font-semibold text-stone-400 py-1">{d}</span>
+              <span key={d} className="text-center text-[11px] font-semibold text-tertiary py-1">{d}</span>
             ))}
           </div>
 
@@ -165,7 +165,7 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
                       ? 'bg-orange-500 text-white shadow-sm'
                       : isToday
                       ? 'bg-orange-50 text-orange-600 font-bold ring-1 ring-orange-200'
-                      : 'text-stone-700 hover:bg-stone-100',
+                      : 'text-secondary hover:bg-stone-100',
                   ].join(' ')}
                 >
                   {day}
@@ -175,11 +175,11 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-3 mt-2 border-t border-stone-100">
+          <div className="flex items-center justify-between pt-3 mt-2 border-t border-theme">
             <button
               type="button"
               onClick={() => { onChange(''); setOpen(false) }}
-              className="text-xs text-stone-400 hover:text-stone-600 transition-colors px-2 py-1 rounded hover:bg-stone-50"
+              className="text-xs text-tertiary hover:text-secondary transition-colors px-2 py-1 rounded hover:bg-subtle"
             >
               Clear
             </button>

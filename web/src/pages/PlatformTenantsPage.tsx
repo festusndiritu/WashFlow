@@ -21,7 +21,7 @@ interface Tenant {
 }
 
 const PLAN_BADGE: Record<string, string> = {
-  free:       'bg-stone-100 text-stone-600 border border-stone-200',
+  free:       'bg-stone-100 text-secondary border border-stone-200',
   starter:    'bg-blue-50 text-blue-700 border border-blue-200',
   pro:        'bg-violet-50 text-violet-700 border border-violet-200',
   enterprise: 'bg-amber-50 text-amber-700 border border-amber-200',
@@ -77,8 +77,8 @@ export function PlatformTenantsPage() {
     <AppShell orgName="Platform Console" orgRole="Platform Owner" sidebarNav={sidebarNav}>
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">Organizations</h1>
-          <p className="text-sm text-stone-500">{total} total</p>
+          <h1 className="text-base font-semibold text-primary leading-none mb-0.5">Organizations</h1>
+          <p className="text-sm text-secondary">{total} total</p>
         </div>
       </div>
 
@@ -94,32 +94,32 @@ export function PlatformTenantsPage() {
             <div className="w-6 h-6 border-2 border-orange-200 border-t-orange-500 rounded-full animate-spin" />
           </div>
         ) : tenants.length === 0 ? (
-          <p className="text-center text-stone-400 text-sm py-16">No organizations yet</p>
+          <p className="text-center text-tertiary text-sm py-16">No organizations yet</p>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-stone-100 bg-stone-50">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-stone-500 uppercase tracking-wider">Organization</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-stone-500 uppercase tracking-wider hidden sm:table-cell">Plan</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-stone-500 uppercase tracking-wider hidden md:table-cell">Shops</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-stone-500 uppercase tracking-wider hidden md:table-cell">Users</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-stone-500 uppercase tracking-wider hidden lg:table-cell">Orders</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-stone-500 uppercase tracking-wider hidden lg:table-cell">Revenue</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-stone-500 uppercase tracking-wider hidden sm:table-cell">Status</th>
+              <tr className="border-b border-theme bg-subtle">
+                <th className="text-left px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider">Organization</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider hidden sm:table-cell">Plan</th>
+                <th className="text-right px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider hidden md:table-cell">Shops</th>
+                <th className="text-right px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider hidden md:table-cell">Users</th>
+                <th className="text-right px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider hidden lg:table-cell">Orders</th>
+                <th className="text-right px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider hidden lg:table-cell">Revenue</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-secondary uppercase tracking-wider hidden sm:table-cell">Status</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-50">
+            <tbody className="divide-y divide-[var(--border-default)]">
               {tenants.map(t => (
-                <tr key={t.id} className={`hover:bg-stone-50 transition-colors ${t.status === 'suspended' ? 'opacity-60' : ''}`}>
+                <tr key={t.id} className={`hover:bg-subtle transition-colors ${t.status === 'suspended' ? 'opacity-60' : ''}`}>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
                       <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 font-bold text-sm shrink-0 select-none">
                         {t.name[0].toUpperCase()}
                       </div>
                       <div>
-                        <p className="font-medium text-stone-900">{t.name}</p>
-                        <p className="text-xs text-stone-400 font-mono">{t.slug}</p>
+                        <p className="font-medium text-primary">{t.name}</p>
+                        <p className="text-xs text-tertiary font-mono">{t.slug}</p>
                       </div>
                     </div>
                   </td>
@@ -132,10 +132,10 @@ export function PlatformTenantsPage() {
                       {PLANS.map(p => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
                     </select>
                   </td>
-                  <td className="px-4 py-3 text-right text-stone-600 tabular-nums hidden md:table-cell">{t.shops_count}</td>
-                  <td className="px-4 py-3 text-right text-stone-600 tabular-nums hidden md:table-cell">{t.users_count}</td>
-                  <td className="px-4 py-3 text-right text-stone-600 tabular-nums hidden lg:table-cell">{t.orders_count}</td>
-                  <td className="px-4 py-3 text-right font-medium text-stone-900 tabular-nums hidden lg:table-cell">
+                  <td className="px-4 py-3 text-right text-secondary tabular-nums hidden md:table-cell">{t.shops_count}</td>
+                  <td className="px-4 py-3 text-right text-secondary tabular-nums hidden md:table-cell">{t.users_count}</td>
+                  <td className="px-4 py-3 text-right text-secondary tabular-nums hidden lg:table-cell">{t.orders_count}</td>
+                  <td className="px-4 py-3 text-right font-medium text-primary tabular-nums hidden lg:table-cell">
                     KES {t.revenue.toLocaleString('en-KE', { minimumFractionDigits: 0 })}
                   </td>
                   <td className="px-4 py-3 hidden sm:table-cell">
@@ -147,20 +147,20 @@ export function PlatformTenantsPage() {
                   <td className="px-4 py-3 text-right relative">
                     {confirmDelete === t.id ? (
                       <div className="flex items-center justify-end gap-2">
-                        <span className="text-xs text-stone-500">Delete?</span>
+                        <span className="text-xs text-secondary">Delete?</span>
                         <button onClick={() => deleteTenant(t.id)} className="text-xs font-semibold text-red-600 hover:text-red-700">Yes</button>
-                        <button onClick={() => setConfirmDelete(null)} className="text-xs text-stone-400 hover:text-stone-600">No</button>
+                        <button onClick={() => setConfirmDelete(null)} className="text-xs text-tertiary hover:text-secondary">No</button>
                       </div>
                     ) : (
                       <div className="relative inline-block">
                         <button onClick={() => setActionId(actionId === t.id ? null : t.id)}
-                          className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-400 hover:text-stone-700 transition-colors">
+                          className="p-1.5 rounded-lg hover:bg-stone-100 text-tertiary hover:text-secondary transition-colors">
                           <MoreHorizontal className="w-4 h-4" />
                         </button>
                         {actionId === t.id && (
-                          <div className="absolute right-0 top-8 z-20 bg-white border border-stone-200 rounded-xl shadow-lg py-1 w-44 text-sm">
+                          <div className="absolute right-0 top-8 z-20 bg-surface border-theme rounded-xl shadow-lg py-1 w-44 text-sm">
                             <button onClick={() => toggleStatus(t)}
-                              className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-stone-50 text-stone-700">
+                              className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-subtle text-secondary">
                               {t.status === 'active'
                                 ? <><ShieldOff className="w-3.5 h-3.5 text-amber-500" /> Suspend</>
                                 : <><ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> Activate</>}
@@ -183,7 +183,7 @@ export function PlatformTenantsPage() {
 
       {/* Pagination */}
       {pages > 1 && (
-        <div className="flex items-center justify-between mt-4 text-sm text-stone-500">
+        <div className="flex items-center justify-between mt-4 text-sm text-secondary">
           <span>Page {page} of {pages}</span>
           <div className="flex gap-1">
             <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}

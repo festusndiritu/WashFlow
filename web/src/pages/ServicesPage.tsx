@@ -23,7 +23,7 @@ const CATEGORY_COLOR: Record<string, string> = {
   washing:      'bg-sky-50 text-sky-700 border-sky-200',
   ironing:      'bg-violet-50 text-violet-700 border-violet-200',
   dry_cleaning: 'bg-amber-50 text-amber-700 border-amber-200',
-  general:      'bg-stone-100 text-stone-600 border-stone-200',
+  general:      'bg-stone-100 text-secondary border-stone-200',
   delivery:     'bg-emerald-50 text-emerald-700 border-emerald-200',
 }
 
@@ -153,8 +153,8 @@ export function ServicesPage() {
   const headerSlot = (
     <div className="flex items-center justify-between gap-4 flex-wrap">
       <div>
-        <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">Service Catalog</h1>
-        <p className="text-xs text-stone-400">Price list &amp; POS items — {tenant?.name}</p>
+        <h1 className="text-base font-semibold text-primary leading-none mb-0.5">Service Catalog</h1>
+        <p className="text-xs text-tertiary">Price list &amp; POS items — {tenant?.name}</p>
       </div>
       {canManage && (
         <button onClick={() => setShowForm(true)}
@@ -178,25 +178,25 @@ export function ServicesPage() {
         <form onSubmit={onSubmit} className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Service name *</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Service name *</label>
               <input value={name} onChange={(e) => setName(e.target.value)} required placeholder="e.g. Wash &amp; Fold" className={inputCls} autoFocus />
             </div>
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Category</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Category</label>
               <Select value={category} onChange={setCategory} options={CATEGORIES.map((c) => ({ value: c, label: c.replace('_', ' ') }))} />
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Unit</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Unit</label>
               <Select value={unit} onChange={setUnit} options={UNITS.map((u) => ({ value: u, label: u }))} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Price per unit (KES) *</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Price per unit (KES) *</label>
               <input type="number" min="0" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} required placeholder="0.00" className={inputCls} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-stone-600 mb-1">Available in</label>
+              <label className="block text-xs font-medium text-secondary mb-1">Available in</label>
               <Select value={shopScope} onChange={setShopScope} options={[{ value: '', label: 'All shops' }, ...shops.map((s) => ({ value: s.id, label: s.name }))]} placeholder="All shops" />
             </div>
           </div>
@@ -205,7 +205,7 @@ export function ServicesPage() {
             <button type="submit" disabled={submitting} className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors">
               <Plus className="w-3.5 h-3.5" /> {submitting ? 'Saving…' : 'Add service'}
             </button>
-            <button type="button" onClick={() => setShowForm(false)} className="text-sm text-stone-500 hover:text-stone-700 px-3 py-2 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
+            <button type="button" onClick={() => setShowForm(false)} className="text-sm text-secondary hover:text-secondary px-3 py-2 rounded-lg hover:bg-stone-100 transition-colors">Cancel</button>
           </div>
         </form>
       </Modal>
@@ -215,21 +215,21 @@ export function ServicesPage() {
           <div className="w-6 h-6 rounded-full border-2 border-stone-200 border-t-orange-500 animate-spin" />
         </div>
       ) : services.length === 0 ? (
-        <div className="bg-white rounded-xl border border-stone-200 shadow-sm py-16 text-center">
-          <Tag className="w-8 h-8 text-stone-300 mx-auto mb-2" />
-          <p className="text-sm text-stone-400 mb-1">No services in the catalog yet</p>
-          <p className="text-xs text-stone-300">Add wash &amp; fold, ironing, dry cleaning services with prices</p>
+        <div className="card py-16 text-center">
+          <Tag className="w-8 h-8 text-disabled mx-auto mb-2" />
+          <p className="text-sm text-tertiary mb-1">No services in the catalog yet</p>
+          <p className="text-xs text-disabled">Add wash &amp; fold, ironing, dry cleaning services with prices</p>
           {canManage && <button onClick={() => setShowForm(true)} className="mt-3 text-sm text-orange-600 hover:text-orange-700 font-medium">Add first service →</button>}
         </div>
       ) : (
         <div className="space-y-4">
           {Object.entries(grouped).map(([cat, svcs]) => (
             <div key={cat} className="card">
-              <div className="px-5 py-3 border-b border-stone-100 flex items-center gap-2">
+              <div className="px-5 py-3 border-b border-theme flex items-center gap-2">
                 <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold border capitalize ${CATEGORY_COLOR[cat] ?? CATEGORY_COLOR.general}`}>{cat.replace('_', ' ')}</span>
-                <span className="text-xs text-stone-400">{svcs.length} service{svcs.length !== 1 ? 's' : ''}</span>
+                <span className="text-xs text-tertiary">{svcs.length} service{svcs.length !== 1 ? 's' : ''}</span>
               </div>
-              <div className="divide-y divide-stone-50">
+              <div className="divide-y divide-[var(--border-default)]">
                 {svcs.map((svc) => {
                   const isEditing = editingId === svc.id
                   const isConfirm = confirmDeleteId === svc.id
@@ -238,12 +238,12 @@ export function ServicesPage() {
                   if (isConfirm) {
                     return (
                       <div key={svc.id} className="px-5 py-3.5 flex items-center gap-3 flex-wrap bg-red-50">
-                        <p className="text-sm text-stone-700">Delete <strong>{svc.name}</strong>?</p>
+                        <p className="text-sm text-secondary">Delete <strong>{svc.name}</strong>?</p>
                         <button onClick={() => deleteService(svc.id)} disabled={isDeleting}
                           className="text-xs font-semibold text-white bg-red-500 hover:bg-red-600 disabled:opacity-60 px-3 py-1.5 rounded-lg">
                           {isDeleting ? 'Deleting…' : 'Yes, delete'}
                         </button>
-                        <button onClick={() => setConfirmDeleteId(null)} className="text-xs text-stone-500 hover:text-stone-700 px-3 py-1.5 rounded-lg hover:bg-stone-100">Cancel</button>
+                        <button onClick={() => setConfirmDeleteId(null)} className="text-xs text-secondary hover:text-secondary px-3 py-1.5 rounded-lg hover:bg-stone-100">Cancel</button>
                       </div>
                     )
                   }
@@ -258,13 +258,13 @@ export function ServicesPage() {
                         </div>
                         <div className="flex items-center gap-2">
                           <input type="number" min="0" step="0.01" value={editPrice} onChange={(e) => setEditPrice(e.target.value)} className={`w-36 ${inputCls}`} placeholder="Price" />
-                          <span className="text-xs text-stone-400">KES / {editUnit}</span>
+                          <span className="text-xs text-tertiary">KES / {editUnit}</span>
                           <div className="ml-auto flex gap-2">
                             <button onClick={() => saveEdit(svc)} disabled={editSaving}
                               className="inline-flex items-center gap-1 bg-orange-500 hover:bg-orange-600 disabled:opacity-60 text-white text-xs font-semibold px-3 py-1.5 rounded-lg">
                               <Check className="w-3.5 h-3.5" /> {editSaving ? 'Saving…' : 'Save'}
                             </button>
-                            <button onClick={() => setEditingId(null)} className="text-xs text-stone-500 hover:text-stone-700 px-3 py-1.5 rounded-lg hover:bg-stone-100">Cancel</button>
+                            <button onClick={() => setEditingId(null)} className="text-xs text-secondary hover:text-secondary px-3 py-1.5 rounded-lg hover:bg-stone-100">Cancel</button>
                           </div>
                         </div>
                         {editError && <p className="text-xs text-red-600">{editError}</p>}
@@ -273,19 +273,19 @@ export function ServicesPage() {
                   }
 
                   return (
-                    <div key={svc.id} className="px-5 py-3.5 flex items-center justify-between gap-3 hover:bg-stone-50 transition-colors">
+                    <div key={svc.id} className="px-5 py-3.5 flex items-center justify-between gap-3 hover:bg-subtle transition-colors">
                       <div className="flex items-center gap-3 min-w-0">
                         <div>
-                          <p className="text-sm font-medium text-stone-900">{svc.name}</p>
-                          <p className="text-xs text-stone-400">per {svc.unit}{svc.shop_id ? ` · ${shops.find((s) => s.id === svc.shop_id)?.name ?? 'one shop'}` : ' · all shops'}</p>
+                          <p className="text-sm font-medium text-primary">{svc.name}</p>
+                          <p className="text-xs text-tertiary">per {svc.unit}{svc.shop_id ? ` · ${shops.find((s) => s.id === svc.shop_id)?.name ?? 'one shop'}` : ' · all shops'}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 shrink-0">
-                        <span className="text-sm font-bold text-stone-900">KES {Number(svc.price_per_unit).toLocaleString('en-KE', { minimumFractionDigits: 2 })}</span>
+                        <span className="text-sm font-bold text-primary">KES {Number(svc.price_per_unit).toLocaleString('en-KE', { minimumFractionDigits: 2 })}</span>
                         {canManage && (
                           <>
-                            <button onClick={() => startEdit(svc)} className="p-1.5 text-stone-400 hover:text-stone-600 hover:bg-stone-100 rounded-lg"><Pencil className="w-3.5 h-3.5" /></button>
-                            <button onClick={() => setConfirmDeleteId(svc.id)} className="p-1.5 text-stone-400 hover:text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-3.5 h-3.5" /></button>
+                            <button onClick={() => startEdit(svc)} className="p-1.5 text-tertiary hover:text-secondary hover:bg-stone-100 rounded-lg"><Pencil className="w-3.5 h-3.5" /></button>
+                            <button onClick={() => setConfirmDeleteId(svc.id)} className="p-1.5 text-tertiary hover:text-red-500 hover:bg-red-50 rounded-lg"><Trash2 className="w-3.5 h-3.5" /></button>
                           </>
                         )}
                       </div>

@@ -80,17 +80,17 @@ export function Select({ value, onChange, options, placeholder = 'Select…', re
         type="button"
         disabled={disabled}
         onClick={openDropdown}
-        className={`w-full flex items-center justify-between gap-2 px-3 py-2 text-sm bg-white border rounded-lg outline-none transition-shadow text-left ${
+        className={`w-full flex items-center justify-between gap-2 px-3 py-2 text-sm bg-surface border rounded-lg outline-none transition-shadow text-left ${
           open ? 'ring-2 ring-orange-400 border-transparent' : 'border-stone-200 hover:border-stone-300'
-        } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${!selected ? 'text-stone-400' : 'text-stone-900'}`}
+        } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${!selected ? 'text-tertiary' : 'text-primary'}`}
       >
         <span className="truncate">{selected ? selected.label : placeholder}</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-stone-400 shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 text-tertiary shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && dropPos && (
         <div
-          className="fixed z-[9999] bg-white border border-stone-200 rounded-xl shadow-xl overflow-hidden"
+          className="fixed z-[9999] bg-surface border-theme rounded-xl shadow-xl overflow-hidden"
           style={{ top: dropPos.top, left: dropPos.left, width: dropPos.width }}
         >
           <ul className="max-h-52 overflow-y-auto py-1">
@@ -102,7 +102,7 @@ export function Select({ value, onChange, options, placeholder = 'Select…', re
                   className={`w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-left transition-colors ${
                     opt.value === value
                       ? 'bg-orange-50 text-orange-700 font-medium'
-                      : 'text-stone-700 hover:bg-stone-50'
+                      : 'text-secondary hover:bg-subtle'
                   }`}
                 >
                   <span>{opt.label}</span>

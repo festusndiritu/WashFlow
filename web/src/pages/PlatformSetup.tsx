@@ -29,7 +29,7 @@ export function PlatformSetupPage() {
     }
   }
 
-  const inputCls = 'w-full px-3.5 py-2.5 text-sm bg-stone-900 border border-stone-700 rounded-lg outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-shadow text-white placeholder:text-stone-600'
+  const inputCls = 'w-full px-3.5 py-2.5 text-sm bg-stone-900 border border-stone-700 rounded-lg outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-shadow text-white placeholder:text-secondary'
 
   return (
     <div className="min-h-screen bg-stone-950 flex items-center justify-center px-6 py-12">
@@ -52,19 +52,19 @@ export function PlatformSetupPage() {
         </div>
 
         <h1 className="text-xl font-bold text-white mb-1 tracking-tight">Initialize platform</h1>
-        <p className="text-stone-400 text-sm mb-7">This account will have access to all tenant metrics.</p>
+        <p className="text-tertiary text-sm mb-7">This account will have access to all tenant metrics.</p>
 
         <form onSubmit={onSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-stone-400 mb-1.5">Full name</label>
+            <label className="block text-xs font-medium text-tertiary mb-1.5">Full name</label>
             <input value={name} onChange={(e) => setName(e.target.value)} required placeholder="Platform Admin" className={inputCls} />
           </div>
           <div>
-            <label className="block text-xs font-medium text-stone-400 mb-1.5">Email address</label>
+            <label className="block text-xs font-medium text-tertiary mb-1.5">Email address</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="admin@washflow.io" className={inputCls} />
           </div>
           <div>
-            <label className="block text-xs font-medium text-stone-400 mb-1.5">Password</label>
+            <label className="block text-xs font-medium text-tertiary mb-1.5">Password</label>
             <input type="password" value={password} minLength={8} onChange={(e) => setPassword(e.target.value)} required placeholder="••••••••" className={inputCls} />
           </div>
 

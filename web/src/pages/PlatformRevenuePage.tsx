@@ -19,7 +19,7 @@ interface RevenueData {
 }
 
 const PLAN_BADGE: Record<string, string> = {
-  free:       'bg-stone-100 text-stone-500',
+  free:       'bg-stone-100 text-secondary',
   starter:    'bg-blue-50 text-blue-600',
   pro:        'bg-violet-50 text-violet-600',
   enterprise: 'bg-amber-50 text-amber-600',
@@ -40,8 +40,8 @@ export function PlatformRevenuePage() {
   return (
     <AppShell orgName="Platform Console" orgRole="Platform Owner" sidebarNav={<PlatformNav />}>
       <div className="mb-5">
-        <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">Revenue Overview</h1>
-        <p className="text-sm text-stone-500">Paid orders across all organizations</p>
+        <h1 className="text-base font-semibold text-primary leading-none mb-0.5">Revenue Overview</h1>
+        <p className="text-sm text-secondary">Paid orders across all organizations</p>
       </div>
 
       {error && (
@@ -56,42 +56,42 @@ export function PlatformRevenuePage() {
           <TrendingUp className="w-6 h-6 text-emerald-600" />
         </div>
         <div>
-          <p className="text-xs text-stone-500 font-medium uppercase tracking-wider mb-1">Total Platform Revenue</p>
+          <p className="text-xs text-secondary font-medium uppercase tracking-wider mb-1">Total Platform Revenue</p>
           {data
-            ? <p className="text-3xl font-black text-stone-900 tabular-nums">KES {data.total_revenue.toLocaleString('en-KE', { minimumFractionDigits: 2 })}</p>
+            ? <p className="text-3xl font-black text-primary tabular-nums">KES {data.total_revenue.toLocaleString('en-KE', { minimumFractionDigits: 2 })}</p>
             : <div className="h-8 w-48 bg-stone-100 rounded animate-pulse" />}
         </div>
       </div>
 
       {/* Per-tenant breakdown */}
       <div className="card overflow-hidden">
-        <div className="px-5 py-3.5 border-b border-stone-100">
-          <h2 className="text-sm font-semibold text-stone-900">Per-Organization Breakdown</h2>
+        <div className="px-5 py-3.5 border-b border-theme">
+          <h2 className="text-sm font-semibold text-primary">Per-Organization Breakdown</h2>
         </div>
         {!data ? (
           <div className="flex items-center justify-center py-16">
             <div className="w-6 h-6 border-2 border-orange-200 border-t-orange-500 rounded-full animate-spin" />
           </div>
         ) : data.breakdown.length === 0 ? (
-          <p className="text-center text-stone-400 text-sm py-16">No paid orders yet</p>
+          <p className="text-center text-tertiary text-sm py-16">No paid orders yet</p>
         ) : (
-          <div className="divide-y divide-stone-50">
+          <div className="divide-y divide-[var(--border-default)]">
             {data.breakdown.map((row, i) => (
               <div key={row.id} className="px-5 py-4">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2.5">
                     {i === 0 && <Crown className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
                     <div>
-                      <p className="text-sm font-medium text-stone-900">{row.name}</p>
+                      <p className="text-sm font-medium text-primary">{row.name}</p>
                       <div className="flex items-center gap-1.5 mt-0.5">
                         <span className={`text-[11px] font-semibold px-1.5 py-0.5 rounded ${PLAN_BADGE[row.plan] ?? PLAN_BADGE.free}`}>
                           {row.plan}
                         </span>
-                        <span className="text-xs text-stone-400">{row.paid_orders} paid order{row.paid_orders !== 1 ? 's' : ''}</span>
+                        <span className="text-xs text-tertiary">{row.paid_orders} paid order{row.paid_orders !== 1 ? 's' : ''}</span>
                       </div>
                     </div>
                   </div>
-                  <p className="text-sm font-bold text-stone-900 tabular-nums">
+                  <p className="text-sm font-bold text-primary tabular-nums">
                     KES {row.revenue.toLocaleString('en-KE', { minimumFractionDigits: 0 })}
                   </p>
                 </div>
