@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { Building2, Package, ShoppingBag, Users, Briefcase, LayoutDashboard, AlertCircle } from 'lucide-react'
+import { Building2, Package, ShoppingBag, Users, Briefcase, AlertCircle } from 'lucide-react'
 import client from '../api/client'
 import { useAuthStore } from '../store/auth'
-import { AppShell, NavItem } from '../components/AppShell'
+import { AppShell } from '../components/AppShell'
+import { PlatformNav } from '../components/PlatformNav'
 
 interface PlatformMetrics {
   total_tenants: number
@@ -33,9 +34,7 @@ export function PlatformDashboardPage() {
       .catch((err: any) => setError(err.response?.data?.detail || 'Could not load metrics'))
   }, [])
 
-  const sidebarNav = (
-    <NavItem icon={<LayoutDashboard />} label="Overview" active />
-  )
+  const sidebarNav = <PlatformNav active="overview" />
 
   const headerSlot = (
     <div className="flex items-center justify-between">

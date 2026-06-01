@@ -31,6 +31,8 @@ def startup() -> None:
         conn.execute(text("ALTER TABLE orders ADD COLUMN IF NOT EXISTS payment_status VARCHAR(20) NOT NULL DEFAULT 'unpaid'"))
         conn.execute(text("ALTER TABLE payments ADD COLUMN IF NOT EXISTS citapay_reference VARCHAR(100)"))
         conn.execute(text("CREATE INDEX IF NOT EXISTS ix_payments_citapay_reference ON payments (citapay_reference) WHERE citapay_reference IS NOT NULL"))
+        conn.execute(text("ALTER TABLE tenants ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'active'"))
+        conn.execute(text("ALTER TABLE tenants ADD COLUMN IF NOT EXISTS plan VARCHAR(30) NOT NULL DEFAULT 'free'"))
         conn.execute(text("""
             CREATE TABLE IF NOT EXISTS expenses (
                 id VARCHAR(36) PRIMARY KEY,

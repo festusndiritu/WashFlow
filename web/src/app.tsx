@@ -2,6 +2,10 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { LoginPage } from './pages/Login'
 import { PlatformDashboardPage } from './pages/PlatformDashboard'
+import { PlatformTenantsPage } from './pages/PlatformTenantsPage'
+import { PlatformRevenuePage } from './pages/PlatformRevenuePage'
+import { PlatformOrdersPage } from './pages/PlatformOrdersPage'
+import { PlatformUsersPage } from './pages/PlatformUsersPage'
 import { PlatformSetupPage } from './pages/PlatformSetup'
 import { SignupPage } from './pages/Signup'
 import { TenantDashboardPage } from './pages/TenantDashboard'
@@ -26,6 +30,46 @@ export function App() {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/platform-setup" element={<PlatformSetupPage />} />
+      <Route
+        path="/platform"
+        element={
+          <ProtectedRoute>
+            <PlatformDashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/platform/tenants"
+        element={
+          <ProtectedRoute>
+            <PlatformTenantsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/platform/revenue"
+        element={
+          <ProtectedRoute>
+            <PlatformRevenuePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/platform/orders"
+        element={
+          <ProtectedRoute>
+            <PlatformOrdersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/platform/users"
+        element={
+          <ProtectedRoute>
+            <PlatformUsersPage />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/dashboard"
         element={
