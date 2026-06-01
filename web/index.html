@@ -25,6 +25,17 @@
     <meta property="og:description" content="Laundry business management platform" />
     <meta property="og:image" content="/icon-512.png" />
     <meta property="og:type" content="website" />
+    <!-- Prevent flash of wrong theme on load -->
+    <script>
+      ;(function(){
+        try {
+          var s = JSON.parse(localStorage.getItem('washflow-theme') || '{}')
+          var m = s.state && s.state.mode
+          var dark = m === 'dark' || ((!m || m === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          if (dark) document.documentElement.classList.add('dark')
+        } catch(e){}
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

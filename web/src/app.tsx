@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { useThemeInit } from './hooks/useThemeInit'
 import { LoginPage } from './pages/Login'
 import { PlatformDashboardPage } from './pages/PlatformDashboard'
 import { PlatformTenantsPage } from './pages/PlatformTenantsPage'
@@ -25,6 +26,7 @@ import { useAuthStore } from './store/auth'
 export function App() {
   const token = useAuthStore((s) => s.token)
   const user = useAuthStore((s) => s.user)
+  useThemeInit()
 
   return (
     <Routes>

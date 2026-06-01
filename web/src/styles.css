@@ -1,7 +1,83 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+/* Enable class-based dark mode — apply .dark on <html> to activate */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Semantic color tokens ---------- */
+:root {
+  --page-bg:     #f5f5f4;   /* main page background   */
+  --surface:     #ffffff;   /* card / panel surface   */
+  --surface-sub: #f5f5f4;   /* table header / subtle  */
+  --surface-alt: #e7e5e4;   /* even more subtle       */
+  --border:      #e7e5e4;
+  --border-sub:  #f5f5f4;
+  --text-1:      #1c1917;
+  --text-2:      #44403c;
+  --text-3:      #78716c;
+  --text-4:      #a8a29e;
+}
+
+.dark {
+  --page-bg:     #111110;
+  --surface:     #1c1917;
+  --surface-sub: #292524;
+  --surface-alt: #3c3835;
+  --border:      #292524;
+  --border-sub:  #1c1917;
+  --text-1:      #fafaf9;
+  --text-2:      #d6d3d1;
+  --text-3:      #a8a29e;
+  --text-4:      #78716c;
+}
+
 @layer base {
   html { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
-  body { background: #fafaf9; color: #1c1917; }
+  body { background: var(--page-bg); color: var(--text-1); transition: background 0.2s, color 0.2s; }
 }
+
+/* ---------- Dark mode — remap content-area Tailwind utilities ---------- */
+/* Unlayered CSS beats @layer utilities automatically (CSS cascade layers) */
+
+/* Backgrounds */
+.dark .bg-white          { background-color: var(--surface) }
+.dark .bg-stone-50       { background-color: var(--surface-sub) }
+.dark .bg-stone-100      { background-color: var(--surface-sub) }
+.dark .bg-stone-200      { background-color: var(--surface-alt) }
+
+/* Hover backgrounds */
+.dark .hover\:bg-white:hover       { background-color: var(--surface) }
+.dark .hover\:bg-stone-50:hover    { background-color: var(--surface-sub) }
+.dark .hover\:bg-stone-100:hover   { background-color: var(--surface-alt) }
+
+/* Divide / table row alternates */
+.dark .divide-stone-50   > * + *   { border-color: var(--border-sub) }
+.dark .divide-stone-100  > * + *   { border-color: var(--border) }
+
+/* Borders */
+.dark .border-stone-100  { border-color: var(--border-sub) }
+.dark .border-stone-200  { border-color: var(--border) }
+
+/* Text */
+.dark .text-stone-900    { color: var(--text-1) }
+.dark .text-stone-800    { color: var(--text-2) }
+.dark .text-stone-700    { color: var(--text-2) }
+.dark .text-stone-600    { color: var(--text-3) }
+
+/* Input / form elements */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--surface);
+  color: var(--text-1);
+  border-color: var(--border);
+}
+.dark input::placeholder,
+.dark textarea::placeholder { color: var(--text-4); }
+
+/* Modals / dialogs — usually bg-white with ring/shadow */
+.dark .shadow-sm  { --tw-shadow-color: rgba(0,0,0,0.4); }
+.dark .shadow-md  { --tw-shadow-color: rgba(0,0,0,0.5); }
+.dark .shadow-xl  { --tw-shadow-color: rgba(0,0,0,0.6); }
+.dark .shadow-2xl { --tw-shadow-color: rgba(0,0,0,0.7); }
+

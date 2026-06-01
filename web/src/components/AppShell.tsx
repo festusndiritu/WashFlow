@@ -2,6 +2,7 @@ import React, { useState, type ReactNode } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import { LogOut, Menu, X, LayoutDashboard, Package, Users, DollarSign, Settings } from 'lucide-react'
 import { useAuthStore } from '../store/auth'
+import { ThemeToggle } from './ThemeToggle'
 
 /** WashFlow brand droplet mark — inline SVG so it renders at any size without a network request */
 function BrandMark({ size = 28 }: { size?: number }) {
@@ -85,6 +86,9 @@ function SidebarContent({
             <LogOut className="w-3.5 h-3.5" />
           </button>
         </div>
+        <div className="px-1 pb-1">
+          <ThemeToggle className="w-full justify-start" />
+        </div>
       </div>
     </div>
   )
@@ -103,7 +107,7 @@ export function AppShell({ orgName, orgRole, sidebarNav, headerSlot, children }:
   const matchSettings = useMatch('/settings')
 
   return (
-    <div className="min-h-screen flex bg-stone-100">
+    <div className="min-h-screen flex" style={{ background: 'var(--page-bg)' }}>
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex w-64 shrink-0 flex-col sticky top-0 h-screen shadow-[1px_0_0_0_rgba(0,0,0,0.08)]">
         <SidebarContent orgName={orgName} orgRole={orgRole} sidebarNav={sidebarNav} />
@@ -145,11 +149,12 @@ export function AppShell({ orgName, orgRole, sidebarNav, headerSlot, children }:
 
         {/* Desktop top bar */}
         <div className="hidden lg:flex items-center justify-between px-6 py-3 bg-white border-b border-stone-200 sticky top-0 z-30">
-          <div className="flex items-center gap-2 text-sm text-stone-500">
+          <div className="flex items-center gap-2 text-sm">
             <span className="font-semibold text-stone-800">{orgName}</span>
           </div>
           <div className="flex items-center gap-2">
             {headerSlot}
+            <ThemeToggle />
           </div>
         </div>
 
