@@ -6,6 +6,7 @@ import { AppShell } from '../components/AppShell'
 import { TenantNav } from '../components/TenantNav'
 import { Select } from '../components/Select'
 import { Modal } from '../components/Modal'
+import { useUnitsStore, buildUnitOptions } from '../store/units'
 
 export interface Service {
   id: string
@@ -27,7 +28,6 @@ const CATEGORY_COLOR: Record<string, string> = {
   delivery:     'bg-emerald-50 text-emerald-700 border-emerald-200',
 }
 
-const UNITS = ['kg', 'item', 'piece', 'shirt', 'trouser', 'suit', 'dress', 'curtain', 'blanket', 'pair', 'set']
 const CATEGORIES = ['washing', 'ironing', 'dry_cleaning', 'delivery', 'general']
 
 const inputCls = 'input-base'
@@ -141,6 +141,8 @@ export function ServicesPage() {
   }
 
   const canManage = user?.role === 'owner' || user?.role === 'admin'
+  const storeUnits = useUnitsStore((s) => s.units)
+  const unitOptions = buildUnitOptions(storeUnits)
 
   // Group by category
   const grouped: Record<string, Service[]> = {}
@@ -189,7 +191,7 @@ export function ServicesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
               <label className="block text-xs font-medium text-secondary mb-1">Unit</label>
-              <Select value={unit} onChange={setUnit} options={UNITS.map((u) => ({ value: u, label: u }))} />
+              <Select value={unit} onChange={setUnit} options={unitOptions} />
             </div>
             <div>
               <label className="block text-xs font-medium text-secondary mb-1">Price per unit (KES) *</label>
@@ -254,7 +256,7 @@ export function ServicesPage() {
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                           <input value={editName} onChange={(e) => setEditName(e.target.value)} className={`sm:col-span-2 ${inputCls}`} placeholder="Name" />
                           <Select value={editCategory} onChange={setEditCategory} options={CATEGORIES.map((c) => ({ value: c, label: c.replace('_', ' ') }))} />
-                          <Select value={editUnit} onChange={setEditUnit} options={UNITS.map((u) => ({ value: u, label: u }))} />
+                          <Select value={editUnit} onChange={setEditUnit} options={unitOptions} />
                         </div>
                         <div className="flex items-center gap-2">
                           <input type="number" min="0" step="0.01" value={editPrice} onChange={(e) => setEditPrice(e.target.value)} className={`w-36 ${inputCls}`} placeholder="Price" />

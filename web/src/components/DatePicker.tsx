@@ -52,15 +52,19 @@ export function DatePicker({ value, onChange, placeholder = 'Pick a date' }: Pro
     return () => document.removeEventListener('mousedown', h)
   }, [open])
 
-  // Close on scroll or resize
+  // Close on scroll or resize (but not when scrolling inside the portalled calendar)
   useEffect(() => {
     if (!open) return
-    const close = () => setOpen(false)
-    window.addEventListener('scroll', close, true)
-    window.addEventListener('resize', close)
+    const onScroll = (e: Event) => {
+      if (calRef.current?.contains(e.target as Node)) return
+      setOpen(false)
+    }
+    const onResize = () => setOpen(false)
+    window.addEventListener('scroll', onScroll, true)
+    window.addEventListener('resize', onResize)
     return () => {
-      window.removeEventListener('scroll', close, true)
-      window.removeEventListener('resize', close)
+      window.removeEventListener('scroll', onScroll, true)
+      window.removeEventListener('resize', onResize)
     }
   }, [open])
 

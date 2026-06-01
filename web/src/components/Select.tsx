@@ -54,13 +54,20 @@ export function Select({ value, onChange, options, placeholder = 'Select…', re
   // Close on Escape, scroll, resize
   useEffect(() => {
     if (!open) return
-    const close = () => setOpen(false)
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close() })
-    window.addEventListener('scroll', close, true)
-    window.addEventListener('resize', close)
+    const onEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    const onScroll = (e: Event) => {
+      // Don't close when scrolling inside the portalled dropdown
+      if (dropRef.current?.contains(e.target as Node)) return
+      setOpen(false)
+    }
+    const onResize = () => setOpen(false)
+    window.addEventListener('keydown', onEsc)
+    window.addEventListener('scroll', onScroll, true)
+    window.addEventListener('resize', onResize)
     return () => {
-      window.removeEventListener('scroll', close, true)
-      window.removeEventListener('resize', close)
+      window.removeEventListener('keydown', onEsc)
+      window.removeEventListener('scroll', onScroll, true)
+      window.removeEventListener('resize', onResize)
     }
   }, [open])
 
