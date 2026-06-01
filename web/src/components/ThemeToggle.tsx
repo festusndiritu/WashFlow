@@ -5,31 +5,19 @@ const CYCLE: Record<ThemeMode, ThemeMode> = { light: 'dark', dark: 'system', sys
 const LABEL: Record<ThemeMode, string> = { light: 'Light', dark: 'Dark', system: 'System' }
 const ICON = { light: Sun, dark: Moon, system: Monitor } as const
 
-interface Props {
-  /** 'sidebar' = always-dark context, 'topbar' = follows theme (default) */
-  variant?: 'sidebar' | 'topbar'
-  showLabel?: boolean
-  className?: string
-}
-
-export function ThemeToggle({ variant = 'topbar', showLabel = true, className = '' }: Props) {
+/** Standalone theme toggle — icon only, adapts to current theme context */
+export function ThemeToggle({ className = '' }: { className?: string }) {
   const { mode, setMode } = useThemeStore()
   const Icon = ICON[mode]
-
-  const base = `flex items-center gap-2 rounded-lg transition-colors text-xs font-medium ${showLabel ? 'px-2.5 py-2' : 'p-1.5'}`
-
-  const variantCls = variant === 'sidebar'
-    ? 'text-stone-400 hover:text-stone-200 hover:bg-white/6'
-    : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100 dark:text-stone-400 dark:hover:text-stone-100 dark:hover:bg-white/8'
 
   return (
     <button
       onClick={() => setMode(CYCLE[mode])}
-      title={`Theme: ${LABEL[mode]} — click to cycle`}
-      className={`${base} ${variantCls} ${className}`}
+      title={`Theme: ${LABEL[mode]}`}
+      className={`w-7 h-7 flex items-center justify-center rounded-md transition-colors text-stone-400 hover:text-stone-600 hover:bg-stone-100 dark:hover:text-stone-200 dark:hover:bg-white/8 ${className}`}
     >
-      <Icon className="w-3.5 h-3.5 shrink-0" />
-      {showLabel && <span>{LABEL[mode]}</span>}
+      <Icon className="w-[14px] h-[14px]" />
     </button>
   )
 }
+
