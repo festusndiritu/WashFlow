@@ -42,7 +42,7 @@ function formatDate(d: string) {
   return new Date(d).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-const inputCls = 'w-full px-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-shadow text-stone-900 placeholder:text-stone-400'
+const inputCls = 'input-base'
 
 export function ExpensesPage() {
   const user = useAuthStore((s) => s.user)
@@ -221,7 +221,7 @@ export function ExpensesPage() {
         {catTotals.slice(0, 3).map((c) => {
           const Icon = c.icon
           return (
-            <div key={c.value} className="bg-white rounded-2xl border border-stone-200 shadow-sm p-4">
+            <div key={c.value} className="card p-4">
               <div className="flex items-center justify-between mb-1">
                 <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">{c.label}</p>
                 <div className={`p-1.5 rounded-lg border ${c.bg}`}><Icon className={`w-3.5 h-3.5 ${c.color}`} /></div>
@@ -309,7 +309,7 @@ export function ExpensesPage() {
           <div className="w-6 h-6 rounded-full border-2 border-stone-200 border-t-orange-500 animate-spin" />
         </div>
       ) : visible.length === 0 ? (
-        <div className="bg-white rounded-xl border border-stone-200 shadow-sm py-16 text-center">
+        <div className="card py-16 text-center">
           <TrendingDown className="w-10 h-10 text-stone-200 mx-auto mb-3" />
           <p className="text-sm font-medium text-stone-500">No expenses recorded yet</p>
           {canManage && (
@@ -320,7 +320,7 @@ export function ExpensesPage() {
           )}
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+        <div className="card overflow-hidden">
           <div className="divide-y divide-stone-50">
             {visible.map((exp) => {
               const cat = CAT_MAP[exp.category] ?? CAT_MAP['other']

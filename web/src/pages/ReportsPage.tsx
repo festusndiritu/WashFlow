@@ -164,7 +164,7 @@ export function ReportsPage() {
         <div className="space-y-5">
           {/* KPI cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-5">
+            <div className="card p-5">
               <div className="flex items-start justify-between mb-3">
                 <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Total revenue</p>
                 <div className="p-2 bg-orange-50 rounded-xl"><TrendingUp className="w-4 h-4 text-orange-500" /></div>
@@ -173,7 +173,7 @@ export function ReportsPage() {
               <p className="text-xs text-stone-400 mt-1">Last {data.period_days} days</p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-5">
+            <div className="card p-5">
               <div className="flex items-start justify-between mb-3">
                 <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Total orders</p>
                 <div className="p-2 bg-sky-50 rounded-xl"><ShoppingBag className="w-4 h-4 text-sky-500" /></div>
@@ -182,7 +182,7 @@ export function ReportsPage() {
               <p className="text-xs text-stone-400 mt-1">Last {data.period_days} days</p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-5">
+            <div className="card p-5">
               <div className="flex items-start justify-between mb-3">
                 <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Avg. order value</p>
                 <div className="p-2 bg-emerald-50 rounded-xl"><DollarSign className="w-4 h-4 text-emerald-500" /></div>
@@ -195,7 +195,7 @@ export function ReportsPage() {
           </div>
 
           {/* Revenue trend */}
-          <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-5">
+          <div className="card p-5">
             <p className="text-sm font-semibold text-stone-900 mb-5">Revenue trend</p>
             {trendData.length === 0 ? (
               <p className="text-sm text-stone-400 py-8 text-center">No revenue data for this period.</p>
@@ -253,7 +253,7 @@ export function ReportsPage() {
 
           {/* Orders by status */}
           {statusData.length > 0 && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-5">
+            <div className="card p-5">
               <p className="text-sm font-semibold text-stone-900 mb-5">Orders by status</p>
               <ResponsiveContainer width="100%" height={160}>
                 <BarChart data={statusData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }} barSize={36}>
@@ -278,7 +278,7 @@ export function ReportsPage() {
 
           {/* Shop breakdown */}
           {isOwner && data.shop_breakdown.length > 0 && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+            <div className="card overflow-hidden">
               <div className="px-5 py-3.5 border-b border-stone-100 flex items-center gap-2">
                 <Store className="w-4 h-4 text-stone-400" />
                 <p className="text-sm font-semibold text-stone-900">Revenue by shop</p>
@@ -310,7 +310,7 @@ export function ReportsPage() {
 
           {/* Daily table */}
           {data.daily_revenue.length > 0 && (
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+            <div className="card overflow-hidden">
               <div className="px-5 py-3.5 border-b border-stone-100">
                 <p className="text-sm font-semibold text-stone-900">Daily breakdown</p>
               </div>

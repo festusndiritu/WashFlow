@@ -34,7 +34,7 @@ export function PlatformDashboardPage() {
       .catch((err: any) => setError(err.response?.data?.detail || 'Could not load metrics'))
   }, [])
 
-  const sidebarNav = <PlatformNav active="overview" />
+  const sidebarNav = <PlatformNav />
 
   const headerSlot = (
     <div className="flex items-center justify-between">
@@ -74,7 +74,7 @@ export function PlatformDashboardPage() {
       </div>
 
       {/* Recent orgs */}
-      <div className="bg-white rounded-xl border border-stone-200 shadow-sm">
+      <div className="card">
         <div className="px-5 py-3.5 border-b border-stone-100 flex items-center justify-between">
           <h2 className="text-sm font-semibold text-stone-900">Latest Organizations</h2>
           <span className="text-xs text-stone-400">{metrics?.recent_tenants.length ?? 0} shown</span>

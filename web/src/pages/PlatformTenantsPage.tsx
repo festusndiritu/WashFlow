@@ -71,7 +71,7 @@ export function PlatformTenantsPage() {
 
   const pages = Math.ceil(total / PAGE_SIZE)
 
-  const sidebarNav = <PlatformNav active="tenants" />
+  const sidebarNav = <PlatformNav />
 
   return (
     <AppShell orgName="Platform Console" orgRole="Platform Owner" sidebarNav={sidebarNav}>
@@ -88,7 +88,7 @@ export function PlatformTenantsPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+      <div className="card overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="w-6 h-6 border-2 border-orange-200 border-t-orange-500 rounded-full animate-spin" />

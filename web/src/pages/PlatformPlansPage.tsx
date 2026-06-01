@@ -64,7 +64,7 @@ export function PlatformPlansPage() {
   const totalTenants = plans.reduce((s, p) => s + p.tenant_count, 0)
 
   return (
-    <AppShell orgName="Platform Console" orgRole="Platform Owner" sidebarNav={<PlatformNav active="plans" />}>
+    <AppShell orgName="Platform Console" orgRole="Platform Owner" sidebarNav={<PlatformNav />}>
       <div className="mb-6">
         <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">Subscription Plans</h1>
         <p className="text-sm text-stone-500">{totalTenants} organizations across all tiers</p>

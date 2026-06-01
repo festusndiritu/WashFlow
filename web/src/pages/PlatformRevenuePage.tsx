@@ -38,7 +38,7 @@ export function PlatformRevenuePage() {
   const maxRevenue = data ? Math.max(...data.breakdown.map(b => b.revenue), 1) : 1
 
   return (
-    <AppShell orgName="Platform Console" orgRole="Platform Owner" sidebarNav={<PlatformNav active="revenue" />}>
+    <AppShell orgName="Platform Console" orgRole="Platform Owner" sidebarNav={<PlatformNav />}>
       <div className="mb-5">
         <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">Revenue Overview</h1>
         <p className="text-sm text-stone-500">Paid orders across all organizations</p>
@@ -51,7 +51,7 @@ export function PlatformRevenuePage() {
       )}
 
       {/* Total card */}
-      <div className="bg-white rounded-xl border border-stone-200 shadow-sm p-5 mb-5 flex items-center gap-4">
+      <div className="card flex items-center gap-4">
         <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
           <TrendingUp className="w-6 h-6 text-emerald-600" />
         </div>
@@ -64,7 +64,7 @@ export function PlatformRevenuePage() {
       </div>
 
       {/* Per-tenant breakdown */}
-      <div className="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+      <div className="card overflow-hidden">
         <div className="px-5 py-3.5 border-b border-stone-100">
           <h2 className="text-sm font-semibold text-stone-900">Per-Organization Breakdown</h2>
         </div>

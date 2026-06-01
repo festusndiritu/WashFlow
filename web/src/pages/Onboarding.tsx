@@ -1,9 +1,19 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  Shirt, Tag, Package, Users, ArrowRight, CheckCircle2,
+  Tag, Package, Users, ArrowRight, CheckCircle2,
   Plus, ChevronRight, AlertCircle, Sparkles,
 } from 'lucide-react'
+
+function BrandMark() {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="32" rx="8" fill="#f97316"/>
+      <path d="M16 4C15.3 5.6 7 14.5 7 20C7 24.4 11 28 16 28C21 28 25 24.4 25 20C25 14.5 16.7 5.6 16 4Z" fill="white"/>
+      <path d="M11 19.5L12.5 24L14.8 18L16 20.8L17.2 18L19.5 24L21 19.5" stroke="#f97316" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
 import client from '../api/client'
 import { useAuthStore } from '../store/auth'
 import type { ShopSummary } from '../types'
@@ -33,8 +43,7 @@ const STEPS = [
   { id: 3, label: 'Team' },
 ]
 
-const inputCls =
-  'w-full px-3.5 py-2.5 text-sm bg-white border border-stone-200 rounded-xl outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-shadow text-stone-900 placeholder:text-stone-400'
+const inputCls = 'input-base'
 
 export function OnboardingPage() {
   const navigate = useNavigate()
@@ -150,13 +159,11 @@ export function OnboardingPage() {
   const finish = () => navigate('/dashboard')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-950 via-stone-900 to-stone-800 flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(160deg, #111110 0%, #1a1410 60%, #2a1800 100%)" }}>
       {/* Header */}
       <div className="px-6 py-5 flex items-center justify-between max-w-3xl mx-auto w-full">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-orange-500 rounded-xl flex items-center justify-center">
-            <Shirt className="w-4 h-4 text-white" />
-          </div>
+          <BrandMark />
           <span className="text-white font-bold text-base tracking-tight">WashFlow</span>
         </div>
         <button onClick={finish} className="text-stone-400 hover:text-white text-sm transition-colors">

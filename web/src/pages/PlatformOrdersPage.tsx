@@ -53,7 +53,7 @@ export function PlatformOrdersPage() {
   const pages = Math.ceil(total / PAGE_SIZE)
 
   return (
-    <AppShell orgName="Platform Console" orgRole="Platform Owner" sidebarNav={<PlatformNav active="orders" />}>
+    <AppShell orgName="Platform Console" orgRole="Platform Owner" sidebarNav={<PlatformNav />}>
       <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
         <div>
           <h1 className="text-base font-semibold text-stone-900 leading-none mb-0.5">All Orders</h1>
@@ -76,7 +76,7 @@ export function PlatformOrdersPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+      <div className="card overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="w-6 h-6 border-2 border-orange-200 border-t-orange-500 rounded-full animate-spin" />

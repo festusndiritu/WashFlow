@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from '../store/auth'
 
 interface Props {
@@ -9,7 +9,8 @@ interface Props {
 
 export function ProtectedRoute({ children, allowedRoles }: Props) {
   const { token, user } = useAuthStore()
-  if (!token) return <Navigate to="/login" replace />
+  const location = useLocation()
+  if (!token) return <Navigate to="/login" state={{ from: location.pathname }} replace />
   if (allowedRoles && user && !allowedRoles.includes(user.role)) {
     return <Navigate to="/dashboard" replace />
   }

@@ -13,7 +13,7 @@ interface TenantSettings {
   created_at: string
 }
 
-const inputCls = 'w-full px-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-shadow text-stone-900 placeholder:text-stone-400'
+const inputCls = 'input-base'
 
 export function SettingsPage() {
   const user = useAuthStore((s) => s.user)
@@ -143,7 +143,7 @@ export function SettingsPage() {
       ) : (
         <div className="max-w-xl space-y-6">
           {/* Organization settings */}
-          <div className="bg-white rounded-xl border border-stone-200 shadow-sm p-5">
+          <div className="card p-5">
             <div className="flex items-center gap-2 mb-4">
               <Building2 className="w-4 h-4 text-stone-500" />
               <h2 className="text-sm font-semibold text-stone-900">Organization</h2>
@@ -183,7 +183,7 @@ export function SettingsPage() {
           </div>
 
           {/* Password change */}
-          <div className="bg-white rounded-xl border border-stone-200 shadow-sm p-5">
+          <div className="card p-5">
             <div className="flex items-center gap-2 mb-4">
               <KeyRound className="w-4 h-4 text-stone-500" />
               <h2 className="text-sm font-semibold text-stone-900">Change password</h2>
@@ -215,7 +215,7 @@ export function SettingsPage() {
 
           {/* Shop management — owners only */}
           {isOwner && (
-            <div className="bg-white rounded-xl border border-stone-200 shadow-sm p-5">
+            <div className="card p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Store className="w-4 h-4 text-stone-500" />
                 <h2 className="text-sm font-semibold text-stone-900">Shops</h2>

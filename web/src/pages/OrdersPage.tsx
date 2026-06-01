@@ -61,7 +61,7 @@ const CATEGORY_COLOR: Record<string, string> = {
   general: 'bg-stone-100 text-stone-600 border-stone-200 hover:bg-stone-200',
   delivery: 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100',
 }
-const inputCls = 'w-full px-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-shadow text-stone-900 placeholder:text-stone-400'
+const inputCls = 'input-base'
 
 export function OrdersPage() {
   const user = useAuthStore((s) => s.user)
@@ -324,7 +324,7 @@ export function OrdersPage() {
       {/* Payment modal */}
       {payingOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6">
+          <div className="card w-full max-w-sm p-6">
             <div className="flex items-center justify-between mb-5">
               <div><h3 className="text-base font-semibold text-stone-900">Record payment</h3><p className="text-xs text-stone-400 mt-0.5">{customerMap[payingOrder.customer_id]?.name ?? 'Order'}</p></div>
               <button onClick={() => setPayingOrder(null)} className="p-1.5 text-stone-400 hover:text-stone-600 rounded-lg hover:bg-stone-100"><X className="w-4 h-4" /></button>
@@ -340,12 +340,12 @@ export function OrdersPage() {
               </div>
               <div>
                 <label className="block text-xs font-medium text-stone-700 mb-1.5">Amount (KES)</label>
-                <input type="number" min="0.01" step="0.01" value={payAmount} onChange={(e) => setPayAmount(e.target.value)} required className="w-full px-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 text-stone-900" />
+                <input type="number" min="0.01" step="0.01" value={payAmount} onChange={(e) => setPayAmount(e.target.value)} required className="input-base" />
               </div>
               {payMethod === 'mpesa' && (
                 <div>
                   <label className="block text-xs font-medium text-stone-700 mb-1.5">M-Pesa reference (optional)</label>
-                  <input value={payMpesaRef} onChange={(e) => setPayMpesaRef(e.target.value)} placeholder="e.g. QJK1234567" className="w-full px-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 text-stone-900 placeholder:text-stone-400" />
+                  <input value={payMpesaRef} onChange={(e) => setPayMpesaRef(e.target.value)} placeholder="e.g. QJK1234567" className="input-base" />
                   <button type="button" onClick={sendStkPush} disabled={paySubmitting} className="mt-2 w-full border border-emerald-600 text-emerald-700 hover:bg-emerald-50 disabled:opacity-60 text-sm font-medium py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
                     {paySubmitting
                       ? <><span className="w-3.5 h-3.5 rounded-full border-2 border-emerald-600 border-t-transparent animate-spin" /> Sending…</>
@@ -362,7 +362,7 @@ export function OrdersPage() {
               )}
               <div>
                 <label className="block text-xs font-medium text-stone-700 mb-1.5">Notes (optional)</label>
-                <input value={payNotes} onChange={(e) => setPayNotes(e.target.value)} placeholder="e.g. Partial payment" className="w-full px-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 text-stone-900 placeholder:text-stone-400" />
+                <input value={payNotes} onChange={(e) => setPayNotes(e.target.value)} placeholder="e.g. Partial payment" className="input-base" />
               </div>
               {payError && <p className="text-xs text-red-600">{payError}</p>}
               <button type="submit" disabled={paySubmitting} className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white text-sm font-semibold py-2.5 rounded-lg transition-colors">
@@ -377,7 +377,7 @@ export function OrdersPage() {
       {showPanel && (
         <div className="fixed inset-0 z-50 flex">
           <div className="flex-1 bg-black/40 backdrop-blur-sm" onClick={closePanel} />
-          <div className="w-full max-w-[480px] bg-white shadow-2xl flex flex-col h-full">
+          <div className="w-full max-w-[480px] shadow-2xl flex flex-col h-full" style={{ background: "var(--bg-surface)" }}>
             <div className="flex items-center justify-between px-5 py-4 border-b border-stone-800 bg-stone-950 shrink-0">
               <div><h2 className="text-base font-semibold text-white">New order</h2><p className="text-xs text-stone-400 mt-0.5">{shopName}</p></div>
               <button onClick={closePanel} className="p-1.5 text-stone-400 hover:text-white rounded-lg hover:bg-stone-800 transition-colors"><X className="w-4 h-4" /></button>
@@ -495,7 +495,7 @@ export function OrdersPage() {
             </div>
 
             {/* Sticky footer */}
-            <div className="px-5 py-4 border-t border-stone-100 bg-white shrink-0">
+            <div className="px-5 py-4 border-t shrink-0" style={{ borderColor: "var(--border-default)", background: "var(--bg-surface)" }}>
               {hasItems && (
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs text-stone-500">{itemRows.length} item{itemRows.length !== 1 ? 's' : ''}</span>
@@ -537,7 +537,7 @@ export function OrdersPage() {
         <div className="relative flex-1 max-w-xs">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-400" />
           <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by customer name…"
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 text-stone-900 placeholder:text-stone-400" />
+            className="search-input w-full" />
         </div>
         <div className="flex items-center gap-1.5 flex-wrap">
           <button onClick={() => setFilterStatus(null)}
@@ -554,7 +554,7 @@ export function OrdersPage() {
       </div>
 
       {/* Orders list */}
-      <div className="bg-white rounded-xl border border-stone-200 shadow-sm">
+      <div className="card">
         <div className="px-5 py-3 border-b border-stone-100 flex items-center justify-between rounded-t-xl overflow-hidden">
           <p className="text-sm font-semibold text-stone-900">{filterStatus ? STATUS_LABEL[filterStatus] : 'All'} orders</p>
           <span className="text-xs text-stone-400">{visibleOrders.length} shown</span>
@@ -685,7 +685,7 @@ export function OrdersPage() {
                                   <UserCircle2 className="w-3.5 h-3.5" />
                                 </button>
                                 {assigningOrderId === order.id && (
-                                  <div className="absolute left-0 top-full mt-1 w-44 bg-white border border-stone-200 rounded-xl shadow-lg z-20 overflow-hidden">
+                                  <div className="absolute left-0 top-full mt-1 w-44 card rounded-xl shadow-lg z-20 overflow-hidden">
                                     <div className="px-3 py-2 border-b border-stone-100"><p className="text-[10px] font-semibold text-stone-400 uppercase tracking-wide">Assign to</p></div>
                                     {order.worker_id && <button onClick={() => assignWorker(order.id, null)} className="w-full text-left px-3 py-2 text-xs text-red-500 hover:bg-red-50 transition-colors">✕ Unassign</button>}
                                     {team.filter((m) => m.role !== 'owner').map((m) => (

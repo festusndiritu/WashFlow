@@ -37,7 +37,7 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-const inputCls = 'w-full px-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-shadow text-stone-900 placeholder:text-stone-400'
+const inputCls = 'input-base'
 
 export function TeamPage() {
   const user = useAuthStore((s) => s.user)
@@ -183,7 +183,7 @@ export function TeamPage() {
         </form>
       </Modal>
 
-      <div className="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+      <div className="card overflow-hidden">
         <div className="px-5 py-3 border-b border-stone-100 flex items-center justify-between">
           <p className="text-sm font-semibold text-stone-900">Team members</p>
           <span className="text-xs text-stone-400">{members.length} total</span>

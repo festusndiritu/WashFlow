@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Store, Package, UserCheck, Users, Plus, AlertCircle,
   TrendingUp, Clock, CheckCircle2, Truck, Tag, ArrowUpRight, Banknote,
@@ -130,8 +131,8 @@ export function TenantDashboardPage() {
   const headerSlot = (
     <div className="flex items-center justify-between gap-4 flex-wrap">
       <div>
-        <p className="text-sm font-semibold text-stone-900 leading-none mb-0.5">{user?.name}</p>
-        <p className="text-xs text-stone-400 capitalize">{user?.role} · {tenant?.name}</p>
+        <p className="text-sm font-semibold leading-none mb-0.5" style={{ color: 'var(--text-primary)' }}>{user?.name}</p>
+        <p className="text-xs capitalize" style={{ color: 'var(--text-tertiary)' }}>{user?.role} · {tenant?.name}</p>
       </div>
       {shops.length > 1 && (
         <div className="flex items-center gap-1 bg-stone-100 rounded-lg p-1">
@@ -152,10 +153,7 @@ export function TenantDashboardPage() {
   return (
     <AppShell orgName={tenant?.name ?? 'Organization'} orgRole={user?.role ?? 'worker'} sidebarNav={sidebarNav} headerSlot={headerSlot}>
       {error && (
-        <div className="flex items-center gap-2 mb-5 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-red-700 text-sm">
-          <AlertCircle className="w-4 h-4 shrink-0" /> {error}
-          <button onClick={() => setError(null)} className="ml-auto text-red-400 hover:text-red-600">✕</button>
-        </div>
+        <div className="alert alert-error mb-5 text-sm"><AlertCircle className="w-4 h-4 shrink-0" /><span>{error}</span><button onClick={() => setError(null)} className="ml-auto" style={{ color: 'var(--text-tertiary)' }}>✕</button></div>
       )}
 
       {loading ? (
@@ -168,7 +166,7 @@ export function TenantDashboardPage() {
           {isManagement && report && (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5 items-stretch">
               {/* Revenue with sparkline */}
-              <div className="bg-white rounded-2xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] p-4 col-span-2 lg:col-span-1 relative overflow-hidden flex flex-col">
+              <div className="card p-4 col-span-2 lg:col-span-1 relative overflow-hidden flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-50/60 to-transparent pointer-events-none rounded-2xl" />
                 <div className="relative flex flex-col flex-1">
                   <div className="flex items-center justify-between mb-1">
@@ -202,7 +200,7 @@ export function TenantDashboardPage() {
                   )}
                 </div>
               </div>
-              <div className="bg-white rounded-2xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] p-4 relative overflow-hidden flex flex-col">
+              <div className="card p-4 relative overflow-hidden flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent pointer-events-none rounded-2xl" />
                 <div className="relative flex flex-col flex-1 justify-between">
                   <div>
@@ -215,7 +213,7 @@ export function TenantDashboardPage() {
                   <p className="text-xs text-stone-400 mt-1">Last 30 days</p>
                 </div>
               </div>
-              <div className="bg-white rounded-2xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] p-4 relative overflow-hidden flex flex-col">
+              <div className="card p-4 relative overflow-hidden flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-sky-50/50 to-transparent pointer-events-none rounded-2xl" />
                 <div className="relative flex flex-col flex-1 justify-between">
                   <div>
@@ -225,12 +223,12 @@ export function TenantDashboardPage() {
                     </div>
                     <p className="text-2xl font-bold text-stone-900 tabular-nums leading-none">{customersCount}</p>
                   </div>
-                  <a href="/customers" className="text-xs text-orange-600 hover:text-orange-700 font-medium mt-1 inline-flex items-center gap-0.5">
+                  <Link to="/customers" className="text-xs text-orange-600 hover:text-orange-700 font-medium mt-1 inline-flex items-center gap-0.5">
                     View <ArrowUpRight className="w-3 h-3" />
-                  </a>
+                  </Link>
                 </div>
               </div>
-              <div className="bg-white rounded-2xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] p-4 relative overflow-hidden flex flex-col">
+              <div className="card p-4 relative overflow-hidden flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-50/50 to-transparent pointer-events-none rounded-2xl" />
                 <div className="relative flex flex-col flex-1 justify-between">
                   <div>
@@ -240,9 +238,9 @@ export function TenantDashboardPage() {
                     </div>
                     <p className="text-2xl font-bold text-stone-900 tabular-nums leading-none">{teamCount}</p>
                   </div>
-                  <a href="/team" className="text-xs text-orange-600 hover:text-orange-700 font-medium mt-1 inline-flex items-center gap-0.5">
+                  <Link to="/team" className="text-xs text-orange-600 hover:text-orange-700 font-medium mt-1 inline-flex items-center gap-0.5">
                     Manage <ArrowUpRight className="w-3 h-3" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -251,11 +249,11 @@ export function TenantDashboardPage() {
           {/* Worker quick stats */}
           {!isManagement && (
             <div className="grid grid-cols-2 gap-3 mb-5">
-              <div className="bg-white rounded-xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] p-4">
+              <div className="card p-4">
                 <p className="text-xs font-medium text-stone-500 mb-1">Customers</p>
                 <p className="text-2xl font-bold text-stone-900">{customersCount}</p>
               </div>
-              <div className="bg-white rounded-xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] p-4">
+              <div className="card p-4">
                 <p className="text-xs font-medium text-stone-500 mb-1">Active shop</p>
                 <p className="text-sm font-semibold text-stone-900 truncate">{shops.find((s) => s.id === activeShopId)?.name ?? 'All'}</p>
               </div>
@@ -270,7 +268,7 @@ export function TenantDashboardPage() {
               { label: 'Service catalog', desc: 'Pricing & items',    icon: Tag,        href: '/services',  iconBg: 'bg-violet-100',  iconColor: 'text-violet-600', bg: 'bg-white hover:bg-violet-50 text-stone-700 border-stone-200' },
               { label: 'Reports',         desc: 'Revenue & stats',    icon: TrendingUp, href: '/reports',   iconBg: 'bg-emerald-100', iconColor: 'text-emerald-600', bg: 'bg-white hover:bg-stone-50 text-stone-700 border-stone-200' },
             ].map(({ label, desc, icon: Icon, href, iconBg, iconColor, bg }) => (
-              <a key={href} href={href}
+              <Link key={href} to={href}
                 className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-semibold border shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-all hover:shadow-[0_2px_6px_rgba(0,0,0,0.07)] active:scale-[0.98] ${bg}`}>
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${iconBg}`}>
                   <Icon className={`w-4.5 h-4.5 ${iconColor}`} />
@@ -279,13 +277,13 @@ export function TenantDashboardPage() {
                   <p className="leading-tight truncate">{label}</p>
                   <p className={`text-[11px] font-normal leading-tight truncate mt-0.5 ${bg.includes('orange-500') ? 'text-orange-100' : 'text-stone-400'}`}>{desc}</p>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
 
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
             {/* Recent orders — main panel */}
-            <div className="xl:col-span-2 bg-white rounded-xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden">
+            <div className="card xl:col-span-2 overflow-hidden">
               <div className="px-5 py-3.5 border-b border-stone-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <h2 className="text-sm font-semibold text-stone-900">Recent orders</h2>
@@ -295,17 +293,17 @@ export function TenantDashboardPage() {
                     </span>
                   )}
                 </div>
-                <a href="/orders" className="text-xs text-orange-600 hover:text-orange-700 font-medium inline-flex items-center gap-0.5">
+                <Link to="/orders" className="text-xs text-orange-600 hover:text-orange-700 font-medium inline-flex items-center gap-0.5">
                   View all <ArrowUpRight className="w-3 h-3" />
-                </a>
+                </Link>
               </div>
               {recentOrders.length === 0 ? (
                 <div className="px-5 py-12 text-center">
                   <Package className="w-8 h-8 text-stone-200 mx-auto mb-2" />
                   <p className="text-sm text-stone-400">No orders yet</p>
-                  <a href="/orders" className="mt-2 inline-flex items-center gap-1 text-xs text-orange-600 font-medium">
+                  <Link to="/orders" className="mt-2 inline-flex items-center gap-1 text-xs text-orange-600 font-medium">
                     <Plus className="w-3 h-3" /> Create first order
-                  </a>
+                  </Link>
                 </div>
               ) : (
                 <div>
@@ -369,7 +367,7 @@ export function TenantDashboardPage() {
             <div className="space-y-4">
               {/* Orders by status */}
               {isManagement && report && Object.keys(ordsByStatus).length > 0 && (
-                <div className="bg-white rounded-xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] p-5">
+                <div className="card p-5">
                   <h2 className="text-sm font-semibold text-stone-900 mb-4">Pipeline</h2>
                   <div className="space-y-3">
                     {(['received', 'washing', 'ready', 'delivered'] as const).map((status) => {
@@ -400,21 +398,21 @@ export function TenantDashboardPage() {
               )}
 
               {/* Shops */}
-              <div className="bg-white rounded-xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden">
+              <div className="card overflow-hidden">
                 <div className="px-5 py-3.5 border-b border-stone-100 flex items-center justify-between">
                   <h2 className="text-sm font-semibold text-stone-900 flex items-center gap-2">
                     <Store className="w-4 h-4 text-stone-400" /> Shops
                   </h2>
                   {user?.role === 'owner' && (
-                    <a href="/settings" className="text-xs text-orange-600 hover:text-orange-700 font-medium inline-flex items-center gap-0.5">
+                    <Link to="/settings" className="text-xs text-orange-600 hover:text-orange-700 font-medium inline-flex items-center gap-0.5">
                       Manage <ArrowUpRight className="w-3 h-3" />
-                    </a>
+                    </Link>
                   )}
                 </div>
                 {shops.length === 0 ? (
                   <div className="px-5 py-6 text-center">
                     <p className="text-sm text-stone-400 mb-2">No shops yet</p>
-                    <a href="/settings" className="text-xs text-orange-600 font-medium">Add in Settings →</a>
+                    <Link to="/settings" className="text-xs text-orange-600 font-medium">Add in Settings →</Link>
                   </div>
                 ) : (
                   <div className="p-3 flex flex-col gap-2">
@@ -452,7 +450,7 @@ export function TenantDashboardPage() {
 
               {/* Revenue by shop (multi-shop) */}
               {isManagement && report?.shop_breakdown && report.shop_breakdown.length > 1 && (
-                <div className="bg-white rounded-xl border border-stone-200 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                <div className="card">
                   <div className="px-5 py-3.5 border-b border-stone-100">
                     <h2 className="text-sm font-semibold text-stone-900">Revenue by shop (30d)</h2>
                   </div>

@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, Link } from 'react-router-dom'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { useThemeInit } from './hooks/useThemeInit'
 import { LoginPage } from './pages/Login'
@@ -170,7 +170,14 @@ export function App() {
         }
       />
       <Route path="/" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />
-      <Route path="*" element={<Navigate to={token ? '/dashboard' : '/login'} replace />} />
+      <Route path="*" element={
+        <div className="min-h-screen flex items-center justify-center flex-col gap-4" style={{ background: 'var(--bg-page)' }}>
+          <p className="text-7xl font-black" style={{ color: 'var(--text-disabled)' }}>404</p>
+          <h1 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>Page not found</h1>
+          <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>The page you're looking for doesn't exist.</p>
+          <Link to={token ? '/dashboard' : '/login'} className="btn btn-primary btn-md mt-2">← Go home</Link>
+        </div>
+      } />
     </Routes>
   )
 }

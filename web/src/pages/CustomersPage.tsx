@@ -50,7 +50,7 @@ function formatDateTime(iso: string) {
   return new Date(iso).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
 }
 
-const inputCls = 'w-full px-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-shadow text-stone-900 placeholder:text-stone-400'
+const inputCls = 'input-base'
 
 export function CustomersPage() {
   const user = useAuthStore((s) => s.user)
@@ -210,7 +210,7 @@ export function CustomersPage() {
       <div className="relative mb-4 max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-400 pointer-events-none" />
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name, phone or email…"
-          className="w-full pl-9 pr-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-shadow text-stone-900 placeholder:text-stone-400" />
+          className="search-input w-full" />
       </div>
 
       <div className="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">

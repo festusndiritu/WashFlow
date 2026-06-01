@@ -30,7 +30,7 @@ const CATEGORY_COLOR: Record<string, string> = {
 const UNITS = ['kg', 'item', 'piece', 'shirt', 'trouser', 'suit', 'dress', 'curtain', 'blanket', 'pair', 'set']
 const CATEGORIES = ['washing', 'ironing', 'dry_cleaning', 'delivery', 'general']
 
-const inputCls = 'w-full px-3 py-2 text-sm bg-white border border-stone-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-shadow text-stone-900 placeholder:text-stone-400'
+const inputCls = 'input-base'
 
 export function ServicesPage() {
   const user = useAuthStore((s) => s.user)
@@ -224,7 +224,7 @@ export function ServicesPage() {
       ) : (
         <div className="space-y-4">
           {Object.entries(grouped).map(([cat, svcs]) => (
-            <div key={cat} className="bg-white rounded-xl border border-stone-200 shadow-sm">
+            <div key={cat} className="card">
               <div className="px-5 py-3 border-b border-stone-100 flex items-center gap-2">
                 <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold border capitalize ${CATEGORY_COLOR[cat] ?? CATEGORY_COLOR.general}`}>{cat.replace('_', ' ')}</span>
                 <span className="text-xs text-stone-400">{svcs.length} service{svcs.length !== 1 ? 's' : ''}</span>
