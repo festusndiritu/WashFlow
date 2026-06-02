@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
-import { AlertCircle, X, Check, Building2, KeyRound, Store, Plus, Ruler, Trash2, ChevronRight } from 'lucide-react'
+import { AlertCircle, X, Check, Building2, KeyRound, Store, Plus, Ruler, Trash2, ChevronRight, CreditCard } from 'lucide-react'
 import client from '../api/client'
 import { useAuthStore } from '../store/auth'
 import { AppShell } from '../components/AppShell'
@@ -12,6 +12,7 @@ interface TenantSettings {
   id: string
   name: string
   slug: string
+  plan: string
   created_at: string
 }
 
@@ -49,12 +50,17 @@ export function SettingsPage() {
   const [shopAdding, setShopAdding] = useState(false)
   const [shopError, setShopError] = useState<string | null>(null)
 
+  // Subscription / plan
+  const [planSaving, setPlanSaving] = useState(false)
+  const [planError, setPlanError] = useState<string | null>(null)
+  const [planSuccess, setPlanSuccess] = useState(false)
+
   useEffect(() => {
     const load = async () => {
       try {
         const { data } = await client.get<TenantSettings>('/settings')
         setSettings(data)
-        setOrgName(data.name)
+      setOrgName(data.name)
       } catch (err: any) {
         setError(err.response?.data?.detail || 'Failed to load settings')
       } finally {
@@ -99,6 +105,21 @@ export function SettingsPage() {
       setPwError(err.response?.data?.detail || 'Could not change password')
     } finally {
       setPwSaving(false)
+    }
+  }
+
+  const changePlan = async (newPlan: string) => {
+    setPlanError(null); setPlanSuccess(false)
+    setPlanSaving(true)
+    try {
+      const { data } = await client.patch<TenantSettings>('/settings/plan', { plan: newPlan })
+      setSettings(data)
+      setPlanSuccess(true)
+      setTimeout(() => setPlanSuccess(false), 3000)
+    } catch (err: any) {
+      setPlanError(err.response?.data?.detail || 'Could not update plan')
+    } finally {
+      setPlanSaving(false)
     }
   }
 
@@ -290,6 +311,57 @@ export function SettingsPage() {
               </form>
             </div>
           )}
+
+          {/* Subscription plan — owners only */}
+          {isOwner && settings && (() => {
+            const PLAN_DETAILS: Record<string, { label: string; price: string; features: string[] }> = {
+              free:       { label: 'Free',       price: 'KES 0/mo',      features: ['1 shop', '3 users', '50 orders/mo'] },
+              starter:    { label: 'Starter',    price: 'KES 1,500/mo',  features: ['2 shops', '10 users', '300 orders/mo'] },
+              pro:        { label: 'Pro',        price: 'KES 4,500/mo',  features: ['5 shops', '30 users', '1,000 orders/mo'] },
+              enterprise: { label: 'Enterprise', price: 'KES 12,000/mo', features: ['Unlimited shops', 'Unlimited users', 'Unlimited orders'] },
+            }
+            const PLANS = ['free', 'starter', 'pro', 'enterprise']
+            const current = settings.plan ?? 'free'
+            return (
+              <div className="card p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <CreditCard className="w-4 h-4 text-secondary" />
+                  <h2 className="text-sm font-semibold text-primary">Subscription</h2>
+                  <span className="ml-auto text-xs font-semibold text-orange-600 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full capitalize">{PLAN_DETAILS[current]?.label ?? current}</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  {PLANS.map((p) => {
+                    const d = PLAN_DETAILS[p]
+                    const isActive = p === current
+                    return (
+                      <button
+                        key={p}
+                        type="button"
+                        disabled={isActive || planSaving}
+                        onClick={() => changePlan(p)}
+                        className={`text-left p-3 rounded-xl border-2 transition-all ${isActive ? 'border-orange-500 bg-orange-50' : 'border-theme bg-surface hover:bg-subtle disabled:opacity-50'}`}
+                      >
+                        <p className={`text-sm font-semibold mb-0.5 ${isActive ? 'text-orange-700' : 'text-primary'}`}>{d.label}</p>
+                        <p className={`text-xs mb-1.5 ${isActive ? 'text-orange-600' : 'text-secondary'}`}>{d.price}</p>
+                        <ul className="space-y-0.5">
+                          {d.features.map(f => (
+                            <li key={f} className={`text-[11px] ${isActive ? 'text-orange-600' : 'text-tertiary'}`}>· {f}</li>
+                          ))}
+                        </ul>
+                        {isActive && <p className="text-[10px] font-semibold text-orange-600 mt-1.5">Current plan</p>}
+                      </button>
+                    )
+                  })}
+                </div>
+                {planError && <p className="text-xs text-red-600">{planError}</p>}
+                {planSuccess && (
+                  <div className="flex items-center gap-1.5 text-xs text-emerald-600">
+                    <Check className="w-3.5 h-3.5" /> Plan updated successfully
+                  </div>
+                )}
+              </div>
+            )
+          })()}
 
           {/* Units & Subunits — owners and admins */}
           {canManageUnits && (

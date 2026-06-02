@@ -5,7 +5,7 @@ from ..core.db import get_db
 from ..core.security import hash_password, verify_password
 from ..deps import Identity, get_current_identity
 from ..models import Tenant, User
-from ..schemas.settings import PasswordChange, TenantSettingsResponse, TenantUpdate
+from ..schemas.settings import PasswordChange, PlanUpdate, TenantSettingsResponse, TenantUpdate
 
 router = APIRouter()
 
@@ -22,6 +22,7 @@ def get_settings(
         tenant_id=tenant.id,
         name=tenant.name,
         slug=tenant.slug,
+        plan=tenant.plan,
         created_at=tenant.created_at,
     )
 
@@ -47,6 +48,31 @@ def update_settings(
         tenant_id=tenant.id,
         name=tenant.name,
         slug=tenant.slug,
+        plan=tenant.plan,
+        created_at=tenant.created_at,
+    )
+
+
+@router.patch("/plan", response_model=TenantSettingsResponse)
+def update_plan(
+    payload: PlanUpdate,
+    identity: Identity = Depends(get_current_identity),
+    db: Session = Depends(get_db),
+) -> TenantSettingsResponse:
+    from ..models import MembershipRole
+    if identity.role != MembershipRole.OWNER.value:
+        raise HTTPException(status_code=403, detail="Only the owner can change the plan")
+    tenant = db.query(Tenant).filter(Tenant.id == identity.tenant_id).first()
+    if not tenant:
+        raise HTTPException(status_code=404, detail="Tenant not found")
+    tenant.plan = payload.plan
+    db.commit()
+    db.refresh(tenant)
+    return TenantSettingsResponse(
+        tenant_id=tenant.id,
+        name=tenant.name,
+        slug=tenant.slug,
+        plan=tenant.plan,
         created_at=tenant.created_at,
     )
 

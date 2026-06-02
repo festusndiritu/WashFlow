@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import {
-  Building2, LayoutDashboard, Users, Package, TrendingUp,
   ChevronLeft, ChevronRight, AlertCircle, Trash2, ShieldOff, ShieldCheck, MoreHorizontal,
 } from 'lucide-react'
 import client from '../api/client'
-import { AppShell, NavItem } from '../components/AppShell'
+import { AppShell } from '../components/AppShell'
 import { PlatformNav } from '../components/PlatformNav'
+import { Select } from '../components/Select'
 
 interface Tenant {
   id: string
@@ -20,14 +20,12 @@ interface Tenant {
   revenue: number
 }
 
-const PLAN_BADGE: Record<string, string> = {
-  free:       'bg-stone-100 text-secondary border border-stone-200',
-  starter:    'bg-blue-50 text-blue-700 border border-blue-200',
-  pro:        'bg-violet-50 text-violet-700 border border-violet-200',
-  enterprise: 'bg-amber-50 text-amber-700 border border-amber-200',
-}
-
-const PLANS = ['free', 'starter', 'pro', 'enterprise']
+const PLAN_OPTIONS = [
+  { value: 'free',       label: 'Free' },
+  { value: 'starter',    label: 'Starter' },
+  { value: 'pro',        label: 'Pro' },
+  { value: 'enterprise', label: 'Enterprise' },
+]
 
 export function PlatformTenantsPage() {
   const [tenants, setTenants] = useState<Tenant[]>([])
@@ -124,13 +122,12 @@ export function PlatformTenantsPage() {
                     </div>
                   </td>
                   <td className="px-4 py-3 hidden sm:table-cell">
-                    <select
+                    <Select
                       value={t.plan}
-                      onChange={e => setPlan(t, e.target.value)}
-                      className={`text-xs font-semibold px-2 py-1 rounded-full border-0 cursor-pointer focus:outline-none ${PLAN_BADGE[t.plan] ?? PLAN_BADGE.free}`}
-                    >
-                      {PLANS.map(p => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
-                    </select>
+                      onChange={v => setPlan(t, v)}
+                      options={PLAN_OPTIONS}
+                      className="text-xs"
+                    />
                   </td>
                   <td className="px-4 py-3 text-right text-secondary tabular-nums hidden md:table-cell">{t.shops_count}</td>
                   <td className="px-4 py-3 text-right text-secondary tabular-nums hidden md:table-cell">{t.users_count}</td>
@@ -154,13 +151,13 @@ export function PlatformTenantsPage() {
                     ) : (
                       <div className="relative inline-block">
                         <button onClick={() => setActionId(actionId === t.id ? null : t.id)}
-                          className="p-1.5 rounded-lg hover:bg-stone-100 text-tertiary hover:text-secondary transition-colors">
+                          className="p-1.5 rounded-lg hover:bg-subtle text-tertiary hover:text-secondary transition-colors">
                           <MoreHorizontal className="w-4 h-4" />
                         </button>
                         {actionId === t.id && (
-                          <div className="absolute right-0 top-8 z-20 bg-surface border-theme rounded-xl shadow-lg py-1 w-44 text-sm">
+                          <div className="absolute right-0 top-8 z-20 bg-surface border border-theme rounded-xl shadow-lg py-1 w-44 text-sm">
                             <button onClick={() => toggleStatus(t)}
-                              className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-subtle text-secondary">
+                              className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-subtle text-secondary transition-colors">
                               {t.status === 'active'
                                 ? <><ShieldOff className="w-3.5 h-3.5 text-amber-500" /> Suspend</>
                                 : <><ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> Activate</>}
@@ -187,11 +184,11 @@ export function PlatformTenantsPage() {
           <span>Page {page} of {pages}</span>
           <div className="flex gap-1">
             <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
-              className="p-1.5 rounded-lg hover:bg-stone-100 disabled:opacity-40">
+              className="p-1.5 rounded-lg hover:bg-subtle disabled:opacity-40">
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button onClick={() => setPage(p => Math.min(pages, p + 1))} disabled={page === pages}
-              className="p-1.5 rounded-lg hover:bg-stone-100 disabled:opacity-40">
+              className="p-1.5 rounded-lg hover:bg-subtle disabled:opacity-40">
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

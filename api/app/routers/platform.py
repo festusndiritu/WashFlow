@@ -227,7 +227,7 @@ def list_all_users(
     items = []
     for u in users:
         memberships = db.query(Membership, Tenant.name.label("tenant_name")).join(Tenant, Tenant.id == Membership.tenant_id).filter(Membership.user_id == u.id).all()
-        tenant_names = [m.tenant_name for m, _ in memberships] if memberships else []
+        tenant_names = [tn for _, tn in memberships] if memberships else []
         roles = list({m.role for m, _ in memberships}) if memberships else []
         items.append(PlatformUserRow(
             id=u.id,
