@@ -374,7 +374,7 @@ def google_auth(payload: GoogleAuthRequest, db: Session = Depends(get_db)) -> Au
     membership = (
         db.query(Membership)
         .filter(Membership.user_id == user.id)
-        .order_by(Membership.joined_at.asc())
+        .order_by(Membership.created_at.asc())
         .first()
     )
     if not membership:
