@@ -1,11 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react'
-import { AlertCircle, X, Check, Building2, KeyRound, Store, Plus, Ruler, Trash2, ChevronRight, CreditCard } from 'lucide-react'
+import { AlertCircle, X, Check, Building2, KeyRound, Store, Plus, Ruler, CreditCard } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import client from '../api/client'
 import { useAuthStore } from '../store/auth'
 import { AppShell } from '../components/AppShell'
 import { TenantNav } from '../components/TenantNav'
-import { Select } from '../components/Select'
-import { useUnitsStore } from '../store/units'
 import type { ShopSummary } from '../types'
 
 interface TenantSettings {
@@ -143,28 +142,12 @@ export function SettingsPage() {
   const isOwner = user?.role === 'owner'
   const canManageUnits = user?.role === 'owner' || user?.role === 'admin'
 
-  // Units store
-  const { units, addUnit, removeUnit } = useUnitsStore()
-  const [newUnitName, setNewUnitName] = useState('')
-  const [newUnitParent, setNewUnitParent] = useState('')   // '' = top-level
-  const [unitError, setUnitError] = useState<string | null>(null)
-
-  const topLevelUnits = units.filter((u) => u.parentId === null)
-  const subunitsByParent = (parentId: string) => units.filter((u) => u.parentId === parentId)
-
-  const handleAddUnit = (e: FormEvent) => {
-    e.preventDefault()
-    const trimmed = newUnitName.trim()
-    if (!trimmed) return
-    if (units.find((u) => u.name.toLowerCase() === trimmed.toLowerCase())) {
-      setUnitError('A unit with that name already exists')
-      return
-    }
-    setUnitError(null)
-    addUnit(trimmed, newUnitParent || null)
-    setNewUnitName('')
-    setNewUnitParent('')
+  const PLAN_SHOP_LIMITS: Record<string, number> = {
+    free: 1, starter: 2, pro: 5, enterprise: Infinity,
   }
+  const shopLimit = PLAN_SHOP_LIMITS[settings?.plan ?? 'free'] ?? 1
+  const atShopLimit = shops.length >= shopLimit
+
   const sidebarNav = <TenantNav role={user?.role ?? 'worker'} />
 
   const headerSlot = (
@@ -290,6 +273,12 @@ export function SettingsPage() {
               )}
 
               {/* Add new shop */}
+              {atShopLimit ? (
+                <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                  Your <span className="font-semibold capitalize">{settings?.plan ?? 'free'}</span> plan allows up to{' '}
+                  {shopLimit === 1 ? '1 shop' : `${shopLimit} shops`}. Upgrade to add more.
+                </div>
+              ) : (
               <form onSubmit={addShop} className="space-y-3">
                 <div>
                   <label className="block text-xs font-medium text-secondary mb-1">New shop name</label>
@@ -309,6 +298,7 @@ export function SettingsPage() {
                   {shopAdding ? 'Adding…' : 'Add shop'}
                 </button>
               </form>
+              )}
             </div>
           )}
 
@@ -363,95 +353,18 @@ export function SettingsPage() {
             )
           })()}
 
-          {/* Units & Subunits — owners and admins */}
+          {/* Units & Subunits — link to dedicated page */}
           {canManageUnits && (
             <div className="card p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <Ruler className="w-4 h-4 text-secondary" />
-                <h2 className="text-sm font-semibold text-primary">Units &amp; Subunits</h2>
-                <span className="ml-auto text-xs text-tertiary">{units.length} total</span>
-              </div>
-
-              {/* Unit tree */}
-              <div className="space-y-2 mb-5">
-                {topLevelUnits.map((unit) => {
-                  const subs = subunitsByParent(unit.id)
-                  return (
-                    <div key={unit.id} className="rounded-lg border border-theme overflow-hidden">
-                      {/* Parent row */}
-                      <div className="flex items-center justify-between px-3 py-2 bg-subtle">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-semibold text-primary">{unit.name}</span>
-                          {subs.length > 0 && (
-                            <span className="text-[11px] text-tertiary">{subs.length} subunit{subs.length !== 1 ? 's' : ''}</span>
-                          )}
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => removeUnit(unit.id)}
-                          className="p-1 rounded hover:bg-[var(--bg-muted)] text-disabled hover:text-red-500 transition-colors"
-                          title={subs.length > 0 ? `Delete ${unit.name} and its ${subs.length} subunit(s)` : `Delete ${unit.name}`}
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                      {/* Subunit rows */}
-                      {subs.map((sub) => (
-                        <div key={sub.id} className="flex items-center justify-between px-3 py-2 border-t border-theme">
-                          <div className="flex items-center gap-2 pl-3">
-                            <ChevronRight className="w-3 h-3 text-disabled" />
-                            <span className="text-sm text-secondary">{sub.name}</span>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => removeUnit(sub.id)}
-                            className="p-1 rounded hover:bg-[var(--bg-muted)] text-disabled hover:text-red-500 transition-colors"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )
-                })}
-              </div>
-
-              {/* Add unit / subunit form */}
-              <form onSubmit={handleAddUnit} className="space-y-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-medium text-secondary mb-1">Unit name *</label>
-                    <input
-                      value={newUnitName}
-                      onChange={(e) => { setNewUnitName(e.target.value); setUnitError(null) }}
-                      placeholder="e.g. duvet, load…"
-                      className={inputCls}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-secondary mb-1">
-                      Parent unit <span className="text-tertiary font-normal">(optional — makes it a subunit)</span>
-                    </label>
-                    <Select
-                      value={newUnitParent}
-                      onChange={setNewUnitParent}
-                      options={[
-                        { value: '', label: 'None — top-level unit' },
-                        ...topLevelUnits.map((u) => ({ value: u.id, label: u.name })),
-                      ]}
-                      placeholder="None — top-level unit"
-                    />
-                  </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Ruler className="w-4 h-4 text-secondary" />
+                  <h2 className="text-sm font-semibold text-primary">Units &amp; Subunits</h2>
                 </div>
-                {unitError && <p className="text-xs text-red-600">{unitError}</p>}
-                <button
-                  type="submit"
-                  className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  Add unit
-                </button>
-              </form>
+                <Link to="/units" className="text-xs text-orange-600 hover:text-orange-700 font-medium inline-flex items-center gap-0.5">
+                  Manage →
+                </Link>
+              </div>
             </div>
           )}
 

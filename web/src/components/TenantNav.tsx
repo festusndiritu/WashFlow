@@ -1,4 +1,4 @@
-import { BarChart3, LayoutDashboard, Package, Settings, Tag, TrendingDown, UserCheck, Users } from 'lucide-react'
+import { BarChart3, LayoutDashboard, Package, Ruler, Settings, Tag, TrendingDown, UserCheck, Users } from 'lucide-react'
 import { NavItem } from './AppShell'
 
 interface TenantNavProps {
@@ -15,6 +15,7 @@ export function TenantNav({ role }: TenantNavProps) {
       <NavItem icon={<Tag size={18} />} label="Services" to="/services" />
       {isManagement && <NavItem icon={<TrendingDown size={18} />} label="Expenses" to="/expenses" />}
       {isManagement && <NavItem icon={<BarChart3 size={18} />} label="Reports" to="/reports" />}
+      {isManagement && <NavItem icon={<Ruler size={18} />} label="Units" to="/units" />}
       {isManagement && <NavItem icon={<Users size={18} />} label="Team" to="/team" />}
       <NavItem icon={<Settings size={18} />} label="Settings" to="/settings" />
     </>

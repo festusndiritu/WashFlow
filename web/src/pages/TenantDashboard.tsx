@@ -135,7 +135,7 @@ export function TenantDashboardPage() {
         <p className="text-xs capitalize" style={{ color: 'var(--text-tertiary)' }}>{user?.role} · {tenant?.name}</p>
       </div>
       {shops.length > 1 && (
-        <div className="flex items-center gap-1 bg-stone-100 rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-[var(--bg-muted)] rounded-lg p-1">
           {shops.map((shop) => (
             <button key={shop.id} onClick={() => switchShop(shop.id)}
               className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${shop.id === activeShopId ? 'bg-surface text-primary shadow-sm' : 'text-secondary hover:text-secondary'}`}>
@@ -166,9 +166,8 @@ export function TenantDashboardPage() {
           {isManagement && report && (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5 items-stretch">
               {/* Revenue with sparkline */}
-              <div className="card p-4 col-span-2 lg:col-span-1 relative overflow-hidden flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-50/60 to-transparent pointer-events-none rounded-2xl" />
-                <div className="relative flex flex-col flex-1">
+              <div className="card p-4 col-span-2 lg:col-span-1 flex flex-col">
+                <div className="flex flex-col flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Revenue (30d)</p>
                     <div className="p-1.5 bg-orange-100 rounded-lg"><TrendingUp className="w-3.5 h-3.5 text-orange-500" /></div>
@@ -200,9 +199,8 @@ export function TenantDashboardPage() {
                   )}
                 </div>
               </div>
-              <div className="card p-4 relative overflow-hidden flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent pointer-events-none rounded-2xl" />
-                <div className="relative flex flex-col flex-1 justify-between">
+              <div className="card p-4 flex flex-col">
+                <div className="flex flex-col flex-1 justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Orders</p>
@@ -213,9 +211,8 @@ export function TenantDashboardPage() {
                   <p className="text-xs text-tertiary mt-1">Last 30 days</p>
                 </div>
               </div>
-              <div className="card p-4 relative overflow-hidden flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-sky-50/50 to-transparent pointer-events-none rounded-2xl" />
-                <div className="relative flex flex-col flex-1 justify-between">
+              <div className="card p-4 flex flex-col">
+                <div className="flex flex-col flex-1 justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Customers</p>
@@ -228,9 +225,8 @@ export function TenantDashboardPage() {
                   </Link>
                 </div>
               </div>
-              <div className="card p-4 relative overflow-hidden flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-50/50 to-transparent pointer-events-none rounded-2xl" />
-                <div className="relative flex flex-col flex-1 justify-between">
+              <div className="card p-4 flex flex-col">
+                <div className="flex flex-col flex-1 justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <p className="text-xs font-semibold text-secondary uppercase tracking-wide">Team</p>

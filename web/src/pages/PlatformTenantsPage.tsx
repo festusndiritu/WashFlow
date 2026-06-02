@@ -86,7 +86,7 @@ export function PlatformTenantsPage() {
         </div>
       )}
 
-      <div className="card overflow-hidden">
+      <div className="card">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="w-6 h-6 border-2 border-orange-200 border-t-orange-500 rounded-full animate-spin" />

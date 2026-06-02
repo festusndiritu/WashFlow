@@ -1,27 +1,30 @@
+import React, { Suspense, lazy } from 'react'
 import { Navigate, Route, Routes, Link } from 'react-router-dom'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { useThemeInit } from './hooks/useThemeInit'
-import { LoginPage } from './pages/Login'
-import { PlatformDashboardPage } from './pages/PlatformDashboard'
-import { PlatformTenantsPage } from './pages/PlatformTenantsPage'
-import { PlatformRevenuePage } from './pages/PlatformRevenuePage'
-import { PlatformOrdersPage } from './pages/PlatformOrdersPage'
-import { PlatformUsersPage } from './pages/PlatformUsersPage'
-import { PlatformPlansPage } from './pages/PlatformPlansPage'
-import { PlatformSetupPage } from './pages/PlatformSetup'
-import { SignupPage } from './pages/Signup'
-import { TenantDashboardPage } from './pages/TenantDashboard'
-import { CustomersPage } from './pages/CustomersPage'
-import { OrdersPage } from './pages/OrdersPage'
-import { ReportsPage } from './pages/ReportsPage'
-import { TeamPage } from './pages/TeamPage'
-import { SettingsPage } from './pages/SettingsPage'
-import { ServicesPage } from './pages/ServicesPage'
-import { OnboardingPage } from './pages/Onboarding'
-import { PrintReceiptPage } from './pages/PrintReceiptPage'
-import { InvoicePage } from './pages/InvoicePage'
-import { ExpensesPage } from './pages/ExpensesPage'
 import { useAuthStore } from './store/auth'
+
+const LoginPage = lazy(() => import('./pages/Login').then(m => ({ default: m.LoginPage })))
+const SignupPage = lazy(() => import('./pages/Signup').then(m => ({ default: m.SignupPage })))
+const PlatformSetupPage = lazy(() => import('./pages/PlatformSetup').then(m => ({ default: m.PlatformSetupPage })))
+const PlatformDashboardPage = lazy(() => import('./pages/PlatformDashboard').then(m => ({ default: m.PlatformDashboardPage })))
+const PlatformTenantsPage = lazy(() => import('./pages/PlatformTenantsPage').then(m => ({ default: m.PlatformTenantsPage })))
+const PlatformRevenuePage = lazy(() => import('./pages/PlatformRevenuePage').then(m => ({ default: m.PlatformRevenuePage })))
+const PlatformOrdersPage = lazy(() => import('./pages/PlatformOrdersPage').then(m => ({ default: m.PlatformOrdersPage })))
+const PlatformUsersPage = lazy(() => import('./pages/PlatformUsersPage').then(m => ({ default: m.PlatformUsersPage })))
+const PlatformPlansPage = lazy(() => import('./pages/PlatformPlansPage').then(m => ({ default: m.PlatformPlansPage })))
+const TenantDashboardPage = lazy(() => import('./pages/TenantDashboard').then(m => ({ default: m.TenantDashboardPage })))
+const CustomersPage = lazy(() => import('./pages/CustomersPage').then(m => ({ default: m.CustomersPage })))
+const OrdersPage = lazy(() => import('./pages/OrdersPage').then(m => ({ default: m.OrdersPage })))
+const ReportsPage = lazy(() => import('./pages/ReportsPage').then(m => ({ default: m.ReportsPage })))
+const TeamPage = lazy(() => import('./pages/TeamPage').then(m => ({ default: m.TeamPage })))
+const SettingsPage = lazy(() => import('./pages/SettingsPage').then(m => ({ default: m.SettingsPage })))
+const ServicesPage = lazy(() => import('./pages/ServicesPage').then(m => ({ default: m.ServicesPage })))
+const OnboardingPage = lazy(() => import('./pages/Onboarding').then(m => ({ default: m.OnboardingPage })))
+const PrintReceiptPage = lazy(() => import('./pages/PrintReceiptPage').then(m => ({ default: m.PrintReceiptPage })))
+const InvoicePage = lazy(() => import('./pages/InvoicePage').then(m => ({ default: m.InvoicePage })))
+const ExpensesPage = lazy(() => import('./pages/ExpensesPage').then(m => ({ default: m.ExpensesPage })))
+const UnitsPage = lazy(() => import('./pages/UnitsPage').then(m => ({ default: m.UnitsPage })))
 
 export function App() {
   const token = useAuthStore((s) => s.token)
@@ -29,6 +32,7 @@ export function App() {
   useThemeInit()
 
   return (
+    <Suspense fallback={null}>
     <Routes>
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/login" element={<LoginPage />} />
@@ -138,6 +142,14 @@ export function App() {
         }
       />
       <Route
+        path="/units"
+        element={
+          <ProtectedRoute>
+            <UnitsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/onboarding"
         element={
           <ProtectedRoute>
@@ -179,5 +191,6 @@ export function App() {
         </div>
       } />
     </Routes>
+    </Suspense>
   )
 }

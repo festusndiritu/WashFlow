@@ -541,7 +541,7 @@ export function OrdersPage() {
         </div>
         <div className="flex items-center gap-1.5 flex-wrap">
           <button onClick={() => setFilterStatus(null)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${filterStatus === null ? 'bg-stone-900 text-white' : 'bg-surface border border-theme text-secondary hover:bg-subtle'}`}>
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${filterStatus === null ? 'bg-[var(--brand)] text-white' : 'bg-surface border border-theme text-secondary hover:bg-subtle'}`}>
             All ({orders.length})
           </button>
           {STATUS_FLOW.map((s) => (

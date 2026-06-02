@@ -283,7 +283,7 @@ export function ExpensesPage() {
 
       {/* Filter tabs */}
       <div className="flex items-center gap-1 mb-4 flex-wrap">
-        <div className="flex items-center gap-1 bg-stone-100 rounded-lg p-1 flex-wrap">
+        <div className="flex items-center gap-1 bg-[var(--bg-muted)] rounded-lg p-1 flex-wrap">
           <button onClick={() => setFilterCat('all')}
             className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${filterCat === 'all' ? 'bg-surface text-primary shadow-sm' : 'text-secondary hover:text-secondary'}`}>
             All

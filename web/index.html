@@ -38,7 +38,20 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <style>
+        #app-loader{display:flex;align-items:center;justify-content:center;flex-direction:column;height:100vh;background:#fafaf9}
+        html.dark #app-loader{background:#1c1917}
+        #app-loader .spinner{width:36px;height:36px;border:3px solid #e7e5e4;border-top-color:#f97316;border-radius:50%;animation:spin .7s linear infinite}
+        html.dark #app-loader .spinner{border-color:#44403c;border-top-color:#f97316}
+        #app-loader .label{font-family:system-ui,sans-serif;font-size:13px;color:#a8a29e;margin-top:12px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+      </style>
+      <div id="app-loader">
+        <div class="spinner"></div>
+        <div class="label">Loading WashFlow…</div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
